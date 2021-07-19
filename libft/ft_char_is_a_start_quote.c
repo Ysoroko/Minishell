@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 10:49:38 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/19 15:04:36 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 15:07:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,14 +56,11 @@ static void	ft_add_quote_and_lock(int *count, int *inside)
 static char	ft_return(int inside_single_quotes, int inside_double_quotes,
 						char *str, int i)
 {
-	if (((str[i] == '\'' && i && str[i - 1] != '\\') || (str[i] == '\'' && !i))
-		&& !inside_double_quotes)
+	if (str[i] == '\'' && !inside_double_quotes)
 		return ('\'');
 	else if (str[i] == '\'' && inside_single_quotes)
 		return ('\'');
-	else if (((str[i] == '\"' && i && str[i - 1] != '\\')
-			|| (str[i] == '\"' && !i))
-		&& !inside_single_quotes)
+	else if (str[i] == '\"' && !inside_single_quotes)
 		return ('\"');
 	else
 		return (0);

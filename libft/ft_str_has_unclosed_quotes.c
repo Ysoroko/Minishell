@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/09 10:59:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/04/21 11:00:54 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 15:08:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,12 +87,9 @@ char	ft_str_has_unclosed_quotes(char *s)
 		&inside_simple_quotes, &inside_double_quotes);
 	while (s[++i])
 	{
-		if (((s[i] == '\'' && i && s[i - 1] != '\\') || (s[i] == '\'' && !i)
-				|| (s[i] == '\'' && inside_simple_quotes))
-			&& !inside_double_quotes)
+		if (s[i] == '\'' && !inside_double_quotes)
 			ft_add_quote_and_lock(&count_simple_quotes, &inside_simple_quotes);
-		if (((s[i] == '\"' && i && s[i - 1] != '\\') || (s[i] == '\"' && !i))
-			&& !inside_simple_quotes)
+		if (s[i] == '\"' && !inside_simple_quotes)
 			ft_add_quote_and_lock(&count_double_quotes, &inside_double_quotes);
 	}
 	return (ft_return(inside_simple_quotes, inside_double_quotes));

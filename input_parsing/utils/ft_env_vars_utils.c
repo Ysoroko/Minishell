@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/05/05 10:43:48 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 15:11:50 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,6 +105,6 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 	//printf("dest before strcat of ft_append_env_var_value: [%s]\n", *dest);
 	ft_strcat(*dest, env_value);
 	//printf("dest at the end of ft_append_env_var_value: [%s]\n", *dest);
-	*j += ft_strlen(env_value);
+	*j += (ft_strlen(env_value) - 1);
 	ft_free_str(&env_name);
 }

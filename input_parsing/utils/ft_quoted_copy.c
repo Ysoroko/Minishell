@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:03:28 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/19 14:58:54 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 15:10:32 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,5 +100,5 @@ void	ft_quoted_copy(char *str, char **dest, int *i, int *j)
 	{
 		ft_double_quotes_copy(str, dest, i, j);
 	}
-	
+	//printf("dest at the end of quoted copy: [%s]\n", *dest);
 }

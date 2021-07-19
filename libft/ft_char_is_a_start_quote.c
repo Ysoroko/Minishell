@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/15 10:49:38 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/04/22 12:24:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 15:04:36 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,12 +91,9 @@ char	ft_char_is_a_start_quote(char *s, int j)
 		&inside_simple_quotes, &inside_double_quotes);
 	while (s[++i] && i < j)
 	{
-		if (((s[i] == '\'' && i && s[i - 1] != '\\') || (s[i] == '\'' && !i)
-				|| (s[i] == '\'' && inside_simple_quotes))
-			&& !inside_double_quotes)
+		if (s[i] == '\'' && !inside_double_quotes)
 			ft_add_quote_and_lock(&count_simple_quotes, &inside_simple_quotes);
-		if (((s[i] == '\"' && i && s[i - 1] != '\\') || (s[i] == '\"' && !i))
-			&& !inside_simple_quotes)
+		if (s[i] == '\"' && !inside_simple_quotes)
 			ft_add_quote_and_lock(&count_double_quotes, &inside_double_quotes);
 	}
 	if (i == j)

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/19 14:18:49 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 14:58:10 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,8 +41,8 @@
 # define SPACES_AND_PIPES " \t\n\r\v\f|"
 # define REDIRS_PIPES_QUOTES "><|\'\""
 # define SPACES_AND_REDIRECTIONS " \t\n\r\v\f><"
-# define BACKSLASH_IN_DQ_CHARS "$`\"\\\n"
-# define ENV_VAR_SEPS " \t\n\r\v\f><|\\"
+# define BACKSLASH_IN_DQ_CHARS "$`\"\n"
+# define ENV_VAR_SEPS " \t\n\r\v\f><|"
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
 
 /*

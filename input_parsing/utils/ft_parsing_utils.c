@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/14 13:22:43 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/19 14:23:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,7 +71,7 @@ void	ft_check_for_pipe(char *str_command, t_command *command)
 	if (!str_command || !command)
 		return ;
 	len = ft_strlen(str_command);
-	if (str_command[len - 1] == '|' || str_command[len - 1] == ';')
+	if (ft_strchr(PIPES, str_command[len - 1]))
 		command->pipe = str_command[len - 1];
 }
 
@@ -116,9 +116,7 @@ void	ft_add_words_after_redir_to_argument(t_command *command, char *red_pos)
 	if (!temp)
 		return ;
 	temp2 = ft_strdup_until_c_from_charset_not_quoted(temp, PIPES);
-	printf("temp2 before trimming: [%s]\n", temp2);
 	temp2 = ft_strtrim_exit_replace_src(&temp2, SPACES_AND_PIPES);
-	printf("temp2 after trimming: [%s]\n", temp2);
 	if (command->argument)
 		command->argument = ft_strjoin_free_pref_exit(&(command->argument), " ");
 	command->argument = ft_strjoin_free_pref_exit(&(command->argument), temp2);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/14 13:21:46 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/20 11:27:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 */
 
 static void	ft_check_for_redirections(char *str, t_command *current_command,
-										int *j, char *input)
+										int *j)
 {
 	char	*redirection_found;
 
@@ -32,7 +32,12 @@ static void	ft_check_for_redirections(char *str, t_command *current_command,
 	if (!redirection_found)
 		return ;
 	if (redirection_found[0] == '<')
-		current_command->redirection = ft_strdup_exit("<");
+	{
+		if (redirection_found[1] == '<')
+			current_command->redirection = ft_strdup_exit("<<");
+		else
+			current_command->redirection = ft_strdup_exit("<");
+	}
 	else if (redirection_found[0] == '>')
 	{
 		if (redirection_found[1] == '>')
@@ -171,8 +176,7 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	//printf("Command->name: [%s]\n", command->name);
 	ft_check_for_flags(input_checkpt, command);
 	ft_extract_the_argument(next_command_as_str, command);
-	printf("Command->arg before concat: [%s]\n", command->argument);
-	ft_check_for_redirections(next_command_as_str, command, &j, input_checkpt);
+	ft_check_for_redirections(next_command_as_str, command, &j);
 	//printf("Command->redirection: [%s]\n", command->redirection);
 	ft_check_for_pipe(next_command_as_str, command);
 	ft_free_str(&next_command_as_str);

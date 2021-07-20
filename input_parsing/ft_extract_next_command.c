@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/20 11:27:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/20 16:53:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,7 @@ static void	ft_check_for_redirections(char *str, t_command *current_command,
 ** will start extracting after the command name
 */
 
+ 
 static void	ft_extract_command_name(char *input, t_command *command)
 {
 	char	*temp;
@@ -170,13 +171,13 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	index = 0;
 	command = ft_calloc_exit(1, sizeof(t_command));
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
-	//printf("next_command_as_str: [%s]\n", next_command_as_str);
+	printf("next_command_as_str: [%s]\n", next_command_as_str);
 	j = ft_strlen(next_command_as_str);
+	ft_check_for_redirections(next_command_as_str, command, &j);
 	ft_extract_command_name(input_checkpt, command);
 	//printf("Command->name: [%s]\n", command->name);
 	ft_check_for_flags(input_checkpt, command);
 	ft_extract_the_argument(next_command_as_str, command);
-	ft_check_for_redirections(next_command_as_str, command, &j);
 	//printf("Command->redirection: [%s]\n", command->redirection);
 	ft_check_for_pipe(next_command_as_str, command);
 	ft_free_str(&next_command_as_str);

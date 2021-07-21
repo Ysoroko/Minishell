@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:32:44 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/21 18:24:42 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/21 18:35:52 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,37 @@ int	ft_strlen(char *s)
 	while (s[i])
 		i++;
 	return (i);
+}
+
+char	*ft_memzero(unsigned int len)
+{
+	char	*dst;
+
+	dst = malloc(sizeof(char) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (len)
+		dst[--len] = '\0';
+	return (dst);
+}
+
+char	*ft_strjoin(char *s1, char *s2)
+{
+	char			*dst;
+	unsigned int	i;
+
+	if (!s1 || !s2)
+		return (NULL);
+	dst = ft_memzero(ft_strlen(s1) + ft_strlen(s2));
+	if (!dst)
+		return (NULL);
+	i = 0;
+	while (*s1)
+		dst[i++] = *s1++;
+	while (*s2)
+		dst[i++] = *s2++;
+	dst[i] = '\0';
+	return (dst);
 }
 
 int	ft_count_env(char *s)
@@ -90,29 +121,29 @@ char	*ft_get_paths(char **env)
 	return (dst);
 }
 
-char	**ft_split_env(t_msh *add, char *paths_var, char **paths)
+char	**ft_split_env(t_msh *add, char *paths_var)
 {
 	add->i = -1;
 	add->j = 0;
 	add->k = 0;
-	paths = NULL;
-	paths = (char **)malloc(sizeof(char *) * (ft_count_env(paths_var) + 1));
-	if (!paths)
+	add->paths = NULL;
+	add->paths = (char **)malloc(sizeof(char *) * (ft_count_env(paths_var) + 1));
+	if (!add->paths)
 		return (NULL);
 	while (++add->i < ft_count_env(paths_var))
 	{
-		paths[add->i] = (char *)malloc(sizeof(char) * (ft_strlen(paths_var) + 1));
-		if (!paths[add->i])
+		add->paths[add->i] = (char *)malloc(sizeof(char) * (ft_strlen(paths_var) + 1));
+		if (!add->paths[add->i])
 			return (0);
 		while (paths_var[add->j] && paths_var[add->j] == ':')
 			add->j++;
 		while (paths_var[add->j] && paths_var[add->j] != ':')
-			paths[add->i][add->k++] = paths_var[add->j++];
-		paths[add->i][add->k] = '\0';
+			add->paths[add->i][add->k++] = paths_var[add->j++];
+		add->paths[add->i][add->k] = '\0';
 		add->k = 0;
 	}
-	paths[add->i] = NULL;
-	return (paths);
+	add->paths[add->i] = NULL;
+	return (add->paths);
 }
 
 int	file_exec_check(t_msh *add, char *file)
@@ -176,10 +207,8 @@ int	file_type_check(t_msh *add, char *file)
 	return (0);
 }
 
-int		tests(int ac, char **av, char **env)
+int		tests(t_msh *add, int ac, char **av, char **env)
 {
-	t_msh add;
-	ft_set_all_paths(&add, env);
 	int i = 0;
 	DIR	*dir;
 	struct dirent *p;
@@ -194,7 +223,7 @@ int		tests(int ac, char **av, char **env)
 	while (tok != NULL)
 	{
 		words[i] = strdup(tok);
-		if (ft_len(words[i]) == 1 || ft_len(words[i]) == 2)
+		if (ft_strlen(words[i]) == 1 || ft_strlen(words[i]) == 2)
 		{
 			if (words[i][0] == '|')
 			{
@@ -240,7 +269,7 @@ int		tests(int ac, char **av, char **env)
 			printf("This option has to be saved in a char** for execve.\n\n");
 			printf("\033[0;37m");
 		}
-		file_type_check(&add, words[i]);
+		file_type_check(add, words[i]);
 		tok = strtok(NULL, sep);
 		i++;
 	}
@@ -258,12 +287,13 @@ int	main(int ac, char **av, char **env)
 	all_paths = NULL;
 	paths = NULL;
 	all_paths = ft_get_paths(env);
-	printf("{%s}\n", all_paths);
-	paths = ft_split_env(&add, all_paths, paths);
-	while (paths[i])
-	{
-		printf("[%s]\n", paths[i]);
-		i++;
-	}
+	add.paths = ft_split_env(&add, all_paths);
+	tests(&add, ac, av, env);
+	//printf("{%s}\n", all_paths);
+	//while (add.paths[i])
+	//{
+	//	printf("[%s]\n", add.paths[i]);
+	//	i++;
+	//}
 	return (0);
 }

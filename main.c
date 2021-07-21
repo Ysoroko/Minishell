@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/05/03 13:34:16 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/21 15:18:30 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,3 +130,26 @@ int	main(void)
 
 // Error:	echo '$TERM'"$TERM"
 //			"echo" '-n' '> < |;' ">>" 'test.txt' "|"
+
+// 1) Divide commands based on pipes
+// 2) Look for the command and its arguments to be used with execve
+//		!!! One command only before the pipe! 
+// 3) Divide based on redirections:
+//		a) >/>> redirection: Take current output (stdout?) and redirect it to the file
+//							1st word after ">/>>" = new stdout
+//							everything after is added to the command argument (can also be a command!)
+// 		
+//		b) < redirection:	Current input is taken from the file after the "<"
+//							"< test2.txt cat test.txt": < test.2 txt is ignored (only cat test.txt is executed)
+//							1st word after "<" = where the input is taken from
+//							The command can be found after the redirection.
+//							Only applies to commands when the command has no arguments (echo "" still has an argument "")
+//							
+//		c) << redirections: followed by a "start/stop word" then a command can follow
+//							will read from current stdin until the same start/stop word is encountered
+//							will then make this word a string which can be redirected elsewhere.
+//							Same as with "<", it only applies if the command has no arguments on its own
+
+// GENERAL LOGIC AFTER PIPES DIVISION:
+// 1) all we need is: final STDIN and final STDOUT + final redirection (> vs >>)
+// 2) for all the intermediate redirections, we still need to apply them

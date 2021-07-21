@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/20 16:53:43 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/21 15:44:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -171,7 +171,6 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	index = 0;
 	command = ft_calloc_exit(1, sizeof(t_command));
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
-	printf("next_command_as_str: [%s]\n", next_command_as_str);
 	j = ft_strlen(next_command_as_str);
 	ft_check_for_redirections(next_command_as_str, command, &j);
 	ft_extract_command_name(input_checkpt, command);
@@ -189,3 +188,8 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	//printf("Command->name: [%s]\n", command->name);
 	return (command);
 }
+
+// divide the command in redirections
+// 1) check if there is a redirections
+// 		if no -> first word is a command's name, next are its arguments
+// 		if yes -> first word is a redir arg file, next is command name or its arguments

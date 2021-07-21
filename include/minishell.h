@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/19 14:58:10 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/21 15:21:09 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,6 +47,7 @@
 
 /*
 ** STRUCTURES
+** To use it with "execve": array of strings with []
 */
 
 typedef struct s_command
@@ -59,6 +60,20 @@ typedef struct s_command
 	char				*result;
 	char				pipe;
 }	t_command;
+
+
+typedef struct s_com
+{
+	char	*name;
+	char	*args;
+	char	**arguments;
+	char	*stdin;
+	char	*stdout;
+	char	*pipe;
+	char	*redirection;
+	
+}	t_com;
+
 
 /*
 ** PROTOTYPES

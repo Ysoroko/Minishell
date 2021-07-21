@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/21 15:18:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/21 16:03:50 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -130,7 +130,6 @@ int	main(void)
 
 // Error:	echo '$TERM'"$TERM"
 //			"echo" '-n' '> < |;' ">>" 'test.txt' "|"
-
 // 1) Divide commands based on pipes
 // 2) Look for the command and its arguments to be used with execve
 //		!!! One command only before the pipe! 

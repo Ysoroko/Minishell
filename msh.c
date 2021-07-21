@@ -6,32 +6,15 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:32:44 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/21 12:10:54 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/21 18:21:16 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "msh.h"
 
-int	ft_wsp(char c)
-{
-	return (c == '\v' || c == '\r' || c == '\t'
-			|| c == '\f' || c == '\n' || c == ' ');
-}
-
-int	ft_sep(char c, char *sep)
-{
-	while (*sep)
-	{
-		if (c == *sep)
-			return (1);
-		sep++;
-	}
-	return (0);
-}
-
 int	ft_strlen(char *s)
 {
-	int	i;
+	int i;
 
 	i = 0;
 	while (s[i])
@@ -39,85 +22,115 @@ int	ft_strlen(char *s)
 	return (i);
 }
 
-int	ft_count_words(char *s)
+int	ft_count_env(char *s)
 {
-	int	i;
 	int	n;
 
-	i = 0;
 	n = 1;
-	if (ft_wsp(s[0]))
-		n = 0;
-	while (s[i])
-	{
-		if (ft_wsp(s[i - 1]) && !ft_wsp(s[i]) && s[i] != '\0')
-			n++;
-		i++;
-	}
-	return (n);
-}
-
-int	ft_count_pipes(char *s)
-{
-	int	n;
-
-	n = 0;
 	while (*s)
 	{
-		if (*s == '|')
+		if (*s == ':')
 			n++;
 		s++;
 	}
 	return (n);
 }
 
-char	**ft_split_pipes(t_msh *add, char *line)
+int		ft_strncmp(char *s1, char *s2, unsigned int n)
+{
+	unsigned int i;
+
+	i = 0;
+	while (s1[i] && s2[i] && i < (n - 1))
+	{
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		i++;
+	}
+	return (s1[i] - s2[i]);
+}
+
+char	*ft_dup_path(char *path)
+{
+	char *dst;
+	int i;
+	int len;
+
+	dst = NULL;
+	i = -1;
+	len = 0;
+	while (path[len])
+		len++;
+	dst = malloc(sizeof(char) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (path[++i])
+		dst[i] = path[i];
+	dst[i] = '\0';
+	return (dst);
+}
+
+char	*ft_get_paths(char **env)
+{
+	unsigned int i;
+	char	*dst;
+
+	i = 0;
+	dst = NULL;
+	while (env[i])
+	{
+		if (ft_strncmp("PATH=", env[i], 4) == 0)
+		{
+			dst = ft_dup_path(env[i] + 5);
+			if (!dst)
+				return (NULL);
+		}
+		i++;
+	}
+	return (dst);
+}
+
+char	**ft_split_env(t_msh *add, char *paths_var, char **paths)
 {
 	add->i = -1;
 	add->j = 0;
 	add->k = 0;
-	add->pipes = NULL;
-	add->pipes = (char **)malloc(sizeof(char *) * (ft_count_pipes(line) + 1));
-	if (!add->pipes)
+	paths = NULL;
+	paths = (char **)malloc(sizeof(char *) * (ft_count_env(paths_var) + 1));
+	if (!paths)
 		return (NULL);
-	while (++add->i <= ft_count_pipes(line))
+	while (++add->i < ft_count_env(paths_var))
 	{
-		add->pipes[add->i] = (char *)malloc(sizeof(char) * (ft_strlen(line) + 1));
-		if (!add->pipes[add->i])
-			return (NULL); // ++ free tab
-		while (line[add->j] && line[add->j] == '|')
+		paths[add->i] = (char *)malloc(sizeof(char) * (ft_strlen(paths_var) + 1));
+		if (!paths[add->i])
+			return (0);
+		while (paths_var[add->j] && paths_var[add->j] == ':')
 			add->j++;
-		while (line[add->j] && line[add->j] != '|')
-			add->pipes[add->i][add->k++] = line[add->j++];
-		add->pipes[add->i][add->k] = '\0';
+		while (paths_var[add->j] && paths_var[add->j] != ':')
+			paths[add->i][add->k++] = paths_var[add->j++];
+		paths[add->i][add->k] = '\0';
 		add->k = 0;
 	}
-	add->pipes[add->i] = NULL;
-	return (add->pipes);
+	paths[add->i] = NULL;
+	return (paths);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	t_msh add;
-	char *line;
+	char	*all_paths;
+	char	**paths;
 	int i = 0;
-	char **pipes = NULL;
 
-	while (1)
+	all_paths = NULL;
+	paths = NULL;
+	all_paths = ft_get_paths(env);
+	printf("{%s}\n", all_paths);
+	paths = ft_split_env(&add, all_paths, paths);
+	while (paths[i])
 	{
-		line = readline("MINISHELL: ");
-		printf("line = {%s}\n", line);
-		printf(">>words	%d\n", ft_count_words(line));
-		printf(">>pipes	%d\n", ft_count_pipes(line));
-		pipes = ft_split_pipes(&add, line);
-		while (add.pipes[i])
-		{
-			printf("[%s]\n", add.pipes[i]);
-			i++;
-		}
-		printf("[%s]\n", add.pipes[i]);
-		add_history(line);
-		if (!line)
-			return (0);
+		printf("[%s]\n", paths[i]);
+		i++;
 	}
+	return (0);
 }

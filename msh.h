@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:31:41 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/21 18:34:49 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/21 19:29:09 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,6 +31,8 @@ typedef struct  s_msh
 	char		**strs;
 	char		**paths;
 	char		*s;
+	char		c;
+	int			limit;
 	int			i;
 	int			j;
 	int			k;

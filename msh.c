@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:32:44 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/21 19:51:23 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/22 17:40:29 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,31 +138,32 @@ int	ft_count_words(char *s, char *set)
 	int	n;
 
 	i = 0;
-	n = 1;
+	n = 0;
+	if (!check_set(s[0], set))
+		n = 1;
 	while (s[i])
 	{
-		if (check_set(s[i - 1], set) && !check_set(s[i], set))
+		if ((check_set(s[i - 1], set) && !check_set(s[i], set)) && s[i] != '\0')
 			n++;
 		i++;
 	}
 	return (n);
 }
 
-char	**allocate(t_msh *add, char *s, char *set, char **dst)
+int	ft_count_pipes(char *s)
 {
-	add->i = -1;
-	add->j = 0;
-	add->k = 0;
-	add->limit = 0;
-	dst = NULL;
-	if (add->c == ' ')
-		add->limit = ft_count_words(s, set) + 1;
-	else if (add->c == ':')
-		add->limit = ft_count_env(s) + 1;
-	dst = (char **)malloc(sizeof(char *) * add->limit);
-	if (!dst)
-		return (0);
-	return (dst);
+	int	i;
+	int	n;
+
+	i = 0;
+	n = 0;
+	while (s[i])
+	{
+		if (s[i] == '|')
+			n++;
+		i++;
+	}
+	return (n);
 }
 
 void	close_line(t_msh *add, char c, char **dst)
@@ -174,7 +175,6 @@ void	close_line(t_msh *add, char c, char **dst)
 	}
 	else
 		dst[add->i][add->k] = '\0';
-	add->k = 0;
 }
 
 char	**ft_free_tab(char **tab)
@@ -191,14 +191,32 @@ char	**ft_free_tab(char **tab)
 	return (tab);
 }
 
+int	allocate(t_msh *add, char *s, char *set)
+{
+	add->limit = 0;
+	if (add->c == ' ')
+		add->limit = ft_count_words(s, set) + 1;
+	else if (add->c == ':')
+		add->limit = ft_count_env(s) + 1;
+	else
+		add->limit = ft_count_pipes(s) + 1;
+	return (add->limit);
+}
+
 char	**ft_split(t_msh *add, char *s, char *set, char **dst)
 {
-	dst = allocate(add, s, set, dst);
+	add->i = -1;
+	add->j = 0;
+	add->k = 0;
+	add->limit = allocate(add, s, set);
+	dst = malloc(sizeof(char *) * (add->limit + 1));
 	if (!dst)
 		return (NULL);
+	if (add->c == ' ')
+		add->limit -= 1;
 	while (++add->i < add->limit)
 	{
-		dst[add->i] = (char *)malloc(sizeof(char) * 1024);
+		dst[add->i] = malloc(sizeof(char) * (ft_strlen(s) + 2));
 		if (!dst[add->i])
 			return (ft_free_tab(dst));
 		while (s[add->j] && check_set(s[add->j], set))
@@ -206,127 +224,165 @@ char	**ft_split(t_msh *add, char *s, char *set, char **dst)
 		while (s[add->j] && !check_set(s[add->j], set))
 			dst[add->i][add->k++] = s[add->j++];
 		close_line(add, add->c, dst);
+		if (add->c == ':')
+		{
+			dst[add->i][add->k] = '/';
+			dst[add->i][add->k + 1] = '\0';
+		}
+		else
+			dst[add->i][add->k] = '\0';
+		add->k = 0;
 	}
 	dst[add->i] = NULL;
 	return (dst);
 }
 
-int	file_exec_check(t_msh *add, char *file)
+int	file_exec_check(t_msh *add, char *file, int i, int j)
 {
-	int i = 0;
+	int k = 0;
 	DIR	*dir;
 	struct dirent *p;
 
-	if (!file)
-		return (-1);
-	while (add->paths[i])
+	while (add->paths[k])
 	{
-		dir = opendir(add->paths[i]);
+		dir = opendir(add->paths[k]);
 		while ((p = readdir(dir)) != NULL)
 		{
 			if (strcmp(file, p->d_name) == 0)
 			{
 				printf("\033[0;32m");
-				printf("\n{%s} exists in the directory {%s} as: [%s]\n", file, add->paths[i], ft_strjoin(add->paths[i], file));
+				printf("\n{%s} exists in the directory {%s} as: [%s]\n", file, add->paths[k], ft_strjoin(add->paths[k], file));
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = EXECUTABLE;
 				printf("\033[0;37m");
 				return (1);
 			}
 		}
 		closedir(dir);
-		i++;
+		k++;
 	}
 	printf("\033[0;31m");
-	printf("\n{%s} does not exists in any directory specified by the PATH variable\n", file);
+	//printf("\n{%s} does not exists in any directory specified by the PATH variable\n", file);
 	printf("\033[0;37m");
 	return (-1);
 }
 
-int	file_type_check(t_msh *add, char *file)
+int	file_type_check(t_msh *add, char *file, int i, int j)
 {
 	struct stat sb;
-	file_exec_check(add, file);
+	file_exec_check(add, file, i, j);
+	if(add->types[i][j] == NONE)
+	{
 	if (stat(file, &sb) == 0)
 	{
 		printf("\033[4;32m");
 		printf("\n	file {%s} exists.\n", file);
 		printf("\033[0;37m");
+		if (stat(file, &sb) == 0 && sb.st_mode & S_IXUSR)
+		{
+			printf("\n		file {%s} is an executable.\n", file);
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = EXECUTABLE;
+		}
+		else
+		{
+			printf("\n		file {%s} is not an executable.\n", file);
+		}
+		if (stat(file, &sb) == 0 && sb.st_mode & S_IRUSR)
+		{
+			printf("		file {%s} is readable.\n", file);
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = READABLE;
+		}
+		else
+		{
+			printf("		file {%s} is not readable.\n", file);
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = ARGUMENT;
+		}
+		if (stat(file, &sb) == 0 && sb.st_mode & S_IWUSR)
+		{
+			printf("		file {%s} is writable.\n\n\n", file);
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = WRITABLE;
+			if (add->types[i][j] == READABLE)
+				add->types[i][j] = PERMITTED;
+		}
+		else
+		{
+			printf("		file {%s} is not writable.\n\n\n", file);
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = ARGUMENT;
+		}
 	}
 	else if (stat(file, &sb) == -1)
 	{
 		printf("\033[4;31m");
-		printf("\n	file {%s} does not exist.\n", file);
+		if (add->types[i][j] == NONE)
+			add->types[i][j] = KEYWORD;
+		if (add->types[i][j] == NONE)
+			printf("\n	file {%s} does not exist.\n", file);
 		printf("\033[0;37m");
 	}
-	if (stat(file, &sb) == 0 && sb.st_mode & S_IXUSR)
-		printf("\n		file {%s} is an executable.\n", file);
-	else
-		printf("\n		file {%s} is not an executable.\n", file);
-	if (stat(file, &sb) == 0 && sb.st_mode & S_IRUSR)
-		printf("		file {%s} is readable.\n", file);
-	else
-		printf("		file {%s} is not readable.\n", file);
-	if (stat(file, &sb) == 0 && sb.st_mode & S_IWUSR)
-		printf("		file {%s} is writable.\n\n\n", file);
-	else
-		printf("		file {%s} is not writable.\n\n\n", file);
-	printf("--------------------------------------------------------------------------------------------------\n");
+	}
 	return (0);
+}
+
+int	ft_strslen(char **strs)
+{
+	int i;
+
+	i = 0;
+	while (strs[i])
+		i++;
+	return (i);
 }
 
 int		tests(t_msh *add, int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
+	(void)env;
 	int i = 0;
-	char *line = "< infile ls -l | wc -al > outfile | echo -n bonjour | grep line >> outfile | a.out ";
-	add->c = ' ';
-	add->strs = ft_split(add, line, "\v\r\t\f\n ", add->strs);
+	int j = 0;
+	char *line = "< infile ls -l | wc -a -l -w > outfile | cat |echo -n \"bonjour\" | grep 'line' >> outfile | a.out ";
+	add->c = '|';
+	add->strs = ft_split(add, line, "|", add->strs);
+	printf("number of lines in the line = {%d}\n", ft_strslen(add->strs));
+	add->types = malloc(sizeof(int *) * (ft_strslen(add->strs)));
 	printf("\n\n\n\n");
-	while (add->strs[i])
+	while (add->strs[i] != 0)
 	{
-		if (ft_strlen(add->strs[i]) == 1 || ft_strlen(add->strs[i]) == 2)
+		add->c = ' ';
+		add->piped = NULL;
+		add->piped = ft_split(add, add->strs[i], "\v\r\t\f\n ", add->piped);
+		add->types[i] = malloc(sizeof(int *) * (ft_strslen(add->piped)));
+		while (add->piped[j])
 		{
-			if (add->strs[i][0] == '|')
-			{																													printf("\033[0;33m");
-				printf("\n{%s} is a pipe", add->strs[i]);
-				//printf("This section will have to manage all input generated by the previous\n");
-				//printf("commands and transmit it to the command after that pipe. Theses lines\n");
-				//printf("will be used as input for the command that comes after the delimiter.\n\n");
-			}																													printf("\033[0;37m");
-			if (add->strs[i][0] == '<' && !add->strs[i][1])
-			{																													printf("\033[0;36m");
-				printf("\n{%s} is an input redirection", add->strs[i]);
-				//printf("This section will have to check if the next word is a file and, if it is,\n");
-				//printf("take input from that file (dup2(fd, STDIN)) and display the result of the command.");
-				//printf("If no file is specified the rediretion will take input from STDIN and display the result.\n\n");
-			}																													printf("\033[0;37m");
-			if (add->strs[i][0] == '<' && add->strs[i][1] == '<')
-			{																													printf("\033[0;36m");
-				printf("\n{%s} is a here_doc redirection", add->strs[i]);
-				//printf("This section will have to save the next word as delimiter for the end of reading\n");
-				//printf("then read the input from STDIN and save all the lines until the word is found.\n");
-				//printf("The saved lines will be used as input for the command following that delimiter\n\n");
-			}																													printf("\033[0;37m");
-			if (add->strs[i][0] == '>' && !add->strs[i][1])
-			{																													printf("\033[0;36m");
-				printf("\n{%s} is a TRUNC output redirection", add->strs[i]);
-				//printf("If a filename is specified, this redirection will output the result of the command\n");
-				//printf("in said file after setting the file to 0 size. all data inside the file will be truncated\n");
-				//printf("and the new output will replace it. If the file does not exists it will be created. If the\n");
-				//printf("file exists but the permissions are unsufficient, an error will be returned.\n\n");
-			}																													printf("\033[0;37m");
-			if (add->strs[i][0] == '>' && add->strs[i][1] == '>')
-			{																													printf("\033[0;36m");
-				printf("\n{%s} is an APPEND output redirection", add->strs[i]);
-				//printf("If a filename is specified, this redirection will output the result of the command\n");
-				//printf("in said file appended after the last byte of data. If the file does not exists it will be created.\n");
-				//printf("If the file exists but the permissions are unsufficient, an error will be returned.\n\n");
-			}																													printf("\033[0;37m");
+			printf("---------------------------------------------------------------------words in the pipe are : %s \n\n\n", add->strs[i]);
+			//printf("\n\nlen of the piped line = {%d}\n", ft_strslen(add->piped));
+			add->types[i][j] = NONE;
+			printf("---[%s]\n", add->piped[j]);
+			if (add->piped[j][0] == '-' && ((add->piped[j][1] >= 'A' && add->piped[j][1] <= 'Z') || (add->piped[j][1] >= 'a' && add->piped[j][1] <= 'z')))
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = OPTION;
+			if (add->piped[j][0] == '<' && !add->piped[j][1])
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = RLSIMPLE;
+			if (add->piped[j][0] == '>' && !add->piped[j][1])
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = RRSIMPLE;
+			if (add->piped[j][0] == '<' && add->piped[j][1] == '<')
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = RLDOUBLE;
+			if (add->piped[j][0] == '>' && add->piped[j][1] == '>')
+				if (add->types[i][j] == NONE)
+					add->types[i][j] = RRDOUBLE;
+			file_type_check(add, add->piped[j], i, j);
+			printf("\n   TYPE OF WORD\n[[\t%d\t]]\n\n\n", add->types[i][j]);
+			j++;
 		}
-		if (add->strs[i][0] == '-' && ((add->strs[i][1] >= 'A' && add->strs[i][1] <= 'Z') || (add->strs[i][1] >= 'a' && add->strs[i][1] <= 'z')))
-		{																														printf("\033[0;34m");
-			printf("\n{%s} is an option/keyword to the previous command {%s}", add->strs[i], add->strs[i - 1]);
-			//printf("This option has to be saved in a char** for execve.\n\n");
-		}																														printf("\033[0;37m");
-		file_type_check(add, add->strs[i]);
+		j = 0;
 		i++;
 	}
 	exit(EXIT_SUCCESS);
@@ -337,15 +393,14 @@ int	main(int ac, char **av, char **env)
 	t_msh add;
 	char	*all_paths;
 	char	**paths;
-	int i = 0;
 
 	all_paths = NULL;
 	paths = NULL;
-	add.c = ':';
 	all_paths = ft_get_paths(env);
+	add.c = ':';
 	add.paths = ft_split(&add, all_paths, ":", add.paths);
 	tests(&add, ac, av, env);
 	ft_free_tab(add.paths);
-	ft_free_tab(add.strs);	
+	ft_free_tab(add.strs);
 	return (0);
 }

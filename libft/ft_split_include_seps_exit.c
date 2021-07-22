@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 09:48:32 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/21 17:02:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 13:40:03 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,20 +19,20 @@
 ** Returns 1 if yes, 0 if no and other characters from "seps" are encountered
 */
 
-static int	ft_spaces_only(char *str, char *seps)
-{
-	int	i;
-
-	i = -1;
-	while (str[++i])
-	{
-		if (!ft_isspace(str[i]) && ft_strchr(seps, str[i]))
-			return (0);
-		if (!ft_isspace(str[i]) && !ft_strchr(seps, str[i]))
-			return (1);
-	}
-	return (1);
-}
+//static int	ft_spaces_only(char *str, char *seps)
+//{
+//	int	i;
+//
+//	i = -1;
+//	while (str[++i])
+//	{
+//		if (!ft_isspace(str[i]) && ft_strchr(seps, str[i]))
+//			return (0);
+//		if (!ft_isspace(str[i]) && !ft_strchr(seps, str[i]))
+//			return (1);
+//	}
+//	return (1);
+//}
 
 /*
 ** static int	ft_wordcount(char const *str, char *seps)
@@ -55,10 +55,7 @@ static int	ft_wordcount(char const *str, char *seps)
 		if (!ft_strchr(seps, str[i]) && ft_strchr(seps, str[i - 1]))
 			count++;
 		else if (ft_strchr(seps, str[i]) && !ft_strchr(seps, str[i - 1]))
-		{
-			if (!ft_spaces_only(&(str[i]), seps))
-				count++;
-		}
+			count++;
 		i++;
 	}
 	return (count);
@@ -145,10 +142,12 @@ char	**ft_split_seps_included_exit(char const *str, char *seps)
 		tab_str[i] = malloc(ft_next_word_count(str, seps, s) + 1);
 		if (!tab_str[i])
 			exit(EXIT_FAILURE);
-		while (str[s] != '\0' && str[s] == seps)
-			s++;
-		while (str[s] != '\0' && str[s] != seps)
-			tab_str[i][j++] = str[s++];
+		if (!ft_strchr(seps, str[s]))
+			while (str[s] && !ft_strchr(seps, str[s]))
+				tab_str[i][j++] = str[s++];
+		else
+			while (str[s] && ft_strchr(seps, str[s]))
+				tab_str[i][j++] = str[s++];
 		tab_str[i][j] = '\0';
 	}
 	tab_str[i] = 0;

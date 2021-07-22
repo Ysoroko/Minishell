@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/05/05 13:52:48 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/22 13:07:08 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -134,7 +134,8 @@ SRC				=	ft_atoi.c \
 					ft_display_first_n_chars.c \
 					ft_display_first_n_chars_with_i.c \
 					ft_is_a_valid_double_quote.c \
-					ft_isspace.c
+					ft_isspace.c \
+					ft_split_include_seps_exit.c \
 					
 					
 

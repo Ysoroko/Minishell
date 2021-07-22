@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 09:48:32 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 16:51:04 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 17:00:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -143,16 +143,11 @@ char	**ft_split_seps_included_exit(char const *str, char *seps)
 		if (!tab_str[i])
 			exit(EXIT_FAILURE);
 		if (!ft_strchr_nq(str, s, seps))
-		{
 			while (str[s] && !ft_strchr_nq(str, s, seps))
 				tab_str[i][j++] = str[s++];
-			
-		}
 		else if (ft_strchr_nq(str, s, seps))
-		{
 			while (str[s] && ft_strchr_nq(str, s, seps))
 				tab_str[i][j++] = str[s++];
-		}
 		tab_str[i][j] = '\0';
 	}
 	tab_str[i] = 0;

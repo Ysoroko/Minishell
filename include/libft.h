@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 13:07:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 16:30:19 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -160,7 +160,7 @@ char		ft_char_between_the_quotes(int char_position,
 char		*ft_extract_first_word_qx(char *from, char *separators);
 char		*ft_extract_second_word_qx(char *from, char *separators);
 char		*ft_strxtrim_char(char *str, char except);
-char		*ft_strchr_not_quoted(const char *str, int c);
+char		*ft_strchr_nq(const char *str, int c, char *seps);
 char		*ft_pos_after_the_word_in_string(char *str, char *word);
 char		*ft_strchrset_not_quoted(char *str, char *charset);
 char		ft_char_is_a_start_quote(char *str, int i);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/12 14:33:46 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/05/05 14:39:40 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 14:38:25 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ char	*ft_extract_first_word_qx(char *from, char *separators)
 			ft_quoted_first_word(&temp_copy, &i);
 			break ;
 		}
-		else if (ft_strchr_not_quoted(separators, temp_copy[i]))
+		else if (ft_strchr_nq(separators, temp_copy[i]))
 		{
 			temp_copy[i] = 0;
 			break ;

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/21 15:44:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 16:51:33 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -190,6 +190,7 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 }
 
 // divide the command in redirections
-// 1) check if there is a redirections
+// 1) check if there is a redirection
 // 		if no -> first word is a command's name, next are its arguments
 // 		if yes -> first word is a redir arg file, next is command name or its arguments
+// 2) What redirection it is? Modify command's final stdin/stdout

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 09:48:32 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 13:40:03 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/22 16:51:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,9 @@ static int	ft_wordcount(char const *str, char *seps)
 	count = 1;
 	while (str[i] != '\0')
 	{
-		if (!ft_strchr(seps, str[i]) && ft_strchr(seps, str[i - 1]))
+		if (!ft_strchr_nq(str, i, seps) && ft_strchr_nq(str, i - 1, seps))
 			count++;
-		else if (ft_strchr(seps, str[i]) && !ft_strchr(seps, str[i - 1]))
+		else if (ft_strchr_nq(str, i, seps) && !ft_strchr_nq(str, i - 1, seps))
 			count++;
 		i++;
 	}
@@ -87,11 +87,11 @@ static int	ft_next_word_count(char const *str, char *sep, int i)
 	int	count;
 
 	count = 0;
-	if (!ft_strchr(sep, str[i]))
+	if (!ft_strchr_nq(str, i, sep))
 	{
-		while (str[i] && ft_strchr(sep, str[i]))
+		while (str[i] && ft_strchr_nq(str, i, sep))
 			i++;
-		while (str[i] && !ft_strchr(sep, str[i]))
+		while (str[i] && !ft_strchr_nq(str, i, sep))
 		{
 			count++;
 			i++;
@@ -99,9 +99,9 @@ static int	ft_next_word_count(char const *str, char *sep, int i)
 	}
 	else
 	{
-		while (str[i] && !ft_strchr(sep, str[i]))
+		while (str[i] && !ft_strchr_nq(str, i, sep))
 			i++;
-		while (str[i] && ft_strchr(sep, str[i]))
+		while (str[i] && ft_strchr_nq(str, i, sep))
 		{
 			count++;
 			i++;
@@ -142,12 +142,17 @@ char	**ft_split_seps_included_exit(char const *str, char *seps)
 		tab_str[i] = malloc(ft_next_word_count(str, seps, s) + 1);
 		if (!tab_str[i])
 			exit(EXIT_FAILURE);
-		if (!ft_strchr(seps, str[s]))
-			while (str[s] && !ft_strchr(seps, str[s]))
+		if (!ft_strchr_nq(str, s, seps))
+		{
+			while (str[s] && !ft_strchr_nq(str, s, seps))
 				tab_str[i][j++] = str[s++];
-		else
-			while (str[s] && ft_strchr(seps, str[s]))
+			
+		}
+		else if (ft_strchr_nq(str, s, seps))
+		{
+			while (str[s] && ft_strchr_nq(str, s, seps))
 				tab_str[i][j++] = str[s++];
+		}
 		tab_str[i][j] = '\0';
 	}
 	tab_str[i] = 0;

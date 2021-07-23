@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 16:51:33 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 12:22:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -166,26 +166,19 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	int			j;
 	t_command	*command;
 	char		*next_command_as_str;
-	int			index;
+	char		**temp_str_tab;
+	char		**temp_str_tab2;
 
-	index = 0;
 	command = ft_calloc_exit(1, sizeof(t_command));
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
 	j = ft_strlen(next_command_as_str);
-	ft_check_for_redirections(next_command_as_str, command, &j);
-	ft_extract_command_name(input_checkpt, command);
-	//printf("Command->name: [%s]\n", command->name);
-	ft_check_for_flags(input_checkpt, command);
-	ft_extract_the_argument(next_command_as_str, command);
-	//printf("Command->redirection: [%s]\n", command->redirection);
-	ft_check_for_pipe(next_command_as_str, command);
+	temp_str_tab = ft_split_seps_included_exit(next_command_as_str, SPACES_REDIRS_PIPES);
+	temp_str_tab2 = ft_strtab_map_str_exit(temp_str_tab, ft_strtrim_exit, SPACES);
+
 	ft_free_str(&next_command_as_str);
-	//printf("j: [%i]\n", j);
 	if (!j)
 		*i += 1;
 	*i += j - 1;
-	//printf("ARGUMENT AT THE END OF FT_EXTRACT_NEXT_COMMAND: [%s]\n", command->argument);
-	//printf("Command->name: [%s]\n", command->name);
 	return (command);
 }
 

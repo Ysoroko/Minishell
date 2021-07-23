@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 16:30:19 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 12:28:14 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -178,5 +178,8 @@ void		ft_display_first_n_chars_with_i(char *str,
 int			ft_is_a_valid_double_quote(char *str, int i);
 int			ft_isspace(int c);
 char		**ft_split_seps_included_exit(char const *str, char *seps);
+char		**ft_strtab_map_exit(char **str_tab, char (*f)(char *, char *)
+				, char *arg);
+void		*ft_free_str_tab(char ***str_tab, void *to_return);
 
 #endif

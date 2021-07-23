@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 13:39:27 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 12:10:47 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,25 +110,24 @@ static void	ft_setup_signals(void)
 ** Cleans up and frees all used data after each user's input
 */
 
-int	main(int argc, char **argv)
+int	main(void)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
 
-	if (argc != 3)
-		return (printf("Wrong number of args\n"));
-	char **tab = ft_split_seps_included_exit(argv[1], argv[2]);
-	ft_putstr_tab(tab, STDOUT);
-	//ft_setup_signals();
-	//while (1)
-	//{
-	//	ft_display_prompt(BOLDCYAN, "minishell: ");
-	//	ft_extract_user_input_to_string(&user_input_str);
-	//	input_as_dl_command_list = ft_input_parsing(user_input_str);
-	//	ft_execute(input_as_dl_command_list);
-	//	//printf("ALL GOOD BEFORE ft_cleanup_and_free\n");
-	//	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
-	//}
+	
+	ft_setup_signals();
+	while (1)
+	{
+		ft_display_prompt(BOLDCYAN, "minishell: ");
+		ft_extract_user_input_to_string(&user_input_str);
+		char **tab = ft_split_seps_included_exit(user_input_str, SPACES_REDIRS_PIPES);
+		ft_putstr_tab(tab, STDOUT);
+		input_as_dl_command_list = ft_input_parsing(user_input_str);
+		//ft_execute(input_as_dl_command_list);
+		//printf("ALL GOOD BEFORE ft_cleanup_and_free\n");
+		//ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
+	}
 	return (1);
 }
 

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 12:13:33 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:14:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,23 +52,10 @@
 
 typedef struct s_command
 {
-	char				*name;
-	char				*flags;
-	char				*argument;
-	char				*redirection;
-	char				*redir_arg;
-	char				*result;
-	char				pipe;
-}	t_command;
-
-
-typedef struct s_com
-{
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
-}	t_com;
-
+}	t_command;
 
 /*
 ** PROTOTYPES
@@ -79,7 +66,6 @@ void		ft_free_t_command(void *command_pointer);
 void		ft_update_str_read_so_far(char *input_checkpt, int i, char **prev);
 t_command	*ft_extract_next_command(char *input_checkpnt, int *i);
 void		ft_execute(t_dl_lst *command_list);
-int			ft_check_command_for_errors(t_command *command);
 void		ft_signal_handler(int no_matter);
 void		ft_initialize_termcaps(char **term_type, int *ret);
 char		*ft_extract_next_command_string(char *input_checkpoint);

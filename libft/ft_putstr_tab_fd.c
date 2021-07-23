@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/01/26 15:16:11 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 16:43:41 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:22:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,7 @@ void	ft_putstr_tab(char **str_tab, int fd)
 {
 	int	i;
 
+	ft_putchar_fd('\n', fd);
 	if (!str_tab)
 	{
 		ft_putstr_fd("(null) str_tab\n", fd);
@@ -28,4 +29,5 @@ void	ft_putstr_tab(char **str_tab, int fd)
 		ft_putstr_fd(": ", fd);
 		ft_putendl_fd(str_tab[i], fd);
 	}
+	ft_putchar_fd('\n', fd);
 }

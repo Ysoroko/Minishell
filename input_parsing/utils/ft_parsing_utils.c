@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/21 14:42:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:13:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,18 +26,10 @@ void	ft_free_t_command(void *command_pointer)
 	if (!command_pointer)
 		return ;
 	command = (t_command *)(command_pointer);
-	if (command->name)
-		ft_free_str(&(command->name));
-	if (command->flags)
-		ft_free_str(&(command->flags));
-	if (command->argument)
-		ft_free_str(&(command->argument));
-	if (command->redirection)
-		ft_free_str(&(command->redirection));
-	if (command->result)
-		ft_free_str(&(command->result));
-	if (command->redir_arg)
-		ft_free_str(&(command->redir_arg));
+	if (command->str_tab_all)
+		ft_free_str_tab(&(command->str_tab_all), 0);
+	if (command->str_tab_for_execve)
+		ft_free_str_tab(&(command->str_tab_for_execve), 0);
 	free(command_pointer);
 	command_pointer = 0;
 }
@@ -58,22 +50,22 @@ char	*ft_extract_next_command_string(char *checkpoint)
 	return (ret);
 }
 
-/*
-** FT_CHECK_FOR_PIPE
-** This functions checks if we have a redirection char in str_command
-** argument and stores it in t_command "pipe" element
-*/
-
-void	ft_check_for_pipe(char *str_command, t_command *command)
-{
-	int	len;
-
-	if (!str_command || !command)
-		return ;
-	len = ft_strlen(str_command);
-	if (ft_strchr(PIPES, str_command[len - 1]))
-		command->pipe = str_command[len - 1];
-}
+///*
+//** FT_CHECK_FOR_PIPE
+//** This functions checks if we have a redirection char in str_command
+//** argument and stores it in t_command "pipe" element
+//*/
+//
+//void	ft_check_for_pipe(char *str_command, t_command *command)
+//{
+//	int	len;
+//
+//	if (!str_command || !command)
+//		return ;
+//	len = ft_strlen(str_command);
+//	if (ft_strchr(PIPES, str_command[len - 1]))
+//		command->pipe = str_command[len - 1];
+//}
 
 /*
 ** ft_copy_spaces
@@ -102,23 +94,23 @@ void	ft_copy_spaces(char *src, char **dest, int *i, int *j)
 ** funcion in t_command structure
 */
 
-void	ft_add_words_after_redir_to_argument(t_command *command, char *red_pos)
-{
-	int		i;
-	char	*temp;
-	char	*temp2;
-	char	len;
-
-	i = 0;
-	while (red_pos[i] && ft_strchr(SPACES, red_pos[i]))
-		i++;
-	temp = ft_pos_after_n_one_or_two_words(&(red_pos[i]), 2, SPACES);
-	if (!temp)
-		return ;
-	temp2 = ft_strdup_until_c_from_charset_not_quoted(temp, PIPES);
-	temp2 = ft_strtrim_exit_replace_src(&temp2, SPACES_AND_PIPES);
-	if (command->argument)
-		command->argument = ft_strjoin_free_pref_exit(&(command->argument), " ");
-	command->argument = ft_strjoin_free_pref_exit(&(command->argument), temp2);
-	ft_free_str(&temp2);
-}
+//void	ft_add_words_after_redir_to_argument(t_command *command, char *red_pos)
+//{
+//	int		i;
+//	char	*temp;
+//	char	*temp2;
+//	char	len;
+//
+//	i = 0;
+//	while (red_pos[i] && ft_strchr(SPACES, red_pos[i]))
+//		i++;
+//	temp = ft_pos_after_n_one_or_two_words(&(red_pos[i]), 2, SPACES);
+//	if (!temp)
+//		return ;
+//	temp2 = ft_strdup_until_c_from_charset_not_quoted(temp, PIPES);
+//	temp2 = ft_strtrim_exit_replace_src(&temp2, SPACES_AND_PIPES);
+//	if (command->argument)
+//		command->argument = ft_strjoin_free_pref_exit(&(command->argument), " ");
+//	command->argument = ft_strjoin_free_pref_exit(&(command->argument), temp2);
+//	ft_free_str(&temp2);
+//}

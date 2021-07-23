@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strtab_map_exit.c                               :+:      :+:    :+:   */
+/*   ft_strtab_map_str_exit.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/23 11:57:41 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 12:28:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:18:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,18 +21,18 @@
 ** if malloc'd).
 */
 
-char	**ft_strtab_map_exit(char **stab, char (*f)(char *, char *), char *arg)
+char	**ft_strtab_map_str_exit(char **st, char *f(char *, char *), char *arg)
 {
 	char			**ret_str_tab;
 	unsigned int	i;
 	int				len;
 
-	if (!stab || !f)
+	if (!st || !f)
 		return (0);
 	i = -1;
-	len = ft_str_tab_len(stab);
-	ret_str_tab = ft_calloc_exit(len + 1, sizeof(*stab));
-	while (stab[++i])
-		ret_str_tab[i] = f(stab[i], arg);
+	len = ft_str_tab_len(st);
+	ret_str_tab = ft_calloc_exit(len + 1, sizeof(*st));
+	while (st[++i])
+		ret_str_tab[i] = f(st[i], arg);
 	return (ret_str_tab);
 }

@@ -6,152 +6,44 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 12:22:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 14:21:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-/*
-** FT_CHECK_FOR_REDIRECTIONS
-** This function checks if current_command_as_str has one of the redirection
-** symbols inside of it and if so stores the corresponding redirection in 
-** command->redirection element
-*/
-
-static void	ft_check_for_redirections(char *str, t_command *current_command,
-										int *j)
+static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
 {
-	char	*redirection_found;
+	int	i;
+	int	count;
 
-	//printf("str_before redirection_found: [%s]\n", str);
-	//if (!current_command->name)
-	//	return ;
-	redirection_found = ft_strchrset_not_quoted(str, REDIRECTIONS);
-	//printf("redirection_found: [%s]\n", redirection_found);
-	if (!redirection_found)
-		return ;
-	if (redirection_found[0] == '<')
+	i = -1;
+	count = 0;
+	while (s_tab[++i])
 	{
-		if (redirection_found[1] == '<')
-			current_command->redirection = ft_strdup_exit("<<");
-		else
-			current_command->redirection = ft_strdup_exit("<");
+		if (!ft_str_only_has_chars_from_charset(s_tab[i], excl))
+			count++;
 	}
-	else if (redirection_found[0] == '>')
-	{
-		if (redirection_found[1] == '>')
-			current_command->redirection = ft_strdup_exit(">>");
-		else
-			current_command->redirection = ft_strdup_exit(">");
-	}
-	current_command->redir_arg = ft_extract_first_word_qx
-		(&(redirection_found[ft_strlen(current_command->redirection)]),
-			SPACES_AND_PIPES);
-	ft_add_words_after_redir_to_argument(current_command, redirection_found);
+	return (count);
 }
 
-/*
-** FT_EXTRACT_COMMAND_NAME
-** This function extracts the first word from user's input as a command.
-** It stores it in command->name element
-** It modifies the *indx variable so the argument extracted afterwards
-** will start extracting after the command name
-*/
-
- 
-static void	ft_extract_command_name(char *input, t_command *command)
+static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
 {
-	char	*temp;
-	char	*temp2;
+	char	**ret;
+	int		len;
+	int		i;
+	int		j;
 
-	if (!command->name)
+	len = ft_str_tab_len_without_str_with_only_excl(str_tab, except);
+	ret = ft_calloc_exit(len + 1, sizeof(*str_tab));
+	i = -1;
+	j = -1;
+	while (str_tab[++i])
 	{
-		temp2 = ft_strdup_until_c_from_charset(input, REDIRS_PIPES_QUOTES);
-		temp = ft_extract_first_word_qx(temp2, SPACES);
-		free(temp2);
-		command->name = ft_apply_quotes_and_env_vars(&temp);
-		if (!command->name ||
-				ft_str_only_has_chars_from_charset(command->name, SPACES_REDIRS_PIPES))
-			ft_free_str(&command->name);
-		ft_free_str(&temp);
-		temp = ft_strdup_exit(command->name);
-		ft_free_str(&command->name);
-		command->name = temp;
+		if (!ft_str_only_has_chars_from_charset(str_tab[i], except))
+			ret[++j] = ft_strdup_exit(str_tab[i]);
 	}
-}
-
-/*
-** FT_CHECK_FOR_FLAGS
-** The only command which can have flags for this project is "echo"
-** with a flag "-n". Therefore, we are only checking if we have a
-** flag while our command name is "echo". If it's the case, and the encountered
-** flag is "-n", we fill the t_command structure with the corresponding flag
-** If the flag isn't "-n", we ignore it as a flag 
-** and consider it being a part of the argument
-*/
-
-static void	ft_check_for_flags(char *str, t_command *command)
-{
-	char	*temp;
-
-	if (!command->flags && command->name && !command->argument
-		&& !ft_strcmp(command->name, "echo"))
-	{
-		temp = ft_extract_second_word_qx(str, SPACES);
-		//printf("temp in ft_check_for_flags: [%s]\n", temp);
-		if (temp)
-		{
-			command->flags = ft_apply_quotes_and_env_vars(&temp);
-			ft_free_str(&temp);
-			//printf("flags: [%s]\n", command->flags);
-			if (ft_strcmp(command->flags, "-n"))
-				ft_free_str(&command->flags);
-		}
-	}
-}
-
-/*
-** FT_EXTRACT_THE_ARGUMENT
-** This function uses the previously saved index (which tell at which character
-** of the next_command_as_str the argument starts
-** (after the command name or after the flag) and it extracts the argument
-** as a string starting from that position. 
-** It also removes the spaces and redirection symbols at the start and at 
-** the end of the resulting string
-*/
-
-static void	ft_extract_the_argument(char *str, t_command *command)
-{
-	char	*index;
-	char	*temp;
-	char	*temp2;
-	
-	if (!command->name)
-		return ;
-	//printf("before pos after n words\n");
-	if (command->flags)
-		index = ft_pos_after_n_one_or_two_words(str, 2, SPACES);
-	else
-		index = ft_pos_after_n_one_or_two_words(str, 1, SPACES);
-	//printf("after pos after n words\n");
-	if (index[0] == '\'' || index[0] == '\"')
-		index++;
-	if (!index || !index[0] || ft_strchr(PIPES, index[0]))
-		return ;
-	temp = ft_strdup_until_c_from_charset_not_quoted(index,
-		REDIRS_AND_PIPES);
-	//printf("temp in extract the arg: [%s]\n", temp);
-	temp2 = ft_strtrim_exit(temp, SPACES_REDIRS_PIPES);
-	//printf("temp2 in extract the arg: [%s]\n", temp2);
-	command->argument = ft_apply_quotes_and_env_vars(&temp2);
-	//printf("arg: [%s]\n", command->argument);
-	ft_free_str(&temp);
-	//printf("arg2: [%s]\n", command->argument);
-	ft_free_str(&temp2);
-	//printf("arg3: [%s]\n", command->argument);
-	if (command->argument && !command->argument[0])
-		ft_free_str(&(command->argument));
+	return (ret);
 }
 
 /*
@@ -173,8 +65,14 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
 	j = ft_strlen(next_command_as_str);
 	temp_str_tab = ft_split_seps_included_exit(next_command_as_str, SPACES_REDIRS_PIPES);
+	printf("after split: \n");
+	ft_putstr_tab(temp_str_tab, STDOUT);
 	temp_str_tab2 = ft_strtab_map_str_exit(temp_str_tab, ft_strtrim_exit, SPACES);
-
+	printf("after map: \n");
+	ft_putstr_tab(temp_str_tab2, STDOUT);
+	ft_free_str_tab(&temp_str_tab, 0);
+	command->str_tab_all = ft_copy_str_tab_except_for(temp_str_tab2, SPACES);
+	ft_free_str_tab(&temp_str_tab2, 0);
 	ft_free_str(&next_command_as_str);
 	if (!j)
 		*i += 1;

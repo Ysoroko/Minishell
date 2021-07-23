@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 15:50:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 16:13:20 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,9 +71,10 @@ static int	ft_str_tab_len_for_execve(char **s_tab)
 	count = 0;
 	while (s_tab[++i])
 	{
-		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS))
+		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS_AND_PIPES))
 		{
-			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1], REDIRS))
+			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1],
+					REDIRS_AND_PIPES))
 				count++;
 			else if (!i)
 				count++;
@@ -95,9 +96,10 @@ static char**	ft_copy_str_tab_for_execve(char **s_tab)
 	j = -1;
 	while (s_tab[++i])
 	{
-		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS))
+		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS_AND_PIPES))
 		{
-			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1], REDIRS))
+			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1],
+					REDIRS_AND_PIPES))
 				ret[++j] = ft_strdup_exit(s_tab[i]);
 			else if (!i)
 				ret[++j] = ft_strdup_exit(s_tab[i]);

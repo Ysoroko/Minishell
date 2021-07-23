@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 14:14:08 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 15:48:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@
 # define INPUT_SIZE 1000
 # define MAX_INPUT_SIZE 262144
 # define SPACES " \t\n\r\v\f"
-# define REDIRECTIONS "><"
+# define REDIRS "><"
 # define PIPES "|"
 # define SPACES_REDIRS_PIPES " \t\n\r\v\f><|"
 # define REDIRS_AND_PIPES "><|"

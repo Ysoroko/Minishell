@@ -6,11 +6,19 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 14:21:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/23 15:50:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+** int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
+** This function is used to count the length of str_tab needed to malloc.
+** It doesn't count the words in s_tab composed solely of characters
+** present in *excl argument.
+** In minishell it's used to avoid counting strings composed only of spaces
+*/
 
 static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
 {
@@ -27,6 +35,14 @@ static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
 	return (count);
 }
 
+/*
+** char **ft_copy_str_tab_except_for(char **str_tab, char *except)
+** This function is used to copy **str_tab but not copy
+** strings composed only of characters present in *except argument
+** In minishell, this is used to avoid copying strings composed
+** only of spaces.
+*/
+
 static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
 {
 	char	**ret;
@@ -42,6 +58,50 @@ static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
 	{
 		if (!ft_str_only_has_chars_from_charset(str_tab[i], except))
 			ret[++j] = ft_strdup_exit(str_tab[i]);
+	}
+	return (ret);
+}
+
+static int	ft_str_tab_len_for_execve(char **s_tab)
+{
+	int	i;
+	int	count;
+
+	i = -1;
+	count = 0;
+	while (s_tab[++i])
+	{
+		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS))
+		{
+			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1], REDIRS))
+				count++;
+			else if (!i)
+				count++;
+		}
+	}
+	return (count);
+}
+
+static char**	ft_copy_str_tab_for_execve(char **s_tab)
+{
+	char	**ret;
+	int		i;
+	int		len;
+	int		j;
+
+	len = ft_str_tab_len_for_execve(s_tab);
+	ret = ft_calloc_exit(len + 1, sizeof(*s_tab));
+	i = -1;
+	j = -1;
+	while (s_tab[++i])
+	{
+		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS))
+		{
+			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1], REDIRS))
+				ret[++j] = ft_strdup_exit(s_tab[i]);
+			else if (!i)
+				ret[++j] = ft_strdup_exit(s_tab[i]);
+		}
 	}
 	return (ret);
 }
@@ -65,13 +125,10 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
 	j = ft_strlen(next_command_as_str);
 	temp_str_tab = ft_split_seps_included_exit(next_command_as_str, SPACES_REDIRS_PIPES);
-	printf("after split: \n");
-	ft_putstr_tab(temp_str_tab, STDOUT);
 	temp_str_tab2 = ft_strtab_map_str_exit(temp_str_tab, ft_strtrim_exit, SPACES);
-	printf("after map: \n");
-	ft_putstr_tab(temp_str_tab2, STDOUT);
 	ft_free_str_tab(&temp_str_tab, 0);
 	command->str_tab_all = ft_copy_str_tab_except_for(temp_str_tab2, SPACES);
+	command->str_tab_for_execve = ft_copy_str_tab_for_execve(command->str_tab_all);
 	ft_free_str_tab(&temp_str_tab2, 0);
 	ft_free_str(&next_command_as_str);
 	if (!j)

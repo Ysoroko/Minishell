@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:32:44 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/22 17:40:29 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/23 16:48:21 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -242,6 +242,7 @@ int	file_exec_check(t_msh *add, char *file, int i, int j)
 	int k = 0;
 	DIR	*dir;
 	struct dirent *p;
+	add->s = NULL;
 
 	while (add->paths[k])
 	{
@@ -251,9 +252,12 @@ int	file_exec_check(t_msh *add, char *file, int i, int j)
 			if (strcmp(file, p->d_name) == 0)
 			{
 				printf("\033[0;32m");
-				printf("\n{%s} exists in the directory {%s} as: [%s]\n", file, add->paths[k], ft_strjoin(add->paths[k], file));
+				add->s = ft_strjoin(add->paths[k], file);
+				printf("\n{%s} exists in the directory {%s} as: [%s]\n", file, add->paths[k], add->s);
 				if (add->types[i][j] == NONE)
 					add->types[i][j] = EXECUTABLE;
+				if (add->types[i][j - 1] == RLSIMPLE || add->types[i][j - 1] == RRSIMPLE || add->types[i][j - 1] == RLDOUBLE || add->types[i][j - 1] == RLDOUBLE)
+					add->types[i][j] = ERROR;
 				printf("\033[0;37m");
 				return (1);
 			}
@@ -261,9 +265,6 @@ int	file_exec_check(t_msh *add, char *file, int i, int j)
 		closedir(dir);
 		k++;
 	}
-	printf("\033[0;31m");
-	//printf("\n{%s} does not exists in any directory specified by the PATH variable\n", file);
-	printf("\033[0;37m");
 	return (-1);
 }
 
@@ -314,14 +315,33 @@ int	file_type_check(t_msh *add, char *file, int i, int j)
 			if (add->types[i][j] == NONE)
 				add->types[i][j] = ARGUMENT;
 		}
+		if (j - 1 >= 0)
+		{
+			if (add->types[i][j - 1] == RRSIMPLE)
+				add->types[i][j] = OPENTRUNC;
+			if (add->types[i][j - 1] == RLSIMPLE)
+				add->types[i][j] = TAKEINPUT;
+			if (add->types[i][j - 1] == RRDOUBLE)
+				add->types[i][j] = OPENAPPEND;
+			if (add->types[i][j - 1] == RLDOUBLE)
+				add->types[i][j] = DELIMITER;
+			if (add->types[i][j] == NONE)
+				add->types[i][j] = KEYWORD;
+		}
 	}
 	else if (stat(file, &sb) == -1)
 	{
 		printf("\033[4;31m");
+		if (add->types[i][j - 1] == RRSIMPLE)
+			add->types[i][j] = OPENTRUNC;
+		if (add->types[i][j - 1] == RLSIMPLE)
+			add->types[i][j] = TAKEINPUT;
+		if (add->types[i][j - 1] == RRDOUBLE)
+			add->types[i][j] = OPENAPPEND;
+		if (add->types[i][j - 1] == RLDOUBLE)
+			add->types[i][j] = DELIMITER;
 		if (add->types[i][j] == NONE)
 			add->types[i][j] = KEYWORD;
-		if (add->types[i][j] == NONE)
-			printf("\n	file {%s} does not exist.\n", file);
 		printf("\033[0;37m");
 	}
 	}
@@ -338,6 +358,30 @@ int	ft_strslen(char **strs)
 	return (i);
 }
 
+char	*ft_strdup(char *src)
+{
+	int		i;
+	char	*dst;
+
+	i = -1;
+	dst = NULL;
+	dst = malloc(sizeof(char) * (ft_strlen(src) + 1));
+	if (!dst)
+		return (NULL);
+	while (src[++i])
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (dst);
+}
+
+void	print(char **tab, int **types)
+{
+	int i = 0;
+	int j = 0;
+
+
+}
+
 int		tests(t_msh *add, int ac, char **av, char **env)
 {
 	(void)ac;
@@ -345,22 +389,21 @@ int		tests(t_msh *add, int ac, char **av, char **env)
 	(void)env;
 	int i = 0;
 	int j = 0;
-	char *line = "< infile ls -l | wc -a -l -w > outfile | cat |echo -n \"bonjour\" | grep 'line' >> outfile | a.out ";
+	//char *line = "< infile ls -l | << word wc -a -l -w >> newfile | echo -n \"bonjour\" | grep 'line' > outfile | a.out blabla";
+	char *line = "ls -l -R -a infile";
 	add->c = '|';
 	add->strs = ft_split(add, line, "|", add->strs);
-	printf("number of lines in the line = {%d}\n", ft_strslen(add->strs));
+	//printf("number of lines in the line = {%d}\n", ft_strslen(add->strs));
 	add->types = malloc(sizeof(int *) * (ft_strslen(add->strs)));
 	printf("\n\n\n\n");
-	while (add->strs[i] != 0)
+	while (add->strs[i] != 0) // PIPES
 	{
 		add->c = ' ';
 		add->piped = NULL;
 		add->piped = ft_split(add, add->strs[i], "\v\r\t\f\n ", add->piped);
 		add->types[i] = malloc(sizeof(int *) * (ft_strslen(add->piped)));
-		while (add->piped[j])
+		while (add->piped[j]) // WORDS IN THE PIPE & TYPES OF WORDS
 		{
-			printf("---------------------------------------------------------------------words in the pipe are : %s \n\n\n", add->strs[i]);
-			//printf("\n\nlen of the piped line = {%d}\n", ft_strslen(add->piped));
 			add->types[i][j] = NONE;
 			printf("---[%s]\n", add->piped[j]);
 			if (add->piped[j][0] == '-' && ((add->piped[j][1] >= 'A' && add->piped[j][1] <= 'Z') || (add->piped[j][1] >= 'a' && add->piped[j][1] <= 'z')))
@@ -382,7 +425,9 @@ int		tests(t_msh *add, int ac, char **av, char **env)
 			printf("\n   TYPE OF WORD\n[[\t%d\t]]\n\n\n", add->types[i][j]);
 			j++;
 		}
+		printf("---------------------------------------------------------------------words in the pipe are : %s \n\n\n", add->strs[i]);
 		j = 0;
+		//SETUP EXECVE
 		i++;
 	}
 	exit(EXIT_SUCCESS);
@@ -391,16 +436,53 @@ int		tests(t_msh *add, int ac, char **av, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_msh add;
-	char	*all_paths;
-	char	**paths;
-
-	all_paths = NULL;
-	paths = NULL;
-	all_paths = ft_get_paths(env);
-	add.c = ':';
-	add.paths = ft_split(&add, all_paths, ":", add.paths);
-	tests(&add, ac, av, env);
-	ft_free_tab(add.paths);
-	ft_free_tab(add.strs);
+	char *l1 = "/usr/bin/grep 1";
+	char *l2 = "/usr/bin/wc -l";
+	pid_t p1;
+	pid_t p2;
+	int s1;
+	int s2;
+	add.c = ' ';
+	char **arg1 = ft_split(&add, l1, " ", arg1);
+	char **arg2 = ft_split(&add, l2, " ", arg2);
+	int i = 0;
+	int fd1 = open("infile", O_RDONLY);
+	int fd2 = open("outfile", O_RDWR, O_TRUNC);
+	int pfd[2];
+	pipe(pfd);
+	//while (args[i])
+	//	printf("%s\n", args[i++]);
+	p1 = fork();
+	if (p1 < 0)
+	{
+		printf("Error\n");
+		return (-1);
+	}
+	if (p1 == 0)
+	{
+		dup2(fd1, STDIN_FILENO);
+		dup2(pfd[1], STDOUT_FILENO);
+		close(pfd[0]);
+		close(pfd[1]);
+		execve(arg1[0], arg1, NULL);
+	}
+	p2 = fork();
+	if (p2 < 0)
+	{
+		printf("Error\n");
+		return (-1);
+	}
+	if (p2 == 0)
+	{
+		dup2(fd2, STDOUT_FILENO);
+		dup2(pfd[0], STDIN_FILENO);
+		close(pfd[0]);
+		close(pfd[1]);
+		execve(arg2[0], arg2, NULL);
+	}
+	close(pfd[0]);
+	close(pfd[1]);
+	waitpid(p1,NULL, 0);
+	waitpid(p2, NULL, 0);
 	return (0);
 }

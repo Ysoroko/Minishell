@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:31:41 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/22 17:24:36 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/23 16:19:21 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,12 @@
 # include <sys/stat.h>
 # include <dirent.h>
 # include <stdio.h>
+# include <fcntl.h>
 # include <sys/errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
+# define ERROR -1
 # define NONE 0
 # define RLSIMPLE 1
 # define RRSIMPLE 2
@@ -39,6 +41,10 @@
 # define WRITABLE 10
 # define PERMITTED 11
 # define KEYWORD 12
+# define OPENTRUNC 13
+# define OPENAPPEND 14
+# define TAKEINPUT 15
+# define DELIMITER 16
 
 typedef struct  s_msh
 {

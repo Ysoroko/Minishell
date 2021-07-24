@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 13:53:04 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 14:40:07 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,8 +34,14 @@ static void	ft_control_c_function(void)
 static void	ft_control_backslash_function(void)
 {
 	//ft_putendl_fd("CTRL + \\ pressed", STDOUT);
-	exit(EXIT_SUCCESS);
+	kill(getpid(), SIGABRT);
 }
+
+/*
+** ft_control_d_empty_input_function(void)
+** This signal is caught when CTRL+D is pressed and the input is empty
+** It exits the process and displays "exit in terminal"
+*/
 
 static void	ft_control_d_empty_input_function(void)
 {
@@ -55,7 +61,7 @@ static void	ft_control_d_empty_input_function(void)
 **
 ** Ctrl+C - SIGINT
 ** Ctrl+\ - SIGQUIT
-** Ctrl+D (without user input) = same as Ctrl+\, SIGQUIT
+** Ctrl+D (without user input) = same as Ctrl+\, SIGQUIT but without core dump
 ** Ctrl+D (with input) = does nothing
 */
 

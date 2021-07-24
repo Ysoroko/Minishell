@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 14:40:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 14:42:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,7 @@ static void	ft_control_c_function(void)
 /*
 ** void	ft_control_backslash_function(void)
 ** This function is reposnsible for reaction to "CTRL + D" input from the user
-** CTRL + D sends an "quit" signal, which exits current process and dumps core
+** CTRL + D sends a "quit" signal, which exits current process and dumps core
 */
 
 static void	ft_control_backslash_function(void)

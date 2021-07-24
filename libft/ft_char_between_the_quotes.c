@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/10 15:46:30 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/22 16:47:10 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 11:31:18 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ char	ft_char_between_the_quotes(int c_pos, char *str)
 	int		i;
 
 	i = 0;
-	if (!str || c_pos > ft_strlen(str) || !c_pos)
+	if (!str || c_pos > ft_strlen(str))
 		return (0);
 	while (str[i] && i <= c_pos)
 	{

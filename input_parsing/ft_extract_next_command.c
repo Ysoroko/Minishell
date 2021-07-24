@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 16:13:20 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 11:31:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,8 +125,11 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 
 	command = ft_calloc_exit(1, sizeof(t_command));
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
+	//printf("next command str: [%s]\n", next_command_as_str);
 	j = ft_strlen(next_command_as_str);
 	temp_str_tab = ft_split_seps_included_exit(next_command_as_str, SPACES_REDIRS_PIPES);
+	//printf("AFTER SPLIT: \n");
+	//ft_putstr_tab(temp_str_tab, STDOUT);
 	temp_str_tab2 = ft_strtab_map_str_exit(temp_str_tab, ft_strtrim_exit, SPACES);
 	ft_free_str_tab(&temp_str_tab, 0);
 	command->str_tab_all = ft_copy_str_tab_except_for(temp_str_tab2, SPACES);
@@ -138,9 +141,3 @@ t_command	*ft_extract_next_command(char *input_checkpt, int *i)
 	*i += j - 1;
 	return (command);
 }
-
-// divide the command in redirections
-// 1) check if there is a redirection
-// 		if no -> first word is a command's name, next are its arguments
-// 		if yes -> first word is a redir arg file, next is command name or its arguments
-// 2) What redirection it is? Modify command's final stdin/stdout

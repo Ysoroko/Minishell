@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 16:04:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 11:33:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -120,7 +120,6 @@ int	main(void)
 	{
 		ft_display_prompt(BOLDCYAN, "minishell: ");
 		ft_extract_user_input_to_string(&user_input_str);
-
 		input_as_dl_command_list = ft_input_parsing(user_input_str);
 		// POUR LIRE LE TABEAU POUR EXECVE:
 		// input_as_dl_command_list->content->str_tab_for_execve

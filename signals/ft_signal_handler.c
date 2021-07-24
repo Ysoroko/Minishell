@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 12:58:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 13:53:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,11 +33,14 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
+	//ft_putendl_fd("CTRL + \\ pressed", STDOUT);
 	exit(EXIT_SUCCESS);
 }
 
 static void	ft_control_d_empty_input_function(void)
 {
+	close(STDIN);
+	//ft_putendl_fd("CTRL + D pressed (empty input)", STDOUT);
 	ft_putendl_fd("exit", STDOUT);
 	exit(EXIT_SUCCESS);
 }

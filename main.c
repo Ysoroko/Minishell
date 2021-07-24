@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 11:33:27 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 11:52:51 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** so that the input is written in standard white
 */
 
-static void	ft_display_prompt(char *color, char *prompt_name)
+void	ft_display_prompt(char *color, char *prompt_name)
 {
 	write(STDOUT, color, 10);
 	write(STDOUT, prompt_name, (int)ft_strlen(prompt_name));
@@ -118,7 +118,7 @@ int	main(void)
 	ft_setup_signals();
 	while (1)
 	{
-		ft_display_prompt(BOLDCYAN, "minishell: ");
+		ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
 		ft_extract_user_input_to_string(&user_input_str);
 		input_as_dl_command_list = ft_input_parsing(user_input_str);
 		// POUR LIRE LE TABEAU POUR EXECVE:

@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/23 14:14:02 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/24 11:49:24 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,11 +19,11 @@ INPUT_PARSING		=	input_parsing/ft_input_parsing.c \
 
 EXECUTE				=	execute/ft_execute.c \
 
-UTILS				=	utils/signal/ft_signal_handler.c
+SIGNALS				=	signals/ft_signal_handler.c
 
 FUNCTIONS			=	functions/ft_echo.c
 
-SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(UTILS)
+SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS)
 
 LIBRARIES			=	libft/libft.a \
 						minishell.a

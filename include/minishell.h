@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 15:48:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 11:54:59 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,14 @@
 # include "libft.h"
 # include <string.h>
 # include <sys/errno.h>
+
+
+/*
+** MINISHELL PROMPT DISPLAY CONSTANTS
+*/
+
+# define PROMPT_NAME "minishell: "
+# define PROMPT_COLOR "\033[1m\033[36m"
 
 /*
 ** CONSTANT PARAMETERS
@@ -79,6 +87,7 @@ char		ft_env_var_delimiter(char *str_start_with_dollar_sign);
 void		ft_add_words_after_redir_to_argument(t_command *command,
 				char *red_pos);
 void		ft_copy_spaces(char *src, char **dest, int *i, int *j);
+void		ft_display_prompt(char *color, char *prompt_name);
 
 /*
 ** FUNCTIONS

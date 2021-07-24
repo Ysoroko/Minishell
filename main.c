@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 11:52:51 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 12:56:35 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,11 +37,18 @@ static void	ft_extract_user_input_to_string(char **str)
 {
 	char	*temp;
 	char	unclosed_quote;
+	int		read_ret;
 	
 	*str = ft_calloc_exit(sizeof(char), INPUT_SIZE);
-	ft_read_exit(STDIN, *str, INPUT_SIZE);
-	if (*str && !ft_str_only_has_chars_from_charset(*str, SPACES))
-		ft_check_for_unclosed_quotes(str);	
+	read_ret = ft_read_exit(STDIN, *str, INPUT_SIZE);
+	if (!read_ret)
+		ft_signal_handler(SIGUSR1);
+	if (!ft_strchr(*str, '\n'))
+		printf("\nEOF seen\n");
+	if (!read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
+		ft_signal_handler(SIGUSR1);
+	else if (read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
+		ft_check_for_unclosed_quotes(str);
 	else
 		ft_free_str(str);
 }
@@ -97,6 +104,8 @@ void	ft_check_for_unclosed_quotes(char **input)
 static void	ft_setup_signals(void)
 {
 	signal(SIGINT, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
+	signal(SIGUSR1, ft_signal_handler);
 }
 
 /*

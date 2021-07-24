@@ -6,24 +6,39 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 12:09:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/24 12:58:23 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
+/*
+** void	ft_control_c_function(void)
+** This function is reposnsible for reaction to "CTRL + C" input from the user
+** CTRL + C sends an "interrupt" signal, which discards previous input and
+** displays a new prompt on a newline
+*/
+
 static void	ft_control_c_function(void)
 {
 	ft_putchar_fd('\n', STDOUT);
 	ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
-	//printf(BOLDRED);
-	//printf("\n\nCiao! 👋\n");
-	//printf(COLOR_RESET);
-	//exit(EXIT_SUCCESS);
 }
+
+/*
+** void	ft_control_backslash_function(void)
+** This function is reposnsible for reaction to "CTRL + D" input from the user
+** CTRL + D sends an "quit" signal, which exits current process and dumps core
+*/
 
 static void	ft_control_backslash_function(void)
 {
+	exit(EXIT_SUCCESS);
+}
+
+static void	ft_control_d_empty_input_function(void)
+{
+	ft_putendl_fd("exit", STDOUT);
 	exit(EXIT_SUCCESS);
 }
 
@@ -37,6 +52,8 @@ static void	ft_control_backslash_function(void)
 **
 ** Ctrl+C - SIGINT
 ** Ctrl+\ - SIGQUIT
+** Ctrl+D (without user input) = same as Ctrl+\, SIGQUIT
+** Ctrl+D (with input) = does nothing
 */
 
 void	ft_signal_handler(int sig)
@@ -45,4 +62,6 @@ void	ft_signal_handler(int sig)
 		ft_control_c_function();
 	else if (sig == SIGQUIT)
 		ft_control_backslash_function();
+	else if (sig == SIGUSR1)
+		ft_control_d_empty_input_function();
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:59:14 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:53:01 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ t_command	*ft_extract_next_t_command(char *input_checkpt, int *i)
 	j = ft_strlen(next_command_as_str);
 	ft_extract_str_tab_all(next_command_as_str, command);
 	ft_extract_str_tab_for_execve(command);
+	ft_extract_role_macros_tab(command);
 	ft_free_str(&next_command_as_str);
 	if (!j)
 		*i += 1;

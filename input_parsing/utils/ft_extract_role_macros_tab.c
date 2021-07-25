@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 14:13:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 15:46:03 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,12 @@ static void	ft_first_element_role(char **all_tab, int i, int *macros_array)
 		macros_array[i] = COMMAND;
 }
 
+/*
+** int	ft_determine_redirection(char **all_tab, int i)
+** This function determines what redirection we have in front of us
+** and returns the corresponding macro
+*/
+
 static int	ft_determine_redirection(char **all_tab, int i)
 {
 	char	*current_element;
@@ -51,6 +57,46 @@ static int	ft_determine_redirection(char **all_tab, int i)
 		return (REDIR_LL);
 }
 
+/*
+** void	ft_based_on_previous_role(char **all, int i, int *t)
+** This function determines the corresponding macro of the current
+** element in "all" str array argument and sets the corresponding
+** element in "t" int array to the corresponding macro value.
+*/
+
+static void	ft_based_on_previous_role(char **all, int i, int *t, int l)
+{
+	if (ft_str_is_a_redirection(all[i - 1]))
+		t[i] = REDIR_ARG;
+	else if (!ft_strlcmp(all[i], "|"))
+		t[i] = PIPE;
+	else if (ft_str_is_a_redirection(all[i]))
+		t[i] = ft_determine_redirection(all, i);
+	else if (t[i - 1] == REDIR_ARG && !ft_elem_is_in_int_tab(t, l, COMMAND))
+		t[i] = COMMAND;
+	else if (t[i - 1] == REDIR_ARG && ft_elem_is_in_int_tab(t, l, COMMAND))
+		t[i] = COMMAND_ARG;
+	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-' &&
+			ft_str_is_alpha_only((&(all[i][1]))))
+		t[i] = FLAG;
+	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-' &&
+			!ft_str_is_alpha_only((&(all[i][1]))))
+		t[i] = COMMAND_ARG;
+	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG
+			|| t[i - 1] == COMMAND_ARG) && all[i][0] != '-'
+			&& !ft_str_is_a_redirection(all[i]))
+		t[i] = COMMAND_ARG;
+	else
+		t[i] = ERROR;
+}
+
+/*
+** void	ft_determine_element_role(char **all, int i, int *t)
+** This is the central hub of determining macro values.
+** It divides the detection in 2 cases based on the element's position:
+** Element is at the first position or it is not
+*/
+
 static void	ft_determine_element_role(char **all, int i, int *t)
 {
 	int	l;
@@ -59,33 +105,17 @@ static void	ft_determine_element_role(char **all, int i, int *t)
 	if (!i)
 		ft_first_element_role(all, i, t);
 	else
-	{
-		// "echo > >" is a "syntax error near unexpected token '>'"!
-		if (ft_str_is_a_redirection(all[i - 1]))
-			t[i] = REDIR_ARG;
-		else if (!ft_strlcmp(all[i], "|"))
-			t[i] = PIPE;
-		else if (ft_str_is_a_redirection(all[i]))
-			t[i] = ft_determine_redirection(all, i);
-		// if (we are after a redirection argument and we still have no command
-		// ,this is the command
-		else if (t[i - 1] == REDIR_ARG && !ft_elem_is_in_int_tab(t, l, COMMAND))
-			t[i] = COMMAND;
-		else if (t[i - 1] == REDIR_ARG && ft_elem_is_in_int_tab(t, l, COMMAND))
-			t[i] = COMMAND_ARG;
-		else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-')
-			t[i] = FLAG;
-		else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG || t[i - 1] == COMMAND_ARG)
-					&& all[i][0] != '-' && !ft_str_is_a_redirection(all[i]))
-			t[i] = COMMAND_ARG;
-		else
-			t[i] = ERROR;
-	}
-
+		ft_based_on_previous_role(all, i, t, l);
 }
 
+/*
+** void	ft_extract_role_macros_tab(t_command *command)
+** This function is responsible for creating the int array of macros
+** based on the role of each element in "str_tab_all" in "command"
+** argument
+*/
 
-void ft_extract_role_macros_tab(t_command *command)
+void	ft_extract_role_macros_tab(t_command *command)
 {
 	char	**all_tab;
 	int		i;
@@ -100,7 +130,5 @@ void ft_extract_role_macros_tab(t_command *command)
 	macros_array = command->role_macros;
 	i = -1;
 	while (all_tab[++i])
-	{
 		ft_determine_element_role(all_tab, i, macros_array);
-	}
 }

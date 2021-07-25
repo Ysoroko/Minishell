@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:06:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 15:43:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -184,6 +184,7 @@ void		*ft_free_str_tab(char ***str_tab, void *to_return);
 void		*ft_free_int_tab(int **int_tab, void *to_return);
 int			ft_elem_is_in_int_tab(int *tab, int tab_len, int elem);
 void		ft_print_line_of_chars(char char_to_print, int len_of_the_line);
+int			ft_str_is_alpha_only(char *str);
 
 
 #endif

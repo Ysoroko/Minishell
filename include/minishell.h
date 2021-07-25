@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 11:54:59 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:20:12 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,20 @@
 # define BACKSLASH_IN_DQ_CHARS "$`\"\n"
 # define ENV_VAR_SEPS " \t\n\r\v\f><|"
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
+
+/*
+** INT_TAB_MACROS
+*/
+
+# define REDIR_R 1
+# define REDIR_RR 2
+# define REDIR_L 3
+# define REDIR_LL 4
+# define REDIR_ARG 5
+# define PIPE 6
+# define COMMAND 7
+# define FLAG 8
+# define COMMAND_ARG 9
 
 /*
 ** STRUCTURES

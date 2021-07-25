@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 13:48:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 14:13:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,8 +75,8 @@ static void	ft_determine_element_role(char **all, int i, int *t)
 			t[i] = COMMAND_ARG;
 		else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-')
 			t[i] = FLAG;
-		else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] != '-'
-					&& !ft_str_is_a_redirection(all[i]))
+		else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG || t[i - 1] == COMMAND_ARG)
+					&& all[i][0] != '-' && !ft_str_is_a_redirection(all[i]))
 			t[i] = COMMAND_ARG;
 		else
 			t[i] = ERROR;

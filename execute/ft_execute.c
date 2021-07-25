@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 14:10:00 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 14:14:30 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,7 +74,7 @@ static void	ft_print_command_list(void *current_command)
 
 	s = -16;
 	i = -1;
-	printf("\n\n\n");
+	printf("\n");
 	command = (t_command *)(current_command);
 	printf("_________________________________________\n\n");
 	printf("%*s\n", s, "Str_tab_all:\n");

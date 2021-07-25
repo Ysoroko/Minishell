@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 13:16:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 16:10:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,5 +87,5 @@ void	ft_copy_spaces(char *src, char **dest, int *i, int *j)
 	while (src[k] && ft_isspace(src[k]))
 		k++;
 	((*dest)[*j] = ' ');
-	(*i)+= k - 1;
+	(*i) += k - 1;
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 12:43:22 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 13:02:04 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 16:09:18 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,7 @@ static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
 ** only of spaces.
 */
 
-static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
+static char	**ft_copy_str_tab_except_for(char **str_tab, char *except)
 {
 	char	**ret;
 	int		len;

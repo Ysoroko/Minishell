@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:03:28 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/19 15:10:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 16:10:30 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,13 +34,10 @@ static void	ft_double_quotes_copy(char *str, char **dest, int *i, int *j)
 	{
 		if (str[k] == '$')
 		{
-			//printf("appending in ft_dq_copy at\n \t&str[k]: [%s]\n \tk: [%d]\n, \t*dest: [%s]\n", &(str[k]), k, *dest);
 			ft_append_env_var_value(&(str[k]), dest, &k, j);
-			//printf("after appending in ft_dq_copy at\n \t&str[k]: [%s]\n \tk: [%d]\n, \t*dest: [%s]\n", &(str[k]), k, *dest);
 		}
 		else
 		{
-			printf("copying in ft_dq_copy [%c] to dest at j:[%d]\n", str[k], *j);
 			(*dest)[*j] = str[k];
 		}
 		(*j)++;
@@ -49,7 +46,6 @@ static void	ft_double_quotes_copy(char *str, char **dest, int *i, int *j)
 	if (!(*dest)[*j])
 		(*j)--;
 	*i += k;
-	//printf("str[i] at the end of ft_dq_cpy: [%c]\n", str[*i]);
 }
 
 /*
@@ -100,5 +96,4 @@ void	ft_quoted_copy(char *str, char **dest, int *i, int *j)
 	{
 		ft_double_quotes_copy(str, dest, i, j);
 	}
-	//printf("dest at the end of quoted copy: [%s]\n", *dest);
 }

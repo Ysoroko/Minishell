@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:28:29 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:56:14 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,6 +102,8 @@ void		ft_add_words_after_redir_to_argument(t_command *command,
 				char *red_pos);
 void		ft_copy_spaces(char *src, char **dest, int *i, int *j);
 void		ft_display_prompt(char *color, char *prompt_name);
+void		ft_extract_str_tab_all(char *next_command_str, t_command *command);
+void		ft_extract_str_tab_for_execve(t_command *command);
 
 /*
 ** FUNCTIONS

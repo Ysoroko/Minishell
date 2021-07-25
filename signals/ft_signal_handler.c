@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 14:42:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:40:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,6 +29,7 @@ static void	ft_control_c_function(void)
 ** void	ft_control_backslash_function(void)
 ** This function is reposnsible for reaction to "CTRL + D" input from the user
 ** CTRL + D sends a "quit" signal, which exits current process and dumps core
+** This is achieved by sending a "SIGABRT" signal to our own process.
 */
 
 static void	ft_control_backslash_function(void)
@@ -40,7 +41,8 @@ static void	ft_control_backslash_function(void)
 /*
 ** ft_control_d_empty_input_function(void)
 ** This signal is caught when CTRL+D is pressed and the input is empty
-** It exits the process and displays "exit in terminal"
+** It exits the process and displays "exit" in terminal.
+** Does not dump core ("unlike CTRL + \").
 */
 
 static void	ft_control_d_empty_input_function(void)

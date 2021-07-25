@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/25 12:28:21 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/25 12:55:22 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -15,7 +15,9 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/utils/ft_apply_quotes_and_env_vars.c \
 						input_parsing/utils/ft_parsing_utils.c \
 						input_parsing/utils/ft_quoted_copy.c \
-						input_parsing/utils/ft_env_vars_utils.c
+						input_parsing/utils/ft_env_vars_utils.c \
+						input_parsing/utils/ft_extract_str_tab_all.c \
+						input_parsing/utils/ft_extract_str_tab_for_execve.c \
 
 EXECUTE				=	execute/ft_execute.c \
 

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 14:45:14 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 15:08:30 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,6 +52,7 @@
 # define BACKSLASH_IN_DQ_CHARS "$`\"\n"
 # define ENV_VAR_SEPS " \t\n\r\v\f><|"
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
+# define LINE_LENGTH 70
 
 /*
 ** INT_TAB_MACROS

@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/25 13:25:31 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/25 15:06:16 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -140,6 +140,7 @@ SRC				=	ft_atoi.c \
 					ft_free_str_tab.c \
 					ft_free_int_tab.c \
 					ft_elem_is_in_int_tab.c \
+					ft_print_line_of_chars.c \
 					
 
 BONUS			=	ft_lstadd_back.c \

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 14:45:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 15:11:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,7 +55,7 @@ static char	*ft_role_str(int m)
 	else if (m == FLAG)
 		return ("Flag");
 	else if (m == COMMAND_ARG)
-		return ("Command argument");
+		return ("Command arg");
 	else if (m == REDIR_L)
 		return ("<");
 	else if (m == REDIR_LL)
@@ -67,18 +67,39 @@ static char	*ft_role_str(int m)
 	else if (m == PIPE)
 		return ("Pipe");
 	else if (m == REDIR_ARG)
-		return ("Redirection argument");
+		return ("Redir arg");
 	else
-		return ("Undefined role");
+		return ("Undefined");
 }
+
+/*
+** void	ft_print_tab_header(int	s)
+** This function simply prints the header of the tab which will be like:
+** ____________________________________________________________
+** i        | Str_tab_all      | Macros tab       | Execve_tab 
+** ____________________________________________________________
+*/
 
 static void	ft_print_tab_header(int	s)
 {
 	printf(BOLDWHITE);
-	printf("____________________________________________________________\n\n");
-	printf("%*s | %*s | %*s\n", -8, "i", s, "Str_tab_all", s, "Macros tab");
-	printf("____________________________________________________________\n\n");
+	ft_print_line_of_chars('_', LINE_LENGTH);
+	printf("\n%*s | %*s | %*s | %*s\n", -8, "i", s, "Str_tab_all", s,
+			"Macros tab", s, "Execve_tab");
+	ft_print_line_of_chars('_', LINE_LENGTH);
+	printf("\n");
 	printf(COLOR_RESET);
+}
+
+static char	*ft_print_execve_tab(char **tab, int i)
+{
+	int	len;
+
+	len = ft_str_tab_len(tab);
+	if (i >= len)
+		return ("");
+	else
+		return (tab[i]);
 }
 
 /*
@@ -104,11 +125,10 @@ void	ft_print_command_list(void *current_command)
 	{
 		str = (command->str_tab_all)[i];
 		m = (command->role_macros)[i];
-		printf("%*d | %*s | %s%*s%s\n", -8, i, s, str, ft_role_color(m),
-			s, ft_role_str(m), COLOR_RESET);
+		printf("%*d | %*s | %s%*s%s | %*s\n", -8, i, s, str, ft_role_color(m),
+			s, ft_role_str(m), COLOR_RESET, s,
+			ft_print_execve_tab(command->str_tab_for_execve, i));
 	}
-	printf("____________________________________________________________\n\n");
-	printf("%*s\n", s, "Str_tab_for execve:");
-	ft_putstr_tab(command->str_tab_for_execve, STDOUT);
-	printf("____________________________________________________________\n\n");
+	ft_print_line_of_chars('_', LINE_LENGTH);
+	printf("\n\n\n");
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 12:48:40 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:56:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:02:16 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -87,6 +87,8 @@ void	ft_extract_str_tab_for_execve(t_command *command)
 {
 	char	**base;
 
+	if (!command)
+		return ;
 	base = command->str_tab_all;
 	command->str_tab_for_execve = ft_copy_str_tab_for_execve(base);
 }

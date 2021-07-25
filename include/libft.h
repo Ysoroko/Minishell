@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:12:39 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:25:19 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -182,5 +182,6 @@ char		**ft_strtab_map_str_exit(char **str_tab, char *f(char *, char *)
 				, char *arg);
 void		*ft_free_str_tab(char ***str_tab, void *to_return);
 void		*ft_free_int_tab(int **int_tab, void *to_return);
+int			ft_elem_is_in_int_tab(int *tab, int tab_len, int elem);
 
 #endif

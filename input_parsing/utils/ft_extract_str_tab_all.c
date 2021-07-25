@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 12:43:22 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:56:50 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:02:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,8 @@ void	ft_extract_str_tab_all(char *next_command_str, t_command *command)
 	char	**temp;
 	char	**temp2;
 
+	if (!command || !next_command_str)
+		return ;
 	temp = ft_split_seps_included_exit(next_command_str, SPACES_REDIRS_PIPES);
 	temp2 = ft_strtab_map_str_exit(temp, ft_strtrim_exit, SPACES);
 	command->str_tab_all = ft_copy_str_tab_except_for(temp2, SPACES);

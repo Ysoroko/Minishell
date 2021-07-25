@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:56:25 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:59:14 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 /*
 ** FT_EXTRACT_NEXT_COMMAND
-** This function analyzes the input read so far and stores it in a t_command
-** It is a central hub of a transformation from input read into one separate
-** t_command structure
+** This function will first extract the string representing the next command
+** (commands are divided by '|' symbol in Minishell project)
+** It will then analyze this command and extract all the necessary information
+** from it like what is redirection, what is an argument and so on.
+** Returns a t_command structure will all the necessary information.
 */
 
 t_command	*ft_extract_next_t_command(char *input_checkpt, int *i)

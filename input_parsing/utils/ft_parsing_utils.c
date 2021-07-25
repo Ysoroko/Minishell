@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:16:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:16:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,27 @@ char	*ft_extract_next_command_string(char *checkpoint)
 	if (ft_str_only_has_chars_from_charset(ret, SPACES))
 		ft_free_str(&ret);
 	return (ret);
+}
+
+/*
+** int	ft_str_is_a_redirection(char *str)
+** This function returns 1 if str argument is a redirection string
+** (one of: ">" ">>" "<" "<<")
+** If it's not a redirection, it will return 0.
+*/
+
+int	ft_str_is_a_redirection(char *str)
+{
+	if (!ft_strlcmp(str, ">"))
+		return (1);
+	else if (!ft_strlcmp(str, ">>"))
+		return (1);
+	else if (!ft_strlcmp(str, "<"))
+		return (1);
+	else if (!ft_strlcmp(str, "<<"))
+		return (1);
+	else
+		return (0);
 }
 
 /*

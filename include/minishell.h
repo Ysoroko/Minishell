@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:56:14 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 13:48:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,6 +57,7 @@
 ** INT_TAB_MACROS
 */
 
+# define ERROR -1
 # define REDIR_R 1
 # define REDIR_RR 2
 # define REDIR_L 3
@@ -104,6 +105,7 @@ void		ft_copy_spaces(char *src, char **dest, int *i, int *j);
 void		ft_display_prompt(char *color, char *prompt_name);
 void		ft_extract_str_tab_all(char *next_command_str, t_command *command);
 void		ft_extract_str_tab_for_execve(t_command *command);
+int			ft_str_is_a_redirection(char *str);
 
 /*
 ** FUNCTIONS

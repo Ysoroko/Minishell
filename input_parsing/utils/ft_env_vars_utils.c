@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:14:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:25:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,7 +91,7 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 
 	if (ft_char_is_a_start_quote(str, *i + 1))
 	{
-		//printf("hey, char after $ is a stat quote!\n");
+		//printf("hey, char after $ is a start quote!\n");
 		return ;
 	}
 	env_name = ft_extract_env_variable_name(str, ENV_VAR_SEPS);

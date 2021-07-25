@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:20:12 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:28:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,7 +86,7 @@ typedef struct s_command
 t_dl_lst	*ft_input_parsing(char *input);
 void		ft_free_t_command(void *command_pointer);
 void		ft_update_str_read_so_far(char *input_checkpt, int i, char **prev);
-t_command	*ft_extract_next_command(char *input_checkpnt, int *i);
+t_command	*ft_extract_next_t_command(char *input_checkpnt, int *i);
 void		ft_execute(t_dl_lst *command_list);
 void		ft_signal_handler(int no_matter);
 void		ft_initialize_termcaps(char **term_type, int *ret);

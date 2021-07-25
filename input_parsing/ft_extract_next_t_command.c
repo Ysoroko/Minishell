@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:16:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:28:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -115,7 +115,7 @@ static char**	ft_copy_str_tab_for_execve(char **s_tab)
 ** t_command structure
 */
 
-t_command	*ft_extract_next_command(char *input_checkpt, int *i)
+t_command	*ft_extract_next_t_command(char *input_checkpt, int *i)
 {
 	int			j;
 	t_command	*command;

@@ -6,13 +6,13 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/24 11:49:24 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/25 12:28:21 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-INPUT_PARSING		=	input_parsing/ft_input_parsing.c \
-						input_parsing/ft_extract_next_command.c \
-						input_parsing/ft_apply_quotes_and_env_vars.c \
+INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
+						input_parsing/ft_extract_next_t_command.c \
+						input_parsing/utils/ft_apply_quotes_and_env_vars.c \
 						input_parsing/utils/ft_parsing_utils.c \
 						input_parsing/utils/ft_quoted_copy.c \
 						input_parsing/utils/ft_env_vars_utils.c

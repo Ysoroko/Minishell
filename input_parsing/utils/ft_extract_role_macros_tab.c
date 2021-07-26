@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 10:53:54 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 12:04:49 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,8 @@ static void	ft_first_element_role(char **all_tab, int i, int *macros_array)
 		macros_array[i] = REDIR_L;
 	else if (!ft_strlcmp(current_element, "<<"))
 		macros_array[i] = REDIR_LL;
+	else if (!ft_strlcmp(current_element, "|"))
+		macros_array[i] = PIPE;
 	else
 		macros_array[i] = COMMAND;
 }
@@ -91,32 +93,30 @@ static void	ft_based_on_previous_role(char **all, int i, int *t, int l)
 }
 
 /*
-** void	ft_determine_element_role(char **all, int i, int *t)
-** This is the central hub of determining macro values.
-** It divides the detection in 2 cases based on the element's position:
-** Element is at the first position or it is not
+** void	ft_identify_redirection_arguments
+** This function is used to determine precisely which redirection argument
+** we have in front of us.
+** Makes a distinction between "> >> < <<" and sets up the corresponding
+** macros in the macros tab
 */
 
-static void	ft_determine_element_role(char **all, int i, int *t)
+static void	ft_identify_redirection_arguments(int *macros_array, int len)
 {
-	int	l;
+	int	i;
 
-	l = ft_str_tab_len(all);
-	if (!i)
-		ft_first_element_role(all, i, t);
-	else
+	i = -1;
+	while (++i < len)
 	{
-		ft_based_on_previous_role(all, i, t, l);
-		if (t[i] == REDIR_ARG)
+		if (macros_array[i] == REDIR_ARG)
 		{
-			if (t[i - 1] == REDIR_R)
-				t[i] = R_REDIR_ARG;
-			else if (t[i - 1] == REDIR_RR)
-				t[i] = RR_REDIR_ARG;
-			else if (t[i - 1] == REDIR_L)
-				t[i] = L_REDIR_ARG;
-			else if (t[i - 1] == REDIR_LL)
-				t[i] = LL_REDIR_ARG;
+			if (macros_array[i - 1] == REDIR_R)
+				macros_array[i] = R_REDIR_ARG;
+			else if (macros_array[i - 1] == REDIR_RR)
+				macros_array[i] = RR_REDIR_ARG;
+			else if (macros_array[i - 1] == REDIR_L)
+				macros_array[i] = L_REDIR_ARG;
+			else if (macros_array[i - 1] == REDIR_LL)
+				macros_array[i] = LL_REDIR_ARG;
 		}
 	}
 }
@@ -143,5 +143,11 @@ void	ft_extract_role_macros_tab(t_command *command)
 	macros_array = command->role_macros;
 	i = -1;
 	while (all_tab[++i])
-		ft_determine_element_role(all_tab, i, macros_array);
+	{
+		if (!i)
+			ft_first_element_role(all_tab, i, macros_array);
+		else
+			ft_based_on_previous_role(all_tab, i, macros_array, len);
+	}
+	ft_identify_redirection_arguments(macros_array, len);
 }

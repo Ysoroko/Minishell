@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 12:40:43 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:49:07 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 static void	ft_control_c_function(void)
 {
+	ft_putstr_fd("\b \b\b \b", STDOUT);
 	ft_putchar_fd('\n', STDOUT);
 	ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
 }
@@ -34,7 +35,7 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	//ft_putendl_fd("CTRL + \\ pressed", STDOUT);
+	ft_putstr_fd("\b \b\b \b", STDOUT);
 	kill(getpid(), SIGABRT);
 }
 

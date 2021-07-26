@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/25 14:45:28 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/07/26 12:21:27 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -24,8 +24,6 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_print_command_list.c \
 
 SIGNALS				=	signals/ft_signal_handler.c
-
-FUNCTIONS			=	functions/ft_echo.c
 
 SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS)
 

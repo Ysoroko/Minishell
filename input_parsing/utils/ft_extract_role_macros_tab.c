@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:04:49 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 12:18:28 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 /*
 ** void	ft_first_element_role(char **all_tab, int i, int *macros_array)
 ** This function is called when i = 0.
-** The first element of the command is always either a redirection
+** The first element of the command is always either a redirection, pipe
 ** or a command itself (aka executable)
 */
 
@@ -38,25 +38,16 @@ static void	ft_first_element_role(char **all_tab, int i, int *macros_array)
 		macros_array[i] = COMMAND;
 }
 
-/*
-** int	ft_determine_redirection(char **all_tab, int i)
-** This function determines what redirection we have in front of us
-** and returns the corresponding macro
-*/
-
-static int	ft_determine_redirection(char **all_tab, int i)
+static void	ft_after_redir_arg(char **all, int i, int *t, int l)
 {
-	char	*current_element;
-
-	current_element = all_tab[i];
-	if (!ft_strlcmp(current_element, ">"))
-		return (REDIR_R);
-	else if (!ft_strlcmp(current_element, ">>"))
-		return (REDIR_RR);
-	else if (!ft_strlcmp(current_element, "<"))
-		return (REDIR_L);
+	if (!ft_elem_is_in_int_tab(t, l, COMMAND))
+		t[i] = COMMAND;
+	else if (ft_elem_is_in_int_tab(t, l, COMMAND)
+		&& !ft_elem_is_in_int_tab(t, l, COMMAND_ARG)
+		&& all[i][0] == '-' && ft_str_is_alpha_only(&(all[i][1])))
+		t[i] = FLAG;
 	else
-		return (REDIR_LL);
+		t[i] = COMMAND_ARG;
 }
 
 /*
@@ -68,16 +59,14 @@ static int	ft_determine_redirection(char **all_tab, int i)
 
 static void	ft_based_on_previous_role(char **all, int i, int *t, int l)
 {
-	if (ft_str_is_a_redirection(all[i - 1]))
-		t[i] = REDIR_ARG;
+	if (ft_str_is_a_redirection(all[i]))
+		t[i] = ft_str_is_a_redirection(all[i]);
 	else if (!ft_strlcmp(all[i], "|"))
 		t[i] = PIPE;
-	else if (ft_str_is_a_redirection(all[i]))
-		t[i] = ft_determine_redirection(all, i);
-	else if (t[i - 1] == REDIR_ARG && !ft_elem_is_in_int_tab(t, l, COMMAND))
-		t[i] = COMMAND;
-	else if (t[i - 1] == REDIR_ARG && ft_elem_is_in_int_tab(t, l, COMMAND))
-		t[i] = COMMAND_ARG;
+	else if (ft_str_is_a_redirection(all[i - 1]))
+		t[i] = REDIR_ARG;
+	else if (t[i - 1] == REDIR_ARG)
+		ft_after_redir_arg(all, i, t, l);
 	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-' &&
 			ft_str_is_alpha_only((&(all[i][1]))))
 		t[i] = FLAG;

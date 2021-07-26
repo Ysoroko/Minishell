@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:18:28 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 12:23:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,9 +73,10 @@ static void	ft_based_on_previous_role(char **all, int i, int *t, int l)
 	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] == '-' &&
 			!ft_str_is_alpha_only((&(all[i][1]))))
 		t[i] = COMMAND_ARG;
-	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG
-			|| t[i - 1] == COMMAND_ARG) && all[i][0] != '-'
+	else if ((t[i - 1] == COMMAND || t[i - 1] == FLAG) && all[i][0] != '-'
 			&& !ft_str_is_a_redirection(all[i]))
+		t[i] = COMMAND_ARG;
+	else if (t[i - 1] == COMMAND_ARG)
 		t[i] = COMMAND_ARG;
 	else
 		t[i] = ERROR;

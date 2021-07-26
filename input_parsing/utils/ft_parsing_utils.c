@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:19:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:08:10 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -88,4 +88,19 @@ void	ft_copy_spaces(char *src, char **dest, int *i, int *j)
 		k++;
 	((*dest)[*j] = ' ');
 	(*i) += k - 1;
+}
+
+int	ft_is_one_of_the_redirections_macros(int macro)
+{
+	if (macro == REDIR_ARG)
+		return (REDIR_ARG);
+	if (macro == R_REDIR_ARG)
+		return (R_REDIR_ARG);
+	if (macro == L_REDIR_ARG)
+		return (L_REDIR_ARG);
+	if (macro == RR_REDIR_ARG)
+		return (RR_REDIR_ARG);
+	if (macro == LL_REDIR_ARG)
+		return (LL_REDIR_ARG);
+	return (0);
 }

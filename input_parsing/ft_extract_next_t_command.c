@@ -6,11 +6,40 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 13:53:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:24:50 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static void	ft_quotes_env_variables_and_update_macros(t_command *command)
+{
+	char	**str_tab_all;
+	int		*macros_tab;
+	char	**temp;
+	int		p_macro;
+	int		i;
+
+	str_tab_all = command->str_tab_all;
+	macros_tab = command->role_macros;
+	i = ft_str_tab_len(str_tab_all);
+	temp = ft_calloc_exit(i + 1, sizeof(*str_tab_all));
+	i = -1;
+	while (str_tab_all[++i])
+	{
+		temp[i] = ft_apply_quotes_and_env_vars(&(str_tab_all[i]));
+		if (i && temp[i][0] == '-' && ft_str_is_alpha_only(&(temp[i][1])))
+		{
+			p_macro = macros_tab[i - 1];
+			if ((p_macro == COMMAND || p_macro == REDIR_ARG || p_macro == FLAG)
+				&& !ft_elem_is_in_int_tab(macros_tab, i - 1, COMMAND_ARG))
+			{
+				macros_tab[i] = FLAG;
+			}
+		}
+	}
+	command->str_tab_all = (char **)ft_free_str_tab(&str_tab_all, temp);
+}
 
 /*
 ** FT_EXTRACT_NEXT_COMMAND
@@ -33,6 +62,7 @@ t_command	*ft_extract_next_t_command(char *input_checkpt, int *i)
 	ft_extract_str_tab_all(next_command_as_str, command);
 	ft_extract_str_tab_for_execve(command);
 	ft_extract_role_macros_tab(command);
+	ft_quotes_env_variables_and_update_macros(command);
 	ft_free_str(&next_command_as_str);
 	if (!j)
 		*i += 1;

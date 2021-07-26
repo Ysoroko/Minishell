@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 11:51:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:01:05 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ static void	ft_print_tab_header(int	s)
 {
 	printf(BOLDWHITE);
 	ft_print_line_of_chars('_', LINE_LENGTH);
-	printf("\n%*s | %*s | %*s | %*s\n", -8, "i", s, "Str_tab_all", s,
-		"Macros tab", s, "Execve_tab");
+	printf("\n%*s | %*s | %*s | %*s\n", -8, "i", s, "str_tab_all", s,
+		"role_macros", s, "str_tab_for_execve");
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n");
 	printf(COLOR_RESET);

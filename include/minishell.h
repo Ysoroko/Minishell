@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:21:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:08:25 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,6 +113,7 @@ void		ft_extract_str_tab_for_execve(t_command *command);
 int			ft_str_is_a_redirection(char *str);
 void 		ft_extract_role_macros_tab(t_command *command);
 void		ft_print_command_list(void *current_command);
+int			ft_is_one_of_the_redirections_macros(int macro);
 
 /*
 ** COLORS

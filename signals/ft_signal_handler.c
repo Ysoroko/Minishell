@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 15:49:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 16:15:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,8 +35,8 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	ft_putstr_fd("\b \b\b \b", STDOUT);
-	kill(getpid(), SIGABRT);
+	// for some reason now it "blocks" the previously entered string
+	ft_putstr_fd("\b \b\b \b", STDIN);
 }
 
 /*
@@ -49,7 +49,6 @@ static void	ft_control_backslash_function(void)
 static void	ft_control_d_empty_input_function(void)
 {
 	close(STDIN);
-	//ft_putendl_fd("CTRL + D pressed (empty input)", STDOUT);
 	ft_putendl_fd("exit", STDOUT);
 	exit(EXIT_SUCCESS);
 }

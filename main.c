@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 14:02:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 16:13:18 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_extract_user_input_to_string(char **str)
 	if (!read_ret)
 		ft_signal_handler(SIGUSR1);
 	if (!ft_strchr(*str, '\n'))
-		printf("\nEOF seen\n");
+		printf("\nEOF Seen\n");
 	if (!read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
 		ft_signal_handler(SIGUSR1);
 	else if (read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))

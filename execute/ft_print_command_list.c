@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:15:20 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 11:09:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,8 @@ static char	*ft_role_color(int m)
 		return (BOLDCYAN);
 	else if (m == REDIR_L || m == REDIR_LL || m == REDIR_R || m == REDIR_RR)
 		return (BOLDMAGENTA);
-	else if (m == REDIR_ARG)
+	else if (m == REDIR_ARG || m == R_REDIR_ARG || m == RR_REDIR_ARG
+		|| m == L_REDIR_ARG || m == LL_REDIR_ARG)
 		return (BOLDBLUE);
 	else if (m == PIPE)
 		return (BOLDYELLOW);
@@ -48,28 +49,14 @@ static char	*ft_role_color(int m)
 
 static char	*ft_role_str(int m)
 {
-	if (m == ERROR)
-		return ("Error");
-	else if (m == COMMAND)
-		return ("Command");
-	else if (m == FLAG)
-		return ("Flag");
-	else if (m == COMMAND_ARG)
-		return ("Command arg");
-	else if (m == REDIR_L)
-		return ("<");
-	else if (m == REDIR_LL)
-		return ("<<");
-	else if (m == REDIR_R)
-		return (">");
-	else if (m == REDIR_RR)
-		return (">>");
-	else if (m == PIPE)
-		return ("Pipe");
-	else if (m == REDIR_ARG)
-		return ("Redir arg");
-	else
+	const char	*tab[] = {"Error", ">", ">>", "<", "<<", "Redir arg", "| Pipe",
+					"Command", "Flag", "Command arg", "> Redir arg",
+					"< Redir arg", ">> Redir arg", "<< Redir arg"};
+
+	if (m > ft_str_tab_len((char **)tab) || m < 0)
 		return ("Undefined");
+	else
+		return ((char *)(tab[m]));
 }
 
 /*
@@ -91,7 +78,15 @@ static void	ft_print_tab_header(int	s)
 	printf(COLOR_RESET);
 }
 
-static char	*ft_print_execve_tab(char **tab, int i)
+/*
+** char	*ft_print_execve_tab(char **tab, int i)
+** This function allows us to print execve_tab next to str_tab_all and macros
+** despite execve_tab usually being shorter than those 2.
+** It simply returns the execve_tab[i] element if element i exists
+** or an empty string otherwise
+*/
+
+static char	*ft_print_execve_element(char **tab, int i)
 {
 	int	len;
 
@@ -127,7 +122,7 @@ void	ft_print_command_list(void *current_command)
 		m = (command->role_macros)[i];
 		printf("%*d | %*s | %s%*s%s | %*s\n", -8, i, s, str, ft_role_color(m),
 			s, ft_role_str(m), COLOR_RESET, s,
-			ft_print_execve_tab(command->str_tab_for_execve, i));
+			ft_print_execve_element(command->str_tab_for_execve, i));
 	}
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");

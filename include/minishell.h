@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:08:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 11:04:05 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@
 ** INT_TAB_MACROS
 */
 
-# define ERROR -1
+# define ERROR 0
 # define REDIR_R 1
 # define REDIR_RR 2
 # define REDIR_L 3
@@ -68,6 +68,10 @@
 # define COMMAND 7
 # define FLAG 8
 # define COMMAND_ARG 9
+# define R_REDIR_ARG 10
+# define L_REDIR_ARG 11
+# define RR_REDIR_ARG 12
+# define LL_REDIR_ARG 13
 
 /*
 ** STRUCTURES

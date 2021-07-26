@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:46:03 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 10:53:54 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,7 +105,20 @@ static void	ft_determine_element_role(char **all, int i, int *t)
 	if (!i)
 		ft_first_element_role(all, i, t);
 	else
+	{
 		ft_based_on_previous_role(all, i, t, l);
+		if (t[i] == REDIR_ARG)
+		{
+			if (t[i - 1] == REDIR_R)
+				t[i] = R_REDIR_ARG;
+			else if (t[i - 1] == REDIR_RR)
+				t[i] = RR_REDIR_ARG;
+			else if (t[i - 1] == REDIR_L)
+				t[i] = L_REDIR_ARG;
+			else if (t[i - 1] == REDIR_LL)
+				t[i] = LL_REDIR_ARG;
+		}
+	}
 }
 
 /*

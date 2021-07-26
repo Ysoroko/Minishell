@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 15:27:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:31:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,7 +17,7 @@ static void	ft_quotes_env_variables_and_update_macros(t_command *command)
 	char	**str_tab_all;
 	int		*macros_tab;
 	char	**temp;
-	int		p_macro;
+	int		p_m;
 	int		i;
 
 	str_tab_all = command->str_tab_all;
@@ -30,8 +30,8 @@ static void	ft_quotes_env_variables_and_update_macros(t_command *command)
 		temp[i] = ft_apply_quotes_and_env_vars(&(str_tab_all[i]));
 		if (i && temp[i][0] == '-' && ft_str_is_alpha_only(&(temp[i][1])))
 		{
-			p_macro = macros_tab[i - 1];
-			if ((p_macro == COMMAND || p_macro == REDIR_ARG || p_macro == FLAG)
+			p_m = macros_tab[i - 1];
+			if ((p_m == COMMAND || ft_is_a_redir_arg_macro(p_m) || p_m == FLAG)
 				&& !ft_elem_is_in_int_tab(macros_tab, i - 1, COMMAND_ARG))
 			{
 				macros_tab[i] = FLAG;

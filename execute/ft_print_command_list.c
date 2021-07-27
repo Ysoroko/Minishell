@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 15:01:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 11:07:59 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ static char	*ft_role_color(int m)
 	else if (m == PIPE)
 		return (BOLDYELLOW);
 	else
-		return (COLOR_RESET);
+		return (BOLDRED);
 }
 
 /*
@@ -49,15 +49,31 @@ static char	*ft_role_color(int m)
 
 static char	*ft_role_str(int m)
 {
-	const char	*tab[] = {"Error", ">", ">>", "<", "<<", "Redir arg", "| Pipe",
-					"Command", "Flag", "Command arg", "> Redir arg",
-					"< Redir arg", ">> Redir arg", "<< Redir arg"};
+	const char	*tab[] = {"ERROR", "REDIR_R", "REDIR_RR", "REDIR_L",
+					"REDIR_LL", "REDIR_ARG", "PIPE", "COMMAND", "FLAG",
+					"COMMAND_ARG", "R_REDIR_ARG", "L_REDIR_ARG",
+					"RR_REDIR_ARG", "LL_REDIR_ARG"};
 
 	if (m > ft_str_tab_len((char **)tab) || m < 0)
 		return ("Undefined");
 	else
 		return ((char *)(tab[m]));
 }
+
+# define ERROR 0
+# define REDIR_R 1
+# define REDIR_RR 2
+# define REDIR_L 3
+# define REDIR_LL 4
+# define REDIR_ARG 5
+# define PIPE 6
+# define COMMAND 7
+# define FLAG 8
+# define COMMAND_ARG 9
+# define R_REDIR_ARG 10
+# define L_REDIR_ARG 11
+# define RR_REDIR_ARG 12
+# define LL_REDIR_ARG 13
 
 /*
 ** void	ft_print_tab_header(int	s)
@@ -71,7 +87,7 @@ static void	ft_print_tab_header(int	s)
 {
 	printf(BOLDWHITE);
 	ft_print_line_of_chars('_', LINE_LENGTH);
-	printf("\n%*s | %*s | %*s | %*s\n", -8, "i", s, "str_tab_all", s,
+	printf("\n%*s | %*s | %*s | %*s\n", PLACE_FOR_I, "i", s, "str_tab_all", s,
 		"role_macros", s, "str_tab_for_execve");
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n");
@@ -111,7 +127,7 @@ void	ft_print_command_list(void *current_command)
 	int			m;
 	int			i;
 
-	s = -16;
+	s = -18;
 	i = -1;
 	printf("\n");
 	command = (t_command *)(current_command);
@@ -120,8 +136,8 @@ void	ft_print_command_list(void *current_command)
 	{
 		str = (command->str_tab_all)[i];
 		m = (command->role_macros)[i];
-		printf("%*d | %*s | %s%*s%s | %*s\n", -8, i, s, str, ft_role_color(m),
-			s, ft_role_str(m), COLOR_RESET, s,
+		printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
+		ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
 			ft_print_execve_element(command->str_tab_for_execve, i));
 	}
 	ft_print_line_of_chars('_', LINE_LENGTH);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 15:31:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 11:03:46 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@
 # define ENV_VAR_SEPS " \t\n\r\v\f><|"
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
 # define LINE_LENGTH 70
+# define PLACE_FOR_I -2
 
 /*
 ** INT_TAB_MACROS

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 16:13:18 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 15:21:05 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -123,6 +123,7 @@ int	main(void)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
+	int			minishell_pid;
 
 	ft_setup_signals();
 	while (1)
@@ -139,3 +140,19 @@ int	main(void)
 	}
 	return (1);
 }
+
+// T_COMMAND STRUCTURE:
+// typedef struct s_command
+// {
+// 	char	**str_tab_all;
+// 	char	**str_tab_for_execve;
+// 	int		*role_macros;
+// }	t_command;
+
+// T_DL_LST STRUCTURE:
+// typedef struct s_dl_lst
+// {
+// 	void			*content;
+// 	struct s_dl_lst	*next;
+// 	struct s_dl_lst	*previous;
+// }				t_dl_lst;

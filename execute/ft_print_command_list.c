@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/27 11:07:59 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 15:25:21 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,21 +59,6 @@ static char	*ft_role_str(int m)
 	else
 		return ((char *)(tab[m]));
 }
-
-# define ERROR 0
-# define REDIR_R 1
-# define REDIR_RR 2
-# define REDIR_L 3
-# define REDIR_LL 4
-# define REDIR_ARG 5
-# define PIPE 6
-# define COMMAND 7
-# define FLAG 8
-# define COMMAND_ARG 9
-# define R_REDIR_ARG 10
-# define L_REDIR_ARG 11
-# define RR_REDIR_ARG 12
-# define LL_REDIR_ARG 13
 
 /*
 ** void	ft_print_tab_header(int	s)

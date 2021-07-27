@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 16:04:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 17:27:48 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@
 ** so that the input is written in standard white
 */
 
-static void	ft_display_prompt(char *color, char *prompt_name)
+void	ft_display_prompt(char *color, char *prompt_name)
 {
 	write(STDOUT, color, 10);
 	write(STDOUT, prompt_name, (int)ft_strlen(prompt_name));
@@ -37,11 +37,18 @@ static void	ft_extract_user_input_to_string(char **str)
 {
 	char	*temp;
 	char	unclosed_quote;
+	int		read_ret;
 	
 	*str = ft_calloc_exit(sizeof(char), INPUT_SIZE);
-	ft_read_exit(STDIN, *str, INPUT_SIZE);
-	if (*str && !ft_str_only_has_chars_from_charset(*str, SPACES))
-		ft_check_for_unclosed_quotes(str);	
+	read_ret = ft_read_exit(STDIN, *str, INPUT_SIZE);
+	if (!read_ret)
+		ft_signal_handler(SIGUSR1);
+	if (!ft_strchr(*str, '\n'))
+		printf("\nEOF Seen\n");
+	if (!read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
+		ft_signal_handler(SIGUSR1);
+	else if (read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
+		ft_check_for_unclosed_quotes(str);
 	else
 		ft_free_str(str);
 }
@@ -97,6 +104,8 @@ void	ft_check_for_unclosed_quotes(char **input)
 static void	ft_setup_signals(void)
 {
 	signal(SIGINT, ft_signal_handler);
+	signal(SIGQUIT, ft_signal_handler);
+	signal(SIGUSR1, ft_signal_handler);
 }
 
 /*
@@ -110,24 +119,83 @@ static void	ft_setup_signals(void)
 ** Cleans up and frees all used data after each user's input
 */
 
+void	ft_exec(t_command *elem)
+{
+	pid_t p;
+	char **exec; 
+
+	exec = elem->str_tab_for_execve;
+	p = fork();
+	if (p < 0)
+	{
+		printf("Error.\n");
+		return ;
+	}
+	if (p == 0)
+	{
+		execve(exec[0], exec, NULL);
+	}
+	wait(NULL);
+}
+
 int	main(void)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
+	int			minishell_pid;
 
 	ft_setup_signals();
 	while (1)
 	{
-		ft_display_prompt(BOLDCYAN, "minishell: ");
-		ft_extract_user_input_to_string(&user_input_str);
-
-		input_as_dl_command_list = ft_input_parsing(user_input_str);
-		// POUR LIRE LE TABEAU POUR EXECVE:
-		// input_as_dl_command_list->content->str_tab_for_execve
-		// POUR IMPRIMER LE TABEAU:
-		// ft_putstr_tab(input_as_dl_command_list->content->str_tab_for_execve, STDOUT);
-		ft_execute(input_as_dl_command_list);
-		ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
+		//ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
+		user_input_str = readline("minishell: ");
+		if (ft_strlen(user_input_str) > 0)
+		{
+			if (strcmp(user_input_str, "exit") == 0)
+				exit(EXIT_SUCCESS);
+			add_history(user_input_str);
+			//ft_extract_user_input_to_string(&user_input_str);
+			input_as_dl_command_list = ft_input_parsing(user_input_str);
+			// POUR LIRE LE TABEAU POUR EXECVE:
+			// input_as_dl_command_list->content->str_tab_for_execve
+			// POUR IMPRIMER LE TABEAU:
+			// ft_putstr_tab(input_as_dl_command_list->content->str_tab_for_execve, STDOUT);
+			ft_execute(input_as_dl_command_list);
+			ft_exec(input_as_dl_command_list->content);
+			ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
+		}
 	}
 	return (1);
 }
+
+// T_COMMAND STRUCTURE:
+// typedef struct s_command
+// {
+// 	char	**str_tab_all;
+// 	char	**str_tab_for_execve;
+// 	int		*role_macros;
+// }	t_command;
+
+// T_DL_LST STRUCTURE:
+// typedef struct s_dl_lst
+// {
+// 	void			*content;
+// 	struct s_dl_lst	*next;
+// 	struct s_dl_lst	*previous;
+// }				t_dl_lst;
+
+
+// # define ERROR 0
+// # define REDIR_R 1
+// # define REDIR_RR 2
+// # define REDIR_L 3
+// # define REDIR_LL 4
+// # define REDIR_ARG 5
+// # define PIPE 6
+// # define COMMAND 7
+// # define FLAG 8
+// # define COMMAND_ARG 9
+// # define R_REDIR_ARG 10
+// # define L_REDIR_ARG 11
+// # define RR_REDIR_ARG 12
+// # define LL_REDIR_ARG 13

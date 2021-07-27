@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 15:48:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/27 17:25:23 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,6 +23,16 @@
 # include "libft.h"
 # include <string.h>
 # include <sys/errno.h>
+# include <readline/readline.h>
+# include <readline/history.h>
+
+
+/*
+** MINISHELL PROMPT DISPLAY CONSTANTS
+*/
+
+# define PROMPT_NAME "minishell: "
+# define PROMPT_COLOR "\033[1m\033[36m"
 
 /*
 ** CONSTANT PARAMETERS
@@ -44,6 +54,27 @@
 # define BACKSLASH_IN_DQ_CHARS "$`\"\n"
 # define ENV_VAR_SEPS " \t\n\r\v\f><|"
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
+# define LINE_LENGTH 70
+# define PLACE_FOR_I -2
+
+/*
+** INT_TAB_MACROS
+*/
+
+# define ERROR 0
+# define REDIR_R 1
+# define REDIR_RR 2
+# define REDIR_L 3
+# define REDIR_LL 4
+# define REDIR_ARG 5
+# define PIPE 6
+# define COMMAND 7
+# define FLAG 8
+# define COMMAND_ARG 9
+# define R_REDIR_ARG 10
+# define L_REDIR_ARG 11
+# define RR_REDIR_ARG 12
+# define LL_REDIR_ARG 13
 
 /*
 ** STRUCTURES
@@ -52,6 +83,7 @@
 
 typedef struct s_command
 {
+	char	**paths;
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
@@ -64,7 +96,7 @@ typedef struct s_command
 t_dl_lst	*ft_input_parsing(char *input);
 void		ft_free_t_command(void *command_pointer);
 void		ft_update_str_read_so_far(char *input_checkpt, int i, char **prev);
-t_command	*ft_extract_next_command(char *input_checkpnt, int *i);
+t_command	*ft_extract_next_t_command(char *input_checkpnt, int *i);
 void		ft_execute(t_dl_lst *command_list);
 void		ft_signal_handler(int no_matter);
 void		ft_initialize_termcaps(char **term_type, int *ret);
@@ -79,12 +111,13 @@ char		ft_env_var_delimiter(char *str_start_with_dollar_sign);
 void		ft_add_words_after_redir_to_argument(t_command *command,
 				char *red_pos);
 void		ft_copy_spaces(char *src, char **dest, int *i, int *j);
-
-/*
-** FUNCTIONS
-*/
-
-void		ft_echo(t_dl_lst *dl_lst, int fd);
+void		ft_display_prompt(char *color, char *prompt_name);
+void		ft_extract_str_tab_all(char *next_command_str, t_command *command);
+void		ft_extract_str_tab_for_execve(t_command *command);
+int			ft_str_is_a_redirection(char *str);
+void 		ft_extract_role_macros_tab(t_command *command);
+void		ft_print_command_list(void *current_command);
+int			ft_is_a_redir_arg_macro(int macro);
 
 /*
 ** COLORS

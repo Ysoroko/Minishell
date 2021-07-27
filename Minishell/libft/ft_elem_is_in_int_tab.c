@@ -1,30 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_read_exit.c                                     :+:      :+:    :+:   */
+/*   ft_elem_is_in_int_tab.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/04/10 13:49:08 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 12:25:24 by ysoroko          ###   ########.fr       */
+/*   Created: 2021/07/25 13:23:05 by ysoroko           #+#    #+#             */
+/*   Updated: 2021/07/25 13:25:09 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/libft.h"
 
 /*
-** FT_READ_EXIT
-** This function calls read with the same arguments, but in case of a call
-** to read returning -1 because of an error, instead of returning -1
-** this function will exit the program straight away
+** int	ft_elem_is_in_int_tab(int *tab, int tab_len, int elem)
+** This function returns 1 if "elem" argument is present in the array of ints
+** "tab" and returns 0 otherwise.
+** If "tab" is a NULL pointer, returns 0
 */
 
-int	ft_read_exit(int fd, void *buff, size_t b_bytes)
+int	ft_elem_is_in_int_tab(int *tab, int tab_len, int elem)
 {
-	int	ret;
+	int	i;
 
-	ret = read(fd, buff, b_bytes);
-	if (ret < 0)
-		exit(EXIT_FAILURE);
-	return (ret);
+	i = -1;
+	if (!tab)
+		return (0);
+	while (++i < tab_len)
+	{
+		if (tab[i] == elem)
+			return (1);
+	}
+	return (0);
 }

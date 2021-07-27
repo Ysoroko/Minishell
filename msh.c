@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/21 11:32:44 by ablondel          #+#    #+#             */
-/*   Updated: 2021/07/23 16:48:21 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/27 16:20:08 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -436,20 +436,20 @@ int		tests(t_msh *add, int ac, char **av, char **env)
 int	main(int ac, char **av, char **env)
 {
 	t_msh add;
-	char *l1 = "/usr/bin/grep 1";
-	char *l2 = "/usr/bin/wc -l";
+	char *l1 = "/usr/bin/wc -l infile";
+	char *l2 = "/usr/bin/grep 1";
 	pid_t p1;
 	pid_t p2;
 	int s1;
 	int s2;
 	add.c = ' ';
 	char **arg1 = ft_split(&add, l1, " ", arg1);
-	char **arg2 = ft_split(&add, l2, " ", arg2);
+	//char **arg2 = ft_split(&add, l2, " ", arg2);
 	int i = 0;
-	int fd1 = open("infile", O_RDONLY);
+	//int fd1 = open("infile", O_RDONLY);
 	int fd2 = open("outfile", O_RDWR, O_TRUNC);
-	int pfd[2];
-	pipe(pfd);
+	//int pfd[2];
+	//pipe(pfd);
 	//while (args[i])
 	//	printf("%s\n", args[i++]);
 	p1 = fork();
@@ -460,29 +460,29 @@ int	main(int ac, char **av, char **env)
 	}
 	if (p1 == 0)
 	{
-		dup2(fd1, STDIN_FILENO);
-		dup2(pfd[1], STDOUT_FILENO);
-		close(pfd[0]);
-		close(pfd[1]);
+		//dup2(fd1, STDIN_FILENO);
+		//dup2(pfd[1], STDOUT_FILENO);
+		//close(pfd[0]);
+		//close(pfd[1]);
 		execve(arg1[0], arg1, NULL);
 	}
-	p2 = fork();
-	if (p2 < 0)
-	{
-		printf("Error\n");
-		return (-1);
-	}
-	if (p2 == 0)
-	{
-		dup2(fd2, STDOUT_FILENO);
-		dup2(pfd[0], STDIN_FILENO);
-		close(pfd[0]);
-		close(pfd[1]);
-		execve(arg2[0], arg2, NULL);
-	}
-	close(pfd[0]);
-	close(pfd[1]);
-	waitpid(p1,NULL, 0);
-	waitpid(p2, NULL, 0);
+	//p2 = fork();
+	//if (p2 < 0)
+	//{
+	//	printf("Error\n");
+	//	return (-1);
+	//}
+	//if (p2 == 0)
+	//{
+	//	dup2(fd2, STDOUT_FILENO);
+	//	dup2(pfd[0], STDIN_FILENO);
+	//	close(pfd[0]);
+	//	close(pfd[1]);
+	//	execve(arg2[0], arg2, NULL);
+	//}
+	//close(pfd[0]);
+	//close(pfd[1]);
+	waitpid(p1, NULL, 0);
+	//waitpid(p2, NULL, 0);
 	return (0);
 }

@@ -1,28 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_execute.c                                       :+:      :+:    :+:   */
+/*   ft_str_is_alpha_only.c                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 14:45:44 by ysoroko          ###   ########.fr       */
+/*   Created: 2021/07/25 15:40:52 by ysoroko           #+#    #+#             */
+/*   Updated: 2021/07/26 15:12:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../include/libft.h"
 
 /*
-** FT_EXECUTE
-** This function is the main bridge between parsing and executing commands
-** It takes the parsing as a t_list* structure, passes it to a different
-** function which will execute all the commands for every element of 
-** the t_list* structure
+** int	ft_str_is_alpha_only(char *str)
+** This function will return 1 if "str" string argument is only composed
+** of alphabetic characters.
+** Returns 0 otherwise (or if str is a NULL pointer)
 */
 
-void	ft_execute(t_dl_lst *command_list)
+int	ft_str_is_alpha_only(char *str)
 {
-	if (!command_list)
-		return ;
-	ft_dl_lstiter(command_list, ft_print_command_list);
+	int	i;
+
+	if (!str || !str[0])
+		return (0);
+	i = -1;
+	while (str[++i])
+	{
+		if (!ft_isalpha(str[i]))
+			return (0);
+	}
+	return (1);
 }

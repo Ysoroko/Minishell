@@ -6,11 +6,11 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/26 09:36:36 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 14:13:29 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 15:31:31 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/minishell.h"
+#include "../../include/minishell.h"
 
 /*
 ** FT_FREE_T_COMMAND
@@ -30,6 +30,8 @@ void	ft_free_t_command(void *command_pointer)
 		ft_free_str_tab(&(command->str_tab_all), 0);
 	if (command->str_tab_for_execve)
 		ft_free_str_tab(&(command->str_tab_for_execve), 0);
+	if (command->role_macros)
+		ft_free_int_tab(&(command->role_macros), 0);
 	free(command_pointer);
 	command_pointer = 0;
 }
@@ -50,22 +52,26 @@ char	*ft_extract_next_command_string(char *checkpoint)
 	return (ret);
 }
 
-///*
-//** FT_CHECK_FOR_PIPE
-//** This functions checks if we have a redirection char in str_command
-//** argument and stores it in t_command "pipe" element
-//*/
-//
-//void	ft_check_for_pipe(char *str_command, t_command *command)
-//{
-//	int	len;
-//
-//	if (!str_command || !command)
-//		return ;
-//	len = ft_strlen(str_command);
-//	if (ft_strchr(PIPES, str_command[len - 1]))
-//		command->pipe = str_command[len - 1];
-//}
+/*
+** int	ft_str_is_a_redirection(char *str)
+** This function returns the corresponding redirection macro
+** if str argument is a redirection string (one of: ">" ">>" "<" "<<")
+** If it's not a redirection, it will return 0.
+*/
+
+int	ft_str_is_a_redirection(char *str)
+{
+	if (!ft_strlcmp(str, ">"))
+		return (REDIR_R);
+	else if (!ft_strlcmp(str, ">>"))
+		return (REDIR_RR);
+	else if (!ft_strlcmp(str, "<"))
+		return (REDIR_L);
+	else if (!ft_strlcmp(str, "<<"))
+		return (REDIR_LL);
+	else
+		return (0);
+}
 
 /*
 ** ft_copy_spaces
@@ -81,36 +87,20 @@ void	ft_copy_spaces(char *src, char **dest, int *i, int *j)
 	while (src[k] && ft_isspace(src[k]))
 		k++;
 	((*dest)[*j] = ' ');
-	(*i)+= k - 1;
+	(*i) += k - 1;
 }
 
-/*
-** ft_add_word_after_redir_to_argument
-** This function is used to add the words following the redirection argument
-** to the command argument
-** For example, "echo bonjour > test.txt au revoir" would
-** create a "test,txt" file and write "bonjour au revoir" inside
-** This function will append "au revoir" to "bonjour" extracted by a different
-** funcion in t_command structure
-*/
-
-//void	ft_add_words_after_redir_to_argument(t_command *command, char *red_pos)
-//{
-//	int		i;
-//	char	*temp;
-//	char	*temp2;
-//	char	len;
-//
-//	i = 0;
-//	while (red_pos[i] && ft_strchr(SPACES, red_pos[i]))
-//		i++;
-//	temp = ft_pos_after_n_one_or_two_words(&(red_pos[i]), 2, SPACES);
-//	if (!temp)
-//		return ;
-//	temp2 = ft_strdup_until_c_from_charset_not_quoted(temp, PIPES);
-//	temp2 = ft_strtrim_exit_replace_src(&temp2, SPACES_AND_PIPES);
-//	if (command->argument)
-//		command->argument = ft_strjoin_free_pref_exit(&(command->argument), " ");
-//	command->argument = ft_strjoin_free_pref_exit(&(command->argument), temp2);
-//	ft_free_str(&temp2);
-//}
+int	ft_is_a_redir_arg_macro(int macro)
+{
+	if (macro == REDIR_ARG)
+		return (REDIR_ARG);
+	if (macro == R_REDIR_ARG)
+		return (R_REDIR_ARG);
+	if (macro == L_REDIR_ARG)
+		return (L_REDIR_ARG);
+	if (macro == RR_REDIR_ARG)
+		return (RR_REDIR_ARG);
+	if (macro == LL_REDIR_ARG)
+		return (LL_REDIR_ARG);
+	return (0);
+}

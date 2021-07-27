@@ -1,16 +1,46 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_extract_next_command.c                          :+:      :+:    :+:   */
+/*   ft_extract_next_t_command.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 16:13:20 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/26 16:22:59 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+static char	**ft_quotes_env_variables_and_update_macros(t_command *command)
+{
+	char	**str_tab_all;
+	int		*macros_tab;
+	char	**temp;
+	int		p_m;
+	int		i;
+
+	str_tab_all = command->str_tab_all;
+	macros_tab = command->role_macros;
+	i = ft_str_tab_len(str_tab_all);
+	temp = ft_calloc_exit(i + 1, sizeof(*str_tab_all));
+	i = -1;
+	while (str_tab_all[++i])
+	{
+		temp[i] = ft_apply_quotes_and_env_vars(&(str_tab_all[i]));
+		if (i && temp[i][0] == '-' && ft_str_is_alpha_only(&(temp[i][1])))
+		{
+			p_m = macros_tab[i - 1];
+			if ((p_m == COMMAND || ft_is_a_redir_arg_macro(p_m) || p_m == FLAG)
+				&& !ft_elem_is_in_int_tab(macros_tab, i - 1, COMMAND_ARG))
+			{
+				macros_tab[i] = FLAG;
+			}
+		}
+	}
+	;
+	return ((char **)(ft_free_str_tab(&str_tab_all, temp)));
+}
 
 /*
 ** int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
@@ -43,7 +73,7 @@ static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
 ** only of spaces.
 */
 
-static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
+static char	**ft_copy_str_tab_except_for(char **str_tab, char *except)
 {
 	char	**ret;
 	int		len;
@@ -62,85 +92,34 @@ static char **ft_copy_str_tab_except_for(char **str_tab, char *except)
 	return (ret);
 }
 
-static int	ft_str_tab_len_for_execve(char **s_tab)
-{
-	int	i;
-	int	count;
-
-	i = -1;
-	count = 0;
-	while (s_tab[++i])
-	{
-		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS_AND_PIPES))
-		{
-			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1],
-					REDIRS_AND_PIPES))
-				count++;
-			else if (!i)
-				count++;
-		}
-	}
-	return (count);
-}
-
-static char**	ft_copy_str_tab_for_execve(char **s_tab)
-{
-	char	**ret;
-	int		i;
-	int		len;
-	int		j;
-
-	len = ft_str_tab_len_for_execve(s_tab);
-	ret = ft_calloc_exit(len + 1, sizeof(*s_tab));
-	i = -1;
-	j = -1;
-	while (s_tab[++i])
-	{
-		if (!ft_str_only_has_chars_from_charset(s_tab[i], REDIRS_AND_PIPES))
-		{
-			if (i && !ft_str_only_has_chars_from_charset(s_tab[i - 1],
-					REDIRS_AND_PIPES))
-				ret[++j] = ft_strdup_exit(s_tab[i]);
-			else if (!i)
-				ret[++j] = ft_strdup_exit(s_tab[i]);
-		}
-	}
-	return (ret);
-}
-
 /*
 ** FT_EXTRACT_NEXT_COMMAND
-** This function analyzes the input read so far and stores it in a t_command
-** It is a central hub of a transformation from input read into one separate
-** t_command structure
+** This function will first extract the string representing the next command
+** (commands are divided by '|' symbol in Minishell project)
+** It will then analyze this command and extract all the necessary information
+** from it like what is redirection, what is an argument and so on.
+** Returns a t_command structure will all the necessary information.
 */
 
-t_command	*ft_extract_next_command(char *input_checkpt, int *i)
+t_command	*ft_extract_next_t_command(char *input_checkpt, int *i)
 {
 	int			j;
 	t_command	*command;
 	char		*next_command_as_str;
-	char		**temp_str_tab;
-	char		**temp_str_tab2;
+	char		**temp;
 
 	command = ft_calloc_exit(1, sizeof(t_command));
 	next_command_as_str = ft_extract_next_command_string(input_checkpt);
 	j = ft_strlen(next_command_as_str);
-	temp_str_tab = ft_split_seps_included_exit(next_command_as_str, SPACES_REDIRS_PIPES);
-	temp_str_tab2 = ft_strtab_map_str_exit(temp_str_tab, ft_strtrim_exit, SPACES);
-	ft_free_str_tab(&temp_str_tab, 0);
-	command->str_tab_all = ft_copy_str_tab_except_for(temp_str_tab2, SPACES);
-	command->str_tab_for_execve = ft_copy_str_tab_for_execve(command->str_tab_all);
-	ft_free_str_tab(&temp_str_tab2, 0);
+	ft_extract_str_tab_all(next_command_as_str, command);
+	ft_extract_role_macros_tab(command);
+	temp = ft_quotes_env_variables_and_update_macros(command);
+	command->str_tab_all = ft_copy_str_tab_except_for(temp, SPACES);
+	ft_extract_str_tab_for_execve(command);
+	ft_free_str_tab(&temp, 0);
 	ft_free_str(&next_command_as_str);
 	if (!j)
 		*i += 1;
 	*i += j - 1;
 	return (command);
 }
-
-// divide the command in redirections
-// 1) check if there is a redirection
-// 		if no -> first word is a command's name, next are its arguments
-// 		if yes -> first word is a redir arg file, next is command name or its arguments
-// 2) What redirection it is? Modify command's final stdin/stdout

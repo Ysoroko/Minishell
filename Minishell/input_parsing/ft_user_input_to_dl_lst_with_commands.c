@@ -1,16 +1,39 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_input_parsing.c                                 :+:      :+:    :+:   */
+/*   ft_user_input_to_dl_lst_with_commands.c            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:35:49 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/23 14:07:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/07/25 12:38:54 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+** void	ft_add_new_command_to_dl_lst(t_dl_lst *lst, t_command *new_command)
+** This function will simply add the previously extracted t_command structure 
+** "new_command" argument to already existing t_dl_lst structure "lst"
+** containing all the commands of user's input
+*/
+
+static void	ft_add_new_command_to_dl_lst(t_dl_lst *lst, t_command *new_command)
+{
+	t_dl_lst	*new_list_member;
+
+	if (!lst->content)
+		lst->content = new_command;
+	else
+	{
+		if (new_command->str_tab_all)
+		{
+			new_list_member = ft_dl_lst_new_exit((void *)new_command);
+			ft_dl_lst_add_back(lst, new_list_member);
+		}
+	}
+}
 
 /*
 ** FT_INPUT_PARSING
@@ -24,7 +47,6 @@
 t_dl_lst	*ft_input_parsing(char *input)
 {
 	t_dl_lst	*command_list;
-	t_dl_lst	*new_list_member;
 	int			i;
 	t_command	*command;
 
@@ -34,17 +56,8 @@ t_dl_lst	*ft_input_parsing(char *input)
 	i = -1;
 	while (input[++i])
 	{
-		command = ft_extract_next_command(&input[i], &i);
-		if (!command_list->content)
-			command_list->content = command;
-		else
-		{
-			if (command->str_tab_all)
-			{
-				new_list_member = ft_dl_lst_new_exit((void *)command);
-				ft_dl_lst_add_back(command_list, new_list_member);
-			}
-		}
+		command = ft_extract_next_t_command(&input[i], &i);
+		ft_add_new_command_to_dl_lst(command_list, command);
 		if (!input[i])
 			break ;
 	}

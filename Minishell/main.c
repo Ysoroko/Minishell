@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/27 17:27:48 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/28 14:43:53 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,32 +119,169 @@ static void	ft_setup_signals(void)
 ** Cleans up and frees all used data after each user's input
 */
 
-void	ft_exec(t_command *elem)
+void	print(char **tab)
 {
-	pid_t p;
-	char **exec; 
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("[%s]\n", tab[i]);
+		i++;
+	}
+	printf("\n\n");
+}
+
+void	ft_set_paths(t_path *p, char **env)
+{
+	int i;
+	int j;
+	char	*tmp;
+
+	i = 0;
+	j = 0;
+	while (env[i])
+	{
+		if (ft_strncmp(env[i], "PATH=", 5) == 0)
+		{
+			p->cmd = ft_strdup(env[i] + 5);
+			if (!p->cmd)
+				exit(EXIT_FAILURE);
+			p->paths = ft_split(p->cmd, ':');
+			if (!p->paths)
+				exit(EXIT_FAILURE);
+			while (p->paths[j])
+			{
+				tmp = p->paths[j];
+				p->paths[j] = ft_strjoin(p->paths[j], "/");
+				free(tmp);
+				j++;
+			}
+		}
+		i++;
+	}
+}
+
+int	ft_exec_check(t_path *p, char *cmd, char **exec_name)
+{
+	int	i;
+	DIR	*dir;
+	struct dirent	*d;
+	char	*tmp;
+
+	i = 0;
+	printf(">>>   %s\n", cmd);
+	while (p->paths[i])
+	{
+		dir = opendir(p->paths[i]);
+		while ((d = readdir(dir)) != NULL)
+		{
+			if (strcmp(cmd, d->d_name) == 0)
+			{
+				printf("OK\n");
+				tmp = *exec_name;
+				*exec_name = ft_strjoin(p->paths[i], cmd);
+				if (tmp)
+					free(tmp);
+				return (1);
+			}
+		}
+		closedir(dir);
+		i++;
+	}
+	return (-1);
+}
+
+void	ft_exec(t_command *elem, t_path *p)
+{
+	pid_t	p1;
+	char	**exec;
 
 	exec = elem->str_tab_for_execve;
-	p = fork();
-	if (p < 0)
+	print(elem->str_tab_for_execve);
+	if (ft_exec_check(p, exec[0], &exec[0]) == -1)
+	{
+		return ;
+	}
+	p1 = fork();
+	if (p1 < 0)
 	{
 		printf("Error.\n");
 		return ;
 	}
-	if (p == 0)
+	if (p1 == 0)
 	{
 		execve(exec[0], exec, NULL);
 	}
-	wait(NULL);
+	waitpid(p1, NULL, 0);
 }
 
-int	main(void)
+void	ft_exec_piped(t_command *elem, t_command *next_elem)
 {
+	pid_t	p1, p2;
+	char	**exec1;
+	char	**exec2;
+	int		pfd[2];
+
+	exec1 = elem->str_tab_for_execve;
+	exec2 = next_elem->str_tab_for_execve;
+	pipe(pfd);
+	p1 = fork();
+	if (p1 < 0)
+	{
+		printf("Error.\n");
+		return ;
+	}
+	if (p1 == 0)
+	{
+		dup2(pfd[1], 1);
+		close(pfd[0]);
+		close(pfd[1]);
+		execve(exec1[0], exec1, NULL);
+	}
+	p2 = fork();
+	if (p2 < 0)
+	{
+		printf("Error.\n");
+		return ;
+	}
+	if (p2 == 0)
+	{
+		dup2(pfd[0], 0);
+		close(pfd[0]);
+		close(pfd[1]);
+		execve(exec2[0], exec2, NULL);
+	}
+	close(pfd[0]);
+	close(pfd[1]);
+	waitpid(p1, NULL, 0);
+	waitpid(p2, NULL, 0);
+}
+
+void	ft_run_through_lst(t_dl_lst *lst, t_path *p)
+{
+	t_command *elem;
+
+	elem = lst->content;
+	while (lst)
+	{
+		elem = lst->content;
+		ft_exec(elem, p);
+		lst = lst->next;
+	}
+}
+
+int	main(int ac, char **av, char **env)
+{
+	(void)ac;
+	(void)av;
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
 	int			minishell_pid;
+	t_path		p;
 
 	ft_setup_signals();
+	ft_set_paths(&p, env);
 	while (1)
 	{
 		//ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
@@ -161,7 +298,8 @@ int	main(void)
 			// POUR IMPRIMER LE TABEAU:
 			// ft_putstr_tab(input_as_dl_command_list->content->str_tab_for_execve, STDOUT);
 			ft_execute(input_as_dl_command_list);
-			ft_exec(input_as_dl_command_list->content);
+			ft_run_through_lst(input_as_dl_command_list, &p);
+			//ft_exec_piped(input_as_dl_command_list->content, input_as_dl_command_list->next->content);
 			ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 		}
 	}

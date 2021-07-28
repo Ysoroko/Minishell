@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/27 17:25:23 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/28 14:11:50 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,6 +22,7 @@
 # include <termios.h>
 # include "libft.h"
 # include <string.h>
+# include <dirent.h>
 # include <sys/errno.h>
 # include <readline/readline.h>
 # include <readline/history.h>
@@ -81,9 +82,15 @@
 ** To use it with "execve": array of strings with []
 */
 
-typedef struct s_command
+typedef struct s_path
 {
 	char	**paths;
+	char	*cmd;
+	char	*final_cmd;
+}	t_path;
+
+typedef struct s_command
+{
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;

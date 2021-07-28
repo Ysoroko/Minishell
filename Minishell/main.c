@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/28 14:43:53 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/07/28 16:15:31 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -258,15 +258,18 @@ void	ft_exec_piped(t_command *elem, t_command *next_elem)
 	waitpid(p2, NULL, 0);
 }
 
+void	check_elem(t_command *elem)
+{
+	printf("TAB_EXECVE = \n");
+	print(elem->str_tab_for_execve);
+}
+
 void	ft_run_through_lst(t_dl_lst *lst, t_path *p)
 {
-	t_command *elem;
-
-	elem = lst->content;
 	while (lst)
 	{
-		elem = lst->content;
-		ft_exec(elem, p);
+		check_elem((t_command *)lst->content);
+		//ft_exec(elem, p);
 		lst = lst->next;
 	}
 }

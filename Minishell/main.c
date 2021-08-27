@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/28 16:15:31 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/27 18:03:04 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,18 +119,7 @@ static void	ft_setup_signals(void)
 ** Cleans up and frees all used data after each user's input
 */
 
-void	print(char **tab)
-{
-	int i;
 
-	i = 0;
-	while (tab[i])
-	{
-		printf("[%s]\n", tab[i]);
-		i++;
-	}
-	printf("\n\n");
-}
 
 void	ft_set_paths(t_path *p, char **env)
 {
@@ -191,7 +180,7 @@ int	ft_exec_check(t_path *p, char *cmd, char **exec_name)
 	}
 	return (-1);
 }
-
+/*
 void	ft_exec(t_command *elem, t_path *p)
 {
 	pid_t	p1;
@@ -215,7 +204,7 @@ void	ft_exec(t_command *elem, t_path *p)
 	}
 	waitpid(p1, NULL, 0);
 }
-
+*/
 void	ft_exec_piped(t_command *elem, t_command *next_elem)
 {
 	pid_t	p1, p2;
@@ -258,18 +247,28 @@ void	ft_exec_piped(t_command *elem, t_command *next_elem)
 	waitpid(p2, NULL, 0);
 }
 
-void	check_elem(t_command *elem)
+void	print(char **tab)
 {
-	printf("TAB_EXECVE = \n");
-	print(elem->str_tab_for_execve);
+	int i;
+
+	i = 0;
+	while (tab[i])
+	{
+		printf("[%s]\n", tab[i]);
+		i++;
+	}
+	printf("\n\n");
 }
 
 void	ft_run_through_lst(t_dl_lst *lst, t_path *p)
 {
+	t_command *c;
+
 	while (lst)
 	{
-		check_elem((t_command *)lst->content);
-		//ft_exec(elem, p);
+		c = lst->content;
+		//printf("[TAB EXECVE]\n");
+		//print(c->str_tab_all);
 		lst = lst->next;
 	}
 }

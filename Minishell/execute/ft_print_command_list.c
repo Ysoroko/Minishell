@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_command_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/27 15:25:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/08/27 18:02:50 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,9 +111,11 @@ void	ft_print_command_list(void *current_command)
 	char		*str;
 	int			m;
 	int			i;
+	int			j;
 
 	s = -18;
 	i = -1;
+	j = 0;
 	printf("\n");
 	command = (t_command *)(current_command);
 	ft_print_tab_header(s);
@@ -124,6 +126,11 @@ void	ft_print_command_list(void *current_command)
 		printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
 		ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
 			ft_print_execve_element(command->str_tab_for_execve, i));
+		while (command->str_tab_for_execve[j])
+		{
+			printf(">> %s <<\n", command->str_tab_for_execve[j]);
+			j++;
+		}
 	}
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");

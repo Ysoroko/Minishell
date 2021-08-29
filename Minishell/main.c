@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/27 18:03:04 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/29 15:46:07 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -300,7 +300,7 @@ int	main(int ac, char **av, char **env)
 			// POUR IMPRIMER LE TABEAU:
 			// ft_putstr_tab(input_as_dl_command_list->content->str_tab_for_execve, STDOUT);
 			ft_execute(input_as_dl_command_list);
-			ft_run_through_lst(input_as_dl_command_list, &p);
+			//ft_run_through_lst(input_as_dl_command_list, &p);
 			//ft_exec_piped(input_as_dl_command_list->content, input_as_dl_command_list->next->content);
 			ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 		}

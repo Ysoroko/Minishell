@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/29 16:10:12 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:25:28 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,33 +94,12 @@ typedef struct s_command
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
+	int		redir_type;
+	char	*infile;
+	char	*outfile;
+	char	*keyword;
+	char	*buffer;
 }	t_command;
-
-// Command Data Structure
-
-// Describes a simple command and arguments
-typedef struct s_smpl_cmd
-{
-	//	Available space for arguments currently preallocated
-	int		_numberOfAvailableArguments;
-	//	Number of arguments
-	int		_numberOfArguments;
-	//	 Array of arguments
-	char	**_arguments;
-}	t_smpl_cmd;
-
-
-// Describes a complete command with the multiple pipes if any 
-// and input/output redirection if any.
-typedef struct s_all_cmd
-{
-	int			_numberOfAvailableSimpleCommands;
-	int			_numberOfSimpleCommands;
-	t_smpl_cmd	**_simpleCommands;
-	char		*_outFile;
-	char		*_inputFile;
-
-}	t_all_cmd;
 
 /*
 ** PROTOTYPES

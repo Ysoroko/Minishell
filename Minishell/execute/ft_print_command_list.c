@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/29 15:54:24 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/30 16:33:36 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,6 +104,26 @@ static char	*ft_print_execve_element(char **tab, int i)
 ** flags/arguments/redirections to make sure everything is running smoothly
 */
 
+void	ft_add_redir_file(t_command *cmd, int m, int i)
+{
+	if (m == R_REDIR_ARG || m == RR_REDIR_ARG)
+	{
+		cmd->outfile = ft_strdup(cmd->str_tab_all[i]);
+		if (m == R_REDIR_ARG)
+			cmd->redir_type = 1;
+		else
+			cmd->redir_type = 2;
+	}
+	else if (m == L_REDIR_ARG || m == LL_REDIR_ARG)
+	{
+		if (m == L_REDIR_ARG)
+			cmd->infile = ft_strdup(cmd->str_tab_all[i]);
+		else if (m == LL_REDIR_ARG)
+			cmd->keyword = ft_strdup(cmd->str_tab_all[i]);
+	}
+	return ;
+}
+
 void	ft_print_command_list(void *current_command)
 {
 	t_command	*command;
@@ -123,16 +143,16 @@ void	ft_print_command_list(void *current_command)
 	{
 		str = (command->str_tab_all)[i];
 		m = (command->role_macros)[i];
-		//printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
-		//ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
-		//	ft_print_execve_element(command->str_tab_for_execve, i));
+		printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
+		ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
+			ft_print_execve_element(command->str_tab_for_execve, i));
 		if (m >= 10 && m <= 13)
 			printf("[%s]\n", command->str_tab_all[i]);
-		while (command->str_tab_for_execve[j])
-		{
-			printf(">> %s <<\n", command->str_tab_for_execve[j]);
-			j++;
-		}
+		//while (command->str_tab_for_execve[j])
+		//{
+		//	printf(">> %s <<\n", command->str_tab_for_execve[j]);
+		//	j++;
+		//}
 	}
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");

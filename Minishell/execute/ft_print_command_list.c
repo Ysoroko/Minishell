@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/30 16:33:36 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/30 17:37:55 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,8 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 {
 	if (m == R_REDIR_ARG || m == RR_REDIR_ARG)
 	{
+		if (cmd->outfile)
+			free(cmd->outfile);
 		cmd->outfile = ft_strdup(cmd->str_tab_all[i]);
 		if (m == R_REDIR_ARG)
 			cmd->redir_type = 1;
@@ -117,9 +119,17 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 	else if (m == L_REDIR_ARG || m == LL_REDIR_ARG)
 	{
 		if (m == L_REDIR_ARG)
+		{
+			if (cmd->infile)
+				free(cmd->infile);
 			cmd->infile = ft_strdup(cmd->str_tab_all[i]);
+		}
 		else if (m == LL_REDIR_ARG)
+		{
+			if (cmd->keyword)
+				free(cmd->keyword);
 			cmd->keyword = ft_strdup(cmd->str_tab_all[i]);
+		}
 	}
 	return ;
 }

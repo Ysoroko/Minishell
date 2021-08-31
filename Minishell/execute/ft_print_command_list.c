@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/30 17:37:55 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/08/31 16:29:06 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,32 +106,46 @@ static char	*ft_print_execve_element(char **tab, int i)
 
 void	ft_add_redir_file(t_command *cmd, int m, int i)
 {
-	if (m == R_REDIR_ARG || m == RR_REDIR_ARG)
+	if (m == REDIR_R || m == REDIR_RR)
 	{
 		if (cmd->outfile)
 			free(cmd->outfile);
-		cmd->outfile = ft_strdup(cmd->str_tab_all[i]);
-		if (m == R_REDIR_ARG)
+		cmd->outfile = ft_strdup(cmd->str_tab_all[i + 1]);
+		if (m == REDIR_R)
 			cmd->redir_type = 1;
 		else
 			cmd->redir_type = 2;
 	}
-	else if (m == L_REDIR_ARG || m == LL_REDIR_ARG)
+	else if (m == REDIR_L || m == REDIR_LL)
 	{
-		if (m == L_REDIR_ARG)
+		if (m == REDIR_L)
 		{
+			cmd->redir_type = 3;
 			if (cmd->infile)
 				free(cmd->infile);
-			cmd->infile = ft_strdup(cmd->str_tab_all[i]);
+			cmd->infile = ft_strdup(cmd->str_tab_all[i + 1]);
 		}
-		else if (m == LL_REDIR_ARG)
+		else if (m == REDIR_LL)
 		{
+			cmd->redir_type = 4;
 			if (cmd->keyword)
 				free(cmd->keyword);
-			cmd->keyword = ft_strdup(cmd->str_tab_all[i]);
+			cmd->keyword = ft_strdup(cmd->str_tab_all[i + 1]);
 		}
 	}
 	return ;
+}
+
+void	ft_print_tab(char **tab)
+{
+	int i = 0;
+
+	printf("[EXECVE]\n");
+	while (tab[i])
+	{
+		printf("___|%s|___\n", tab[i++]);
+	}
+	printf("\n");
 }
 
 void	ft_print_command_list(void *current_command)
@@ -156,14 +170,24 @@ void	ft_print_command_list(void *current_command)
 		printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
 		ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
 			ft_print_execve_element(command->str_tab_for_execve, i));
-		if (m >= 10 && m <= 13)
-			printf("[%s]\n", command->str_tab_all[i]);
+		if (m >= 1 && m <= 4)
+		{
+			ft_add_redir_file(command, m, i);
+			//printf("--|%d|\n", command->redir_type);
+			//printf("--|%s|\n", command->infile);
+			//printf("--|%s|\n", command->outfile);
+			//printf("--|%s|\n\n", command->keyword);
+		}
 		//while (command->str_tab_for_execve[j])
 		//{
 		//	printf(">> %s <<\n", command->str_tab_for_execve[j]);
 		//	j++;
 		//}
 	}
+	printf("[REDIRECTIONS]\n");
+	printf("FDIN|%s|\n", command->infile);
+	printf("FDOUT|%s|\n\n", command->outfile);
+	ft_print_tab(command->str_tab_for_execve);
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");
 }

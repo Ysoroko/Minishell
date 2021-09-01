@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/01 13:02:52 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/01 17:58:07 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -119,6 +119,47 @@ int		ft_check_file_permissions(char *filename)
 	return (-1);
 }
 
+void	ft_free_buffer(t_command *cmd)
+{
+	int	i;
+
+	i = 0;
+	if (!cmd->buffer)
+		return ;
+	while (cmd->buffer[i])
+		i++;
+	while (i >= 0)
+	{
+		free(cmd->buffer[i]);
+		i--;
+	}
+	cmd->buffer = NULL;
+	free(cmd->buffer);
+}
+
+void	ft_load_hdoc_buffer(t_command *cmd)
+{
+	char	*tmp;
+
+	cmd->buffer_index = 0;
+	if (cmd->buffer)
+		ft_free_buffer(cmd);
+	cmd->buffer = (char**)malloc(sizeof(char*) * 1024);
+	while (1)
+	{
+		tmp = readline("> ");
+		cmd->buffer[cmd->buffer_index] = ft_strdup(tmp);
+		free(tmp);
+		if (strcmp(cmd->buffer[cmd->buffer_index], cmd->keyword[cmd->keyword_index]) == 0)
+		{
+			cmd->buffer[cmd->buffer_index + 1] = 0;
+			return ;
+		}
+		cmd->buffer_index++;
+	}
+	cmd->buffer[cmd->buffer_index] = 0;
+}
+
 void	ft_add_redir_file(t_command *cmd, int m, int i)
 {
 	if (m == REDIR_R || m == REDIR_RR)
@@ -161,13 +202,14 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 				printf("Failed to copy keyword.\n");
 				exit(EXIT_FAILURE);
 			}
+			printf("> boucle readline pour le buffer\n\n\n");
+			ft_load_hdoc_buffer(cmd);
 			cmd->keyword_index++;
 			cmd->keyword[cmd->keyword_index] = 0;
 		}
 	}
 	ft_check_file_permissions(cmd->infile);
 	ft_check_file_permissions(cmd->outfile);
-	printf("> boucle readline pour le buffer\n\n\n");
 	return ;
 }
 
@@ -175,8 +217,11 @@ void	ft_print_tab(char **tab)
 {
 	int i = 0;
 
-	while (tab[i])
-		printf("___|%s|___\n", tab[i++]);
+	if (!tab)
+		printf("NO DATA\n");
+	else
+		while (tab[i])
+			printf("___|%s|___\n", tab[i++]);
 	printf("\n");
 }
 
@@ -201,6 +246,7 @@ void	ft_print_command_list(void *current_command)
 	ft_print_tab_header(s);
 	command->keyword = (char**)malloc(sizeof(char*) * 1024);
 	command->keyword_index = 0;
+	
 	while (command->str_tab_all[++i])
 	{
 		str = (command->str_tab_all)[i];
@@ -218,6 +264,8 @@ void	ft_print_command_list(void *current_command)
 	printf("FDOUT		|%s|\n", command->outfile);
 	printf("KEYWORD		|\n");
 	ft_print_tab(command->keyword);
+	printf("BUFFER		|\n");
+	ft_print_tab(command->buffer);
 	printf("RTYPEIN		|%d|\n", command->redir_type_in);
 	printf("RTYPEOUT	|%d|\n\n", command->redir_type_out);
 	printf("[EXECVE]\n");

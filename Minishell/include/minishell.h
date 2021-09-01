@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/31 15:21:03 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/01 12:35:43 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,6 +24,7 @@
 # include <string.h>
 # include <dirent.h>
 # include <sys/errno.h>
+# include <sys/stat.h>
 # include <readline/readline.h>
 # include <readline/history.h>
 
@@ -99,11 +100,14 @@ typedef struct s_command
 	int		fdout_save;
 	int		fdout;
 	int		pfd[1024][2];
-	int		redir_type;
+	int		redir_type_in;
+	int		redir_type_out;
 	char	*infile;
 	char	*outfile;
-	char	*keyword;
-	char	*buffer;
+	char	**keyword;
+	int		keyword_index;
+	char	**buffer;
+	int		buffer_index;
 }	t_command;
 
 /*

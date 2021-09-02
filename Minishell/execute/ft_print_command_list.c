@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/01 17:58:07 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/01 18:02:59 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,6 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 				printf("Failed to copy keyword.\n");
 				exit(EXIT_FAILURE);
 			}
-			printf("> boucle readline pour le buffer\n\n\n");
 			ft_load_hdoc_buffer(cmd);
 			cmd->keyword_index++;
 			cmd->keyword[cmd->keyword_index] = 0;

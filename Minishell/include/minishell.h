@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/01 12:35:43 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/06 16:43:25 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -106,7 +106,7 @@ typedef struct s_command
 	char	*outfile;
 	char	**keyword;
 	int		keyword_index;
-	char	**buffer;
+	char	buffer[4096];
 	int		buffer_index;
 }	t_command;
 

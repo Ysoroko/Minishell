@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/08/29 15:46:07 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/06 15:33:22 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -260,17 +260,26 @@ void	print(char **tab)
 	printf("\n\n");
 }
 
-void	ft_run_through_lst(t_dl_lst *lst, t_path *p)
+int	ft_check_spaces(char c, char *set)
 {
-	t_command *c;
-
-	while (lst)
+	while (*set)
 	{
-		c = lst->content;
-		//printf("[TAB EXECVE]\n");
-		//print(c->str_tab_all);
-		lst = lst->next;
+		if (c == *set)
+			return (1);
+		set++;
 	}
+	return (0);
+}
+
+int	ft_empty_input(char *input)
+{
+	while (*input)
+	{
+		if (!ft_check_spaces(*input, SPACES))
+			return (1);
+		input++;
+	}
+	return (0);
 }
 
 int	main(int ac, char **av, char **env)
@@ -288,7 +297,7 @@ int	main(int ac, char **av, char **env)
 	{
 		//ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
 		user_input_str = readline("minishell: ");
-		if (ft_strlen(user_input_str) > 0)
+		if (ft_strlen(user_input_str) >= 0 && ft_empty_input(user_input_str))
 		{
 			if (strcmp(user_input_str, "exit") == 0)
 				exit(EXIT_SUCCESS);

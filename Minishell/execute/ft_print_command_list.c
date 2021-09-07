@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/06 16:57:39 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/07 17:20:14 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -142,8 +142,8 @@ int	ft_strcmp_end(char *s1, char *s2)
 	int i;
 	int j;
 
-	i = ft_strlen(s1);
-	j = ft_strlen(s2);
+	i = ft_strlen(s1) - 1;
+	j = ft_strlen(s2) - 1;
 	while (s1[i] == s2[j])
 	{
 		if (i == 0)
@@ -159,28 +159,32 @@ void	ft_load_hdoc_buffer(t_command *cmd)
 	char	*tmp;
 	int 	ret;
 
-	cmd->buffer_index = 0;
-	//if (cmd->buffer)
-	//	ft_free_buffer(cmd);
-	//cmd->buffer = (char**)malloc(sizeof(char*) * 1024);
-	while (1)
+	printf("keyword = %s\n", cmd->keyword[cmd->keyword_index]);
+	while (ret > 0)
 	{
 		write(1, "> ", 2);
-		ret = read(0, &cmd->buffer[ret], 4096);
-		//cmd->buffer[ret] = '\0';
-		printf("[%d]---{%s}\n", ret, cmd->buffer);
-		//tmp = readline("");
-		//cmd->buffer[cmd->buffer_index] = ft_strdup(tmp);
-		//free(tmp);
-		if (strcmp(cmd->buffer, "exit\n") == 0)
-			exit(0);
-		if (ft_strcmp_end(cmd->buffer, cmd->keyword[cmd->keyword_index]) == 0 || ret == 0)
+		printf("buffer content = %s\n", cmd->buffer);
+		printf("cmp = %d\n", ft_strncmp(cmd->keyword[cmd->keyword_index], cmd->buffer, ft_strlen(cmd->buffer) - 1));
+		ret += read(STDIN_FILENO, cmd->buffer, 1024);
+		cmd->buffer[ret] = '\0';
+		if (ft_strncmp(cmd->keyword[cmd->keyword_index], cmd->buffer, ft_strlen(cmd->buffer) - 1) == 0 || ret == 0)
 		{
+			//cmd->buffer[ret] = '\0';
 			return ;
 		}
-		//cmd->buffer_index++;
 	}
-	//cmd->buffer[cmd->buffer_index] = 0;
+	return ;
+	//while (1)
+	//{
+	//	write(1, "> ", 2);
+	//	ret = read(0, cmd->buffer, 4096);
+	//	//cmd->buffer[ret] = '\0';
+	//	printf("[%d]---{%s}\n", ret, cmd->buffer);
+	//	if (strcmp(cmd->buffer, "exit\n") == 0)
+	//		exit(0);
+	//	//cmd->buffer_index++;
+	//}
+	////cmd->buffer[cmd->buffer_index] = 0;
 }
 
 void	ft_add_redir_file(t_command *cmd, int m, int i)
@@ -281,23 +285,32 @@ void	ft_print_command_list(void *current_command)
 			ft_add_redir_file(command, m, i);
 		}
 	}
-	//printf("[REDIRECTIONS]\n");
-	//printf("FDIN		|%s|\n", command->infile);
-	//printf("FDOUT		|%s|\n", command->outfile);
-	//printf("KEYWORD		|\n");
-	//ft_print_tab(command->keyword);
-	//printf("BUFFER		|\n");
-	//ft_print_tab(command->buffer);
-	//printf("RTYPEIN		|%d|\n", command->redir_type_in);
-	//printf("RTYPEOUT	|%d|\n\n", command->redir_type_out);
-	//printf("[EXECVE]\n");
-	//ft_print_tab(command->str_tab_for_execve);
+	printf("[REDIRECTIONS]\n");
+	printf("FDIN		|%s|\n", command->infile);
+	printf("FDOUT		|%s|\n", command->outfile);
+	printf("KEYWORD		|\n");
+	ft_print_tab(command->keyword);
+	printf("BUFFER		|%s|\n", command->buffer);
+	printf("RTYPEIN		|%d|\n", command->redir_type_in);
+	printf("RTYPEOUT	|%d|\n\n", command->redir_type_out);
+	printf("[EXECVE]\n");
+	ft_print_tab(command->str_tab_for_execve);
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");
-	char buffer[12] = "1\n2\n3\n";
-	char *arg[12] = {"/usr/bin/wc", "-l", buffer, NULL};
+	//char buffer[12] = "1\n2\n3\n";
+	char *arg[12] = {"/usr/bin/wc", "-l", NULL};
+	//char buf[10];
+	//int ret = 0;
 	pid_t p1 = fork();
 	if (p1 == 0)
-		execve(arg[0], arg + 1, NULL);
+	{
+		//write(1, "> ", 2);
+		//while (read(STDIN_FILENO, buf, 1024) > 0)
+		//{
+		//	write(1, "> ", 2);
+		//	buf[ret] = '\0';
+		//}
+		execve(arg[0], arg, NULL);
+	}
 	wait(NULL);
 }

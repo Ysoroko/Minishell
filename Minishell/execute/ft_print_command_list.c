@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/07 17:20:14 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/08 14:52:32 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ int		ft_check_file_permissions(char *filename)
 	if (stat(filename, &sb) == 0)
 	{
 		if (sb.st_mode & S_IXUSR)
-			printf("File {%s} exists and is executable\n", filename);
+			return (1);
 		if (sb.st_mode & S_IRUSR)
 			printf("File {%s} exists and is readable\n", filename);
 		if (sb.st_mode & S_IWUSR)
@@ -119,72 +119,22 @@ int		ft_check_file_permissions(char *filename)
 	return (-1);
 }
 
-/*void	ft_free_buffer(t_command *cmd)
-{
-	int	i;
-
-	i = 0;
-	if (!cmd->buffer)
-		return ;
-	while (cmd->buffer[i])
-		i++;
-	while (i >= 0)
-	{
-		free(cmd->buffer[i]);
-		i--;
-	}
-	cmd->buffer = NULL;
-	free(cmd->buffer);
-}*/
-
-int	ft_strcmp_end(char *s1, char *s2)
-{
-	int i;
-	int j;
-
-	i = ft_strlen(s1) - 1;
-	j = ft_strlen(s2) - 1;
-	while (s1[i] == s2[j])
-	{
-		if (i == 0)
-			return (0);
-		i--;
-		j--;
-	}
-	return (-1);
-}
-
 void	ft_load_hdoc_buffer(t_command *cmd)
 {
-	char	*tmp;
 	int 	ret;
 
-	printf("keyword = %s\n", cmd->keyword[cmd->keyword_index]);
-	while (ret > 0)
+	ret = 0;
+	while (1)
 	{
 		write(1, "> ", 2);
-		printf("buffer content = %s\n", cmd->buffer);
-		printf("cmp = %d\n", ft_strncmp(cmd->keyword[cmd->keyword_index], cmd->buffer, ft_strlen(cmd->buffer) - 1));
 		ret += read(STDIN_FILENO, cmd->buffer, 1024);
-		cmd->buffer[ret] = '\0';
-		if (ft_strncmp(cmd->keyword[cmd->keyword_index], cmd->buffer, ft_strlen(cmd->buffer) - 1) == 0 || ret == 0)
+		if (ft_strncmp(cmd->keyword[cmd->keyword_index],
+		cmd->buffer, ft_strlen(cmd->buffer) - 1) == 0 || ret == 0)
 		{
-			//cmd->buffer[ret] = '\0';
+			cmd->buffer[ret] = '\0';
 			return ;
 		}
 	}
-	return ;
-	//while (1)
-	//{
-	//	write(1, "> ", 2);
-	//	ret = read(0, cmd->buffer, 4096);
-	//	//cmd->buffer[ret] = '\0';
-	//	printf("[%d]---{%s}\n", ret, cmd->buffer);
-	//	if (strcmp(cmd->buffer, "exit\n") == 0)
-	//		exit(0);
-	//	//cmd->buffer_index++;
-	//}
-	////cmd->buffer[cmd->buffer_index] = 0;
 }
 
 void	ft_add_redir_file(t_command *cmd, int m, int i)
@@ -257,6 +207,52 @@ void	ft_print_tab(char **tab)
 ** flags/arguments/redirections to make sure everything is running smoothly
 */
 
+int	ft_exec_check(char *path, char *cmd)
+{
+	int	i;
+	DIR	*dir;
+	struct dirent	*d;
+	char	*tmp;
+
+	i = 0;
+	dir = opendir(path);
+	d = readdir(dir);
+	while (d != NULL)
+	{
+		if (strcmp(cmd, d->d_name) == 0)
+			return (1);
+		d = readdir(dir);
+	}
+	closedir(dir);
+	return (-1);
+}
+
+int	ft_set_paths(char **exec_name)
+{
+	int i;
+	char	*tmp;
+	char	**paths;
+
+	i = 0;
+	tmp = getenv("PATH");
+	paths = ft_split(tmp, ':');
+	while (paths[i])
+	{
+		tmp = paths[i];
+		paths[i] = ft_strjoin(paths[i], "/");
+		free(tmp);
+		if (ft_exec_check(paths[i], *exec_name) == 1)
+		{
+			tmp = *exec_name;
+			*exec_name = ft_strjoin(paths[i], *exec_name);
+			free(tmp);
+			return (1);
+		}
+		i++;
+	}
+	return (0);
+}
+
 void	ft_print_command_list(void *current_command)
 {
 	t_command	*command;
@@ -285,6 +281,8 @@ void	ft_print_command_list(void *current_command)
 			ft_add_redir_file(command, m, i);
 		}
 	}
+	if (command->str_tab_for_execve[0] != NULL)
+		ft_set_paths(&command->str_tab_for_execve[0]);
 	printf("[REDIRECTIONS]\n");
 	printf("FDIN		|%s|\n", command->infile);
 	printf("FDOUT		|%s|\n", command->outfile);
@@ -297,20 +295,4 @@ void	ft_print_command_list(void *current_command)
 	ft_print_tab(command->str_tab_for_execve);
 	ft_print_line_of_chars('_', LINE_LENGTH);
 	printf("\n\n\n");
-	//char buffer[12] = "1\n2\n3\n";
-	char *arg[12] = {"/usr/bin/wc", "-l", NULL};
-	//char buf[10];
-	//int ret = 0;
-	pid_t p1 = fork();
-	if (p1 == 0)
-	{
-		//write(1, "> ", 2);
-		//while (read(STDIN_FILENO, buf, 1024) > 0)
-		//{
-		//	write(1, "> ", 2);
-		//	buf[ret] = '\0';
-		//}
-		execve(arg[0], arg, NULL);
-	}
-	wait(NULL);
 }

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/08 14:52:32 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/08 15:37:32 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -282,7 +282,8 @@ void	ft_print_command_list(void *current_command)
 		}
 	}
 	if (command->str_tab_for_execve[0] != NULL)
-		ft_set_paths(&command->str_tab_for_execve[0]);
+		if (ft_check_file_permissions(command->str_tab_for_execve[0]) != 1)
+			ft_set_paths(&command->str_tab_for_execve[0]);
 	printf("[REDIRECTIONS]\n");
 	printf("FDIN		|%s|\n", command->infile);
 	printf("FDOUT		|%s|\n", command->outfile);

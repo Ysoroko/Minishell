@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/08 13:09:30 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/16 12:21:13 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -145,6 +145,8 @@ int	ft_check_spaces(char c, char *set)
 
 int	ft_empty_input(char *input)
 {
+	if (!input)
+		return (0);
 	while (*input)
 	{
 		if (!ft_check_spaces(*input, SPACES))
@@ -165,10 +167,10 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		//ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
-		user_input_str = readline("minishell: ");
-		if (ft_strlen(user_input_str) >= 0 && ft_empty_input(user_input_str))
-		{
-			if (strcmp(user_input_str, "exit") == 0)
+		user_input_str = readline("\nminishell: ");
+		//if (ft_strlen(user_input_str) >= 0 && ft_empty_input(user_input_str))
+		//{
+			if (ft_strcmp(user_input_str, "exit") == 0)
 				exit(EXIT_SUCCESS);
 			add_history(user_input_str);
 			//ft_extract_user_input_to_string(&user_input_str);
@@ -181,7 +183,7 @@ int	main(int ac, char **av, char **env)
 			//ft_run_through_lst(input_as_dl_command_list, &p);
 			//ft_exec_piped(input_as_dl_command_list->content, input_as_dl_command_list->next->content);
 			ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
-		}
+		//}
 	}
 	return (1);
 }

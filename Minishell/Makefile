@@ -6,7 +6,7 @@
 #    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/07/27 17:11:27 by ablondel         ###   ########.fr        #
+#    Updated: 2021/09/14 12:50:31 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -50,7 +50,7 @@ LIBFT		=	cd libft && make bonus
 
 NAME		=	minishell.a
 
-FLAGS		=	-Wall -Wextra -Werror -lreadline
+FLAGS		=	-Wall -Wextra -Werror -lreadline -fsanitize=address
 
 LINK		=	ar rcs
 

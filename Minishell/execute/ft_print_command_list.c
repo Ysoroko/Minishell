@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/08 15:37:32 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/16 12:20:54 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -109,13 +109,13 @@ int		ft_check_file_permissions(char *filename)
 	{
 		if (sb.st_mode & S_IXUSR)
 			return (1);
-		if (sb.st_mode & S_IRUSR)
-			printf("File {%s} exists and is readable\n", filename);
-		if (sb.st_mode & S_IWUSR)
-			printf("File {%s} exists and is writable\n", filename);
+		//if (sb.st_mode & S_IRUSR)
+		//	printf("File {%s} exists and is readable\n", filename);
+		//if (sb.st_mode & S_IWUSR)
+		//	printf("File {%s} exists and is writable\n", filename);
 		return (0);
 	}
-	printf("File {%s} does not exists.\n", filename);
+	//printf("File {%s} does not exists.\n", filename);
 	return (-1);
 }
 
@@ -189,18 +189,6 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 	return ;
 }
 
-void	ft_print_tab(char **tab)
-{
-	int i = 0;
-
-	if (!tab)
-		printf("NO DATA\n");
-	else
-		while (tab[i])
-			printf("___|%s|___\n", tab[i++]);
-	printf("\n");
-}
-
 /*
 ** FT_PRINT_COMMAND_LIST
 ** A debugging function used to print the list of our commands and related
@@ -253,47 +241,36 @@ int	ft_set_paths(char **exec_name)
 	return (0);
 }
 
+// cmd->fdin = open(cmd->infile, O_RDONLY);
+// cmd->fdout = open(cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
+// execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, NULL);
+
+
+
 void	ft_print_command_list(void *current_command)
 {
 	t_command	*command;
-	int			s;
-	char		*str;
+	//int			s;
+	//char		*str;
 	int			m;
 	int			i;
 
-	s = -18;
+	//s = -18;
 	i = -1;
-	printf("\n");
 	command = (t_command *)(current_command);
-	ft_print_tab_header(s);
 	command->keyword = (char**)malloc(sizeof(char*) * 1024);
 	command->keyword_index = 0;
-	
 	while (command->str_tab_all[++i])
 	{
-		str = (command->str_tab_all)[i];
+		//str = (command->str_tab_all)[i];
 		m = (command->role_macros)[i];
-		printf("%*d | %*s | %s%*d: %*s%s | %*s\n", PLACE_FOR_I, i, s, str,
-		ft_role_color(m), -2, m, s + 4, ft_role_str(m), COLOR_RESET, s,
-			ft_print_execve_element(command->str_tab_for_execve, i));
 		if (m >= 1 && m <= 4)
-		{
 			ft_add_redir_file(command, m, i);
-		}
 	}
 	if (command->str_tab_for_execve[0] != NULL)
 		if (ft_check_file_permissions(command->str_tab_for_execve[0]) != 1)
 			ft_set_paths(&command->str_tab_for_execve[0]);
-	printf("[REDIRECTIONS]\n");
-	printf("FDIN		|%s|\n", command->infile);
-	printf("FDOUT		|%s|\n", command->outfile);
-	printf("KEYWORD		|\n");
-	ft_print_tab(command->keyword);
-	printf("BUFFER		|%s|\n", command->buffer);
-	printf("RTYPEIN		|%d|\n", command->redir_type_in);
-	printf("RTYPEOUT	|%d|\n\n", command->redir_type_out);
-	printf("[EXECVE]\n");
-	ft_print_tab(command->str_tab_for_execve);
-	ft_print_line_of_chars('_', LINE_LENGTH);
-	printf("\n\n\n");
+	command->is_piped = 0;
+	if (command->role_macros[i - 1] == PIPE)
+		command->is_piped = 1;
 }

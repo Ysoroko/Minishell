@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/08 12:34:37 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/16 16:14:10 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -95,11 +95,13 @@ typedef struct s_command
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
+	int		is_piped;
+	pid_t	ret;
 	int		fdin_save;
 	int		fdin;
 	int		fdout_save;
 	int		fdout;
-	int		pfd[1024][2];
+	int		pfd[2];
 	int		redir_type_in;
 	int		redir_type_out;
 	char	*infile;

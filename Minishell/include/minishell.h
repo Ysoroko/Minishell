@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/16 16:14:10 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:31:42 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,8 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-
+extern int errno;
+char	**g_env;
 /*
 ** MINISHELL PROMPT DISPLAY CONSTANTS
 */
@@ -96,20 +97,15 @@ typedef struct s_command
 	char	**str_tab_for_execve;
 	int		*role_macros;
 	int		is_piped;
-	pid_t	ret;
-	int		fdin_save;
 	int		fdin;
-	int		fdout_save;
 	int		fdout;
-	int		pfd[2];
 	int		redir_type_in;
 	int		redir_type_out;
 	char	*infile;
 	char	*outfile;
 	char	**keyword;
 	int		keyword_index;
-	char	buffer[4096];
-	int		buffer_index;
+	char	*buffer;
 }	t_command;
 
 /*
@@ -142,6 +138,8 @@ void 		ft_extract_role_macros_tab(t_command *command);
 void		ft_print_command_list(void *current_command);
 int			ft_is_a_redir_arg_macro(int macro);
 
+int			ft_check_file_permissions(char *filename);
+void		ft_prompt();
 /*
 ** COLORS
 */

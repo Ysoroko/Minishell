@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/16 12:20:54 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/22 17:38:27 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,7 +68,7 @@ static char	*ft_role_str(int m)
 ** ____________________________________________________________
 */
 
-static void	ft_print_tab_header(int	s)
+static void	ft_print_tab_header(int s)
 {
 	printf(BOLDWHITE);
 	ft_print_line_of_chars('_', LINE_LENGTH);
@@ -98,8 +98,7 @@ static char	*ft_print_execve_element(char **tab, int i)
 		return (tab[i]);
 }
 
-
-int		ft_check_file_permissions(char *filename)
+int	ft_check_file_permissions(char *filename)
 {
 	struct stat	sb;
 
@@ -107,85 +106,112 @@ int		ft_check_file_permissions(char *filename)
 		return (-1);
 	if (stat(filename, &sb) == 0)
 	{
-		if (sb.st_mode & S_IXUSR)
+		if (sb.st_mode & S_IRUSR && sb.st_mode & S_IWUSR)
 			return (1);
-		//if (sb.st_mode & S_IRUSR)
-		//	printf("File {%s} exists and is readable\n", filename);
-		//if (sb.st_mode & S_IWUSR)
-		//	printf("File {%s} exists and is writable\n", filename);
+		else if (sb.st_mode & S_IWUSR)
+			return (2);
+		else if (sb.st_mode & S_IRUSR)
+			return (3);
 		return (0);
 	}
-	//printf("File {%s} does not exists.\n", filename);
 	return (-1);
 }
 
-void	ft_load_hdoc_buffer(t_command *cmd)
+void	ft_hdoc(t_command *cmd)
 {
-	int 	ret;
+	int	fd;
 
-	ret = 0;
+	if (ft_check_file_permissions("hdoc/tmp") >= 1)
+		fd = open("hdoc/tmp", O_RDWR | O_CREAT | O_TRUNC, 0664);
+	else
+		fd = open("hdoc/tmp", O_RDWR | O_CREAT | O_APPEND, 0664);
+	if (fd == -1)
+		exit(EXIT_FAILURE);
 	while (1)
 	{
-		write(1, "> ", 2);
-		ret += read(STDIN_FILENO, cmd->buffer, 1024);
-		if (ft_strncmp(cmd->keyword[cmd->keyword_index],
-		cmd->buffer, ft_strlen(cmd->buffer) - 1) == 0 || ret == 0)
+		cmd->buffer = readline("> ");
+		if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) == 0)
 		{
-			cmd->buffer[ret] = '\0';
+			if (close(fd) == -1)
+				exit(EXIT_FAILURE);
 			return ;
 		}
+		write(fd, cmd->buffer, ft_strlen(cmd->buffer));
+		write(fd, "\n", 1);
 	}
+	if (close(fd) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	ft_add_redir_out(t_command *cmd, int m, int i)
+{
+	if (cmd->outfile)
+		free(cmd->outfile);
+	if (cmd->str_tab_all[i + 1] != NULL)
+		cmd->outfile = ft_strdup(cmd->str_tab_all[i + 1]);
+	else
+		exit(EXIT_FAILURE);
+	if (!cmd->outfile)
+		exit(EXIT_FAILURE);
+	if (m == REDIR_R)
+	{
+		cmd->fdout = open(cmd->outfile, O_CREAT | O_TRUNC, 0664);
+		cmd->redir_type_out = 1;
+	}
+	else
+	{
+		cmd->fdout = open(cmd->outfile, O_CREAT | O_APPEND, 0664);
+		cmd->redir_type_out = 2;
+	}
+	if (cmd->fdout == -1)
+		exit(EXIT_FAILURE);
+	if (close(cmd->fdout) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	ft_add_redir_in(t_command *cmd, int m, int i)
+{
+	cmd->redir_type_in = 3;
+	if (cmd->infile)
+		free(cmd->infile);
+	if (cmd->str_tab_all[i + 1] != NULL)
+		cmd->infile = ft_strdup(cmd->str_tab_all[i + 1]);
+	else
+		exit(EXIT_FAILURE);
+	if (!cmd->infile)
+		exit(EXIT_FAILURE);
+	cmd->fdin = open(cmd->infile, O_RDONLY);
+	if (cmd->fdin == -1)
+		exit(EXIT_FAILURE);
+	if (close(cmd->fdin) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	ft_add_redir_hdoc(t_command *cmd, int m, int i)
+{
+	cmd->redir_type_in = 4;
+	if (cmd->str_tab_all[i + 1] != NULL)
+		cmd->keyword[cmd->keyword_index] = ft_strdup(cmd->str_tab_all[i + 1]);
+	else
+		exit(EXIT_FAILURE);
+	if (!cmd->keyword[cmd->keyword_index])
+		exit(EXIT_FAILURE);
+	ft_hdoc(cmd);
+	cmd->keyword_index++;
+	cmd->keyword[cmd->keyword_index] = 0;
 }
 
 void	ft_add_redir_file(t_command *cmd, int m, int i)
 {
 	if (m == REDIR_R || m == REDIR_RR)
-	{
-		if (cmd->outfile)
-			free(cmd->outfile);
-		cmd->outfile = ft_strdup(cmd->str_tab_all[i + 1]);
-		if (!cmd->outfile)
-		{
-			printf("Failed to copy outfile name.\n");
-			exit(EXIT_FAILURE);
-		}
-		if (m == REDIR_R)
-			cmd->redir_type_out = 1;
-		else
-			cmd->redir_type_out = 2;
-	}
+		ft_add_redir_out(cmd, m, i);
 	else if (m == REDIR_L || m == REDIR_LL)
 	{
 		if (m == REDIR_L)
-		{
-			cmd->redir_type_in = 3;
-			if (cmd->infile)
-				free(cmd->infile);
-			cmd->infile = ft_strdup(cmd->str_tab_all[i + 1]);
-			if (!cmd->infile)
-			{
-				printf("Failed to copy infile name.\n");
-				exit(EXIT_FAILURE);
-			}
-		}
+			ft_add_redir_in(cmd, m, i);
 		else if (m == REDIR_LL)
-		{
-			cmd->redir_type_in = 4;
-			if (cmd->keyword[cmd->keyword_index])
-				free(cmd->keyword[cmd->keyword_index]);
-			cmd->keyword[cmd->keyword_index] = ft_strdup(cmd->str_tab_all[i + 1]);
-			if (!cmd->keyword[cmd->keyword_index])
-			{
-				printf("Failed to copy keyword.\n");
-				exit(EXIT_FAILURE);
-			}
-			ft_load_hdoc_buffer(cmd);
-			cmd->keyword_index++;
-			cmd->keyword[cmd->keyword_index] = 0;
-		}
+			ft_add_redir_hdoc(cmd, m, i);
 	}
-	ft_check_file_permissions(cmd->infile);
-	ft_check_file_permissions(cmd->outfile);
 	return ;
 }
 
@@ -197,10 +223,10 @@ void	ft_add_redir_file(t_command *cmd, int m, int i)
 
 int	ft_exec_check(char *path, char *cmd)
 {
-	int	i;
-	DIR	*dir;
+	int				i;
+	DIR				*dir;
 	struct dirent	*d;
-	char	*tmp;
+	char			*tmp;
 
 	i = 0;
 	dir = opendir(path);
@@ -217,60 +243,66 @@ int	ft_exec_check(char *path, char *cmd)
 
 int	ft_set_paths(char **exec_name)
 {
-	int i;
+	int		i;
 	char	*tmp;
 	char	**paths;
 
 	i = 0;
 	tmp = getenv("PATH");
+	if (!tmp)
+		return (-1);
 	paths = ft_split(tmp, ':');
-	while (paths[i])
+	if (!paths)
+		return (-1);
+	while (paths[i++])
 	{
 		tmp = paths[i];
-		paths[i] = ft_strjoin(paths[i], "/");
+		paths[i] = ft_strjoin_exit(paths[i], "/");
 		free(tmp);
 		if (ft_exec_check(paths[i], *exec_name) == 1)
 		{
 			tmp = *exec_name;
-			*exec_name = ft_strjoin(paths[i], *exec_name);
+			*exec_name = ft_strjoin_exit(paths[i], *exec_name);
 			free(tmp);
 			return (1);
 		}
-		i++;
 	}
 	return (0);
 }
 
-// cmd->fdin = open(cmd->infile, O_RDONLY);
-// cmd->fdout = open(cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
-// execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, NULL);
+int	ft_check_binary(char *filename)
+{
+	struct stat	sb;
 
-
+	if (!filename)
+		return (-1);
+	if (stat(filename, &sb) == 0)
+	{
+		if (sb.st_mode & S_IXUSR)
+			return (1);
+	}
+	return (-1);
+}
 
 void	ft_print_command_list(void *current_command)
 {
 	t_command	*command;
-	//int			s;
-	//char		*str;
 	int			m;
 	int			i;
 
-	//s = -18;
 	i = -1;
 	command = (t_command *)(current_command);
-	command->keyword = (char**)malloc(sizeof(char*) * 1024);
+	command->keyword = (char **)malloc(sizeof(char *) * 1024);
+	if (!command->keyword)
+		exit(EXIT_FAILURE);
 	command->keyword_index = 0;
 	while (command->str_tab_all[++i])
 	{
-		//str = (command->str_tab_all)[i];
 		m = (command->role_macros)[i];
 		if (m >= 1 && m <= 4)
 			ft_add_redir_file(command, m, i);
 	}
-	if (command->str_tab_for_execve[0] != NULL)
-		if (ft_check_file_permissions(command->str_tab_for_execve[0]) != 1)
-			ft_set_paths(&command->str_tab_for_execve[0]);
-	command->is_piped = 0;
-	if (command->role_macros[i - 1] == PIPE)
-		command->is_piped = 1;
+	if (ft_check_binary(command->str_tab_for_execve[0]) != 1)
+		if (ft_set_paths(&command->str_tab_for_execve[0]) == -1)
+			exit(EXIT_FAILURE);
 }

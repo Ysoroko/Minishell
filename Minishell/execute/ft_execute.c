@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/16 16:42:45 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/22 17:31:35 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,106 +20,128 @@
 ** the t_list* structure
 */
 
-void	ft_print_tab(char **tab)
+void	ft_close_pipes(int npipes, int *pfd)
 {
-	int i = 0;
+	int	i;
 
-	if (!tab)
-		printf("NO DATA\n");
-	else
-		while (tab[i])
-			printf("___|%s|___\n", tab[i++]);
-	printf("\n");
+	i = 0;
+	while (i < (npipes * 2))
+	{
+		if (close(pfd[i]) == -1)
+			exit(EXIT_FAILURE);
+		i++;
+	}
 }
 
-void	ft_print_cmd_table(t_command *cmd)
+void	ft_open_pipes(int npipes, int *pfd)
 {
-	printf("-------------------------------------------------\n");
-	printf("[EXECVE]\n");
-	ft_print_tab(cmd->str_tab_for_execve);
-	printf("type in = [%d]\n", cmd->redir_type_in);
-	printf("type out = [%d]\n", cmd->redir_type_out);
-	printf("infile = [%s]\n", cmd->infile);
-	printf("outfile = [%s]\n", cmd->outfile);
-	printf("is piped = [%d]\n", cmd->is_piped);
+	int	i;
+
+	i = 0;
+	while (i < npipes)
+	{
+		if (pipe(pfd + i * 2) == -1)
+			exit(EXIT_FAILURE);
+		i++;
+	}
+}
+
+void	ft_fdin(t_command *cmd)
+{
+	if (cmd->redir_type_in == REDIR_L)
+		cmd->fdin = open(cmd->infile, O_RDONLY);
+	else
+		cmd->fdin = open("hdoc/tmp", O_RDONLY);
+	if (cmd->fdin == -1)
+		exit(EXIT_FAILURE);
+	if (dup2(cmd->fdin, 0) == -1)
+		exit(EXIT_FAILURE);
+	if (close(cmd->fdin) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	ft_fdout(t_command *cmd)
+{
+	if (cmd->redir_type_out == REDIR_R)
+		cmd->fdout = open(cmd->outfile, O_RDWR | O_TRUNC, 0664);
+	else
+		cmd->fdout = open(cmd->outfile, O_RDWR | O_APPEND, 0664);
+	if (cmd->fdout == -1)
+		exit(EXIT_FAILURE);
+	if (dup2(cmd->fdout, 1) == -1)
+		exit(EXIT_FAILURE);
+	if (close(cmd->fdout) == -1)
+		exit(EXIT_FAILURE);
+}
+
+void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
+{
+	if (command_list->next)
+		if (cmd->redir_type_out != REDIR_R || cmd->redir_type_out != REDIR_RR)
+			if (dup2(pfd[j + 1], 1) == -1)
+				exit(EXIT_FAILURE);
+	if (j != 0)
+		if (cmd->redir_type_in != REDIR_L || cmd->redir_type_in != REDIR_LL)
+			if (dup2(pfd[j - 2], 0) == -1)
+				exit(EXIT_FAILURE);
+}
+
+void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
+{
+	*npipes = ft_lstsize((t_list *)lst) - 1;
+	*pfd = (int *)malloc(sizeof(int) * (*npipes * 2));
+	if (!(*pfd))
+		exit(EXIT_FAILURE);
+	ft_dl_lstiter(lst, ft_print_command_list);
+	ft_open_pipes(*npipes, *pfd);
+}
+
+void	ft_fds_and_pipes(t_dl_lst *lst, t_command *cmd, int *pfd, int j)
+{
+	if (cmd->redir_type_in == REDIR_L || cmd->redir_type_in == REDIR_LL)
+		ft_fdin(cmd);
+	if (cmd->redir_type_out == REDIR_R || cmd->redir_type_out == REDIR_RR)
+		ft_fdout(cmd);
+	ft_pipe_cmd(lst, cmd, pfd, j);
+}
+
+void	ft_parent_process(int npipes, int *pfd)
+{
+	int	i;
+
+	i = 0;
+	ft_close_pipes(npipes, pfd);
+	while (i <= npipes)
+	{
+		wait(NULL);
+		i++;
+	}
 }
 
 void	ft_execute(t_dl_lst *command_list)
 {
-	t_command *cmd;
-	int	npipes = ft_lstsize((t_list *)command_list);
-	int pfd[2 * npipes];
-	pid_t p;
-	int status;
-	int i = 0;
-	int j = 0;
+	t_command	*cmd;
+	pid_t		p;
+	int			*pfd;
+	int			npipes;
+	int			j;
 
-	if (!command_list)
-		return ;
-	ft_dl_lstiter(command_list, ft_print_command_list);
-	while (i < npipes)
-	{
-		if (pipe(pfd + i * 2) < 0)
-		{
-			printf("Pipe error.\n");
-			exit(EXIT_FAILURE);
-		}
-		i++;
-	}
-	i = 0;
+	ft_setup_for_exec(command_list, &pfd, &npipes);
+	j = 0;
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
 		p = fork();
-		//ft_print_cmd_table(cmd);
+		if (p < 0)
+			exit(EXIT_FAILURE);
 		if (p == 0)
 		{
-			if (cmd->infile)
-			{
-				cmd->fdin = open(cmd->infile, O_RDONLY);
-				dup2(cmd->fdin, 0);
-				close(cmd->fdin);
-			}
-			if (cmd->outfile)
-			{
-				if (cmd->redir_type_out == 1)
-					cmd->fdout = open(cmd->outfile, O_RDWR | O_CREAT | O_TRUNC, 0777);
-				else
-					cmd->fdout = open(cmd->outfile, O_RDWR | O_CREAT | O_APPEND, 0777);
-				dup2(cmd->fdout, 1);
-				close(cmd->fdout);
-			}
-			if (command_list->next)
-			{
-				if (!cmd->outfile)
-					dup2(pfd[j + 1], 1);
-			}
-			if (j != 0 && j != 2 * npipes)
-			{
-				if (!cmd->infile)
-					dup2(pfd[j - 2], 0);
-			}
-			i = 0;
-			while (i < 2 * npipes)
-			{
-				close(pfd[i]);
-				i++;
-			}
-			execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, NULL);
+			ft_fds_and_pipes(command_list, cmd, pfd, j);
+			ft_close_pipes(npipes, pfd);
+			execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_env);
 		}
 		command_list = command_list->next;
 		j += 2;
 	}
-	i = 0;
-	while (i < 2 * npipes)
-	{
-		close(pfd[i]);
-		i++;
-	}
-	i = 0;
-	while (i < npipes + 1)
-	{
-		wait(&status);
-		i++;
-	}
+	ft_parent_process(npipes, pfd);
 }

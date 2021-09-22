@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/16 12:21:13 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/22 16:31:53 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -153,69 +153,33 @@ int	ft_empty_input(char *input)
 			return (1);
 		input++;
 	}
-	return (0);
+	return (-1);
+}
+
+void	ft_prompt()
+{
+	char		*user_input_str;
+	t_dl_lst	*input_as_dl_command_list;
+	
+	user_input_str = readline("minishell: ");
+	add_history(user_input_str);
+	if (ft_strcmp(user_input_str, "exit") == 0)
+		exit(EXIT_SUCCESS);
+	input_as_dl_command_list = ft_input_parsing(user_input_str);
+	ft_execute(input_as_dl_command_list);
+	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
-	char		*user_input_str;
-	t_dl_lst	*input_as_dl_command_list;
 
 	ft_setup_signals();
+	g_env = env;
 	while (1)
 	{
-		//ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
-		user_input_str = readline("\nminishell: ");
-		//if (ft_strlen(user_input_str) >= 0 && ft_empty_input(user_input_str))
-		//{
-			if (ft_strcmp(user_input_str, "exit") == 0)
-				exit(EXIT_SUCCESS);
-			add_history(user_input_str);
-			//ft_extract_user_input_to_string(&user_input_str);
-			input_as_dl_command_list = ft_input_parsing(user_input_str);
-			// POUR LIRE LE TABEAU POUR EXECVE:
-			// input_as_dl_command_list->content->str_tab_for_execve
-			// POUR IMPRIMER LE TABEAU:
-			// ft_putstr_tab(input_as_dl_command_list->content->str_tab_for_execve, STDOUT);
-			ft_execute(input_as_dl_command_list);
-			//ft_run_through_lst(input_as_dl_command_list, &p);
-			//ft_exec_piped(input_as_dl_command_list->content, input_as_dl_command_list->next->content);
-			ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
-		//}
+		ft_prompt();
 	}
 	return (1);
 }
-
-// T_COMMAND STRUCTURE:
-// typedef struct s_command
-// {
-// 	char	**str_tab_all;
-// 	char	**str_tab_for_execve;
-// 	int		*role_macros;
-// }	t_command;
-
-// T_DL_LST STRUCTURE:
-// typedef struct s_dl_lst
-// {
-// 	void			*content;
-// 	struct s_dl_lst	*next;
-// 	struct s_dl_lst	*previous;
-// }				t_dl_lst;
-
-
-// # define ERROR 0
-// # define REDIR_R 1
-// # define REDIR_RR 2
-// # define REDIR_L 3
-// # define REDIR_LL 4
-// # define REDIR_ARG 5
-// # define PIPE 6
-// # define COMMAND 7
-// # define FLAG 8
-// # define COMMAND_ARG 9
-// # define R_REDIR_ARG 10
-// # define L_REDIR_ARG 11
-// # define RR_REDIR_ARG 12
-// # define LL_REDIR_ARG 13

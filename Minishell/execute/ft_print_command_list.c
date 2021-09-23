@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_command_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/22 17:38:27 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/23 17:31:42 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,9 @@ void	ft_add_redir_out(t_command *cmd, int m, int i)
 		cmd->redir_type_out = 2;
 	}
 	if (cmd->fdout == -1)
+	{
 		exit(EXIT_FAILURE);
+	}
 	if (close(cmd->fdout) == -1)
 		exit(EXIT_FAILURE);
 }
@@ -247,14 +249,14 @@ int	ft_set_paths(char **exec_name)
 	char	*tmp;
 	char	**paths;
 
-	i = 0;
+	i = -1;
 	tmp = getenv("PATH");
 	if (!tmp)
 		return (-1);
 	paths = ft_split(tmp, ':');
 	if (!paths)
 		return (-1);
-	while (paths[i++])
+	while (paths[++i])
 	{
 		tmp = paths[i];
 		paths[i] = ft_strjoin_exit(paths[i], "/");
@@ -274,7 +276,7 @@ int	ft_check_binary(char *filename)
 {
 	struct stat	sb;
 
-	if (!filename)
+	if (!filename || !filename[0])
 		return (-1);
 	if (stat(filename, &sb) == 0)
 	{
@@ -292,6 +294,12 @@ void	ft_print_command_list(void *current_command)
 
 	i = -1;
 	command = (t_command *)(current_command);
+	if (!command || !command->str_tab_all || !command->str_tab_all[0]
+		|| !command->str_tab_for_execve || ! command->str_tab_for_execve[0]
+		|| !command->role_macros || !command->role_macros[0])
+	{
+		return ;
+	}
 	command->keyword = (char **)malloc(sizeof(char *) * 1024);
 	if (!command->keyword)
 		exit(EXIT_FAILURE);
@@ -299,10 +307,12 @@ void	ft_print_command_list(void *current_command)
 	while (command->str_tab_all[++i])
 	{
 		m = (command->role_macros)[i];
-		if (m >= 1 && m <= 4)
+		if (ft_is_a_redir_arg_macro(m))
 			ft_add_redir_file(command, m, i);
 	}
 	if (ft_check_binary(command->str_tab_for_execve[0]) != 1)
+	{
 		if (ft_set_paths(&command->str_tab_for_execve[0]) == -1)
 			exit(EXIT_FAILURE);
+	}
 }

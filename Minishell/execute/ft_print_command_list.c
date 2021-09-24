@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_print_command_list.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/23 17:31:42 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 12:32:53 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -285,7 +285,7 @@ int	ft_check_binary(char *filename)
 	}
 	return (-1);
 }
-
+/*YEYEYEYEEEEEEET!!!!*/
 void	ft_print_command_list(void *current_command)
 {
 	t_command	*command;

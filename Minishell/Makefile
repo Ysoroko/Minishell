@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
+#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/22 18:08:23 by ablondel         ###   ########.fr        #
+#    Updated: 2021/09/24 12:18:29 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -41,16 +41,15 @@ BOLD_YELLOW			=	\033[1;33m
 
 NO_COLOR			=	\033[0m
 
-# Termcap
-# Linking command required to be able to use termcap commands
-# Without it, some termcap functions are not recognized despite the #include
-TERMCAP		=	-ltermcap
-
 LIBFT		=	cd libft && make bonus
 
 NAME		=	minishell.a
 
 FLAGS		=	-Wall -Wextra -Werror -lreadline
+
+READLINE_FLAGS	=	-L $(RPATH)lib -I $(RPATH)include -lreadline -Wno-unused-command-line-argument
+
+RL_FLAGS	=	-L/usr/include  -lreadline
 
 LINK		=	ar rcs
 
@@ -64,15 +63,16 @@ CLEANED		=	echo "\n🧼 $(BOLD_YELLOW)Clean: $(NO_COLOR)Removed all the \".o\" f
 
 FCLEANED	=	echo "\n🧽 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed all the \".a\" files and the \"minishell\" executable \n"						
 
+
 .c.o:
-	@${CC} ${CFLAGS} -I include -c $< -o ${<:.c=.o}
+	@${CC} ${CFLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
 
 all: $(NAME)
 
 $(NAME): $(OBJS)
 		@$(LIBFT)
 		@$(LINK) $(NAME) $(OBJS)
-		@gcc $(FLAGS) $(LIBRARIES) $(TERMCAP) -o $(EXECUTABLE)
+		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) $(TERMCAP) -o $(EXECUTABLE)
 		@$(MINISHELL_COMPILED)
 
 # Compiles everything with warning flags and runs the executable

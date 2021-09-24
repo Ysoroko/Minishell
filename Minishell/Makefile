@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/24 16:11:21 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/09/24 16:19:26 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,7 @@ READLINE_FLAGS	=	-L $(RPATH)lib -I $(RPATH)include -lreadline -Wno-unused-comman
 RL_FLAGS	=	-L/usr/include  -lreadline
 #-------------------------
 
+# This terminal setup line will get rid of "^C", "^D" etc. when pressing CTRL + C/D in minishell
 REMOVE_CONTROL_CHARACTERS = stty -echoctl
 
 LINK		=	ar rcs

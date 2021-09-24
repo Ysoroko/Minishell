@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/23 15:48:54 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 11:56:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -156,12 +156,12 @@ int	ft_empty_input(char *input)
 	return (-1);
 }
 
-void	ft_prompt()
+void	ft_prompt(void)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
 	
-	user_input_str = readline("minishell: ");
+	user_input_str = readline(PROMPT_NAME);
 	if (!user_input_str || !user_input_str[0])
 		return ;
 	add_history(user_input_str);

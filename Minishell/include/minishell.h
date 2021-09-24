@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/22 16:31:42 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/09/24 11:56:51 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**g_env;
 ** MINISHELL PROMPT DISPLAY CONSTANTS
 */
 
-# define PROMPT_NAME "minishell: "
+# define PROMPT_NAME "\033[1m\033[36mminishell: \x1b[0m"
 # define PROMPT_COLOR "\033[1m\033[36m"
 
 /*
@@ -139,7 +139,7 @@ void		ft_print_command_list(void *current_command);
 int			ft_is_a_redir_arg_macro(int macro);
 
 int			ft_check_file_permissions(char *filename);
-void		ft_prompt();
+void		ft_prompt(void);
 /*
 ** COLORS
 */

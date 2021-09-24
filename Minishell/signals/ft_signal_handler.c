@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/27 12:16:44 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 11:57:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,9 @@
 
 static void	ft_control_c_function(void)
 {
-	ft_putstr_fd("\b \b\b \b", STDOUT);
+	//ft_putstr_fd("\b \b\b \b", STDOUT);
 	ft_putchar_fd('\n', STDOUT);
-	ft_display_prompt(PROMPT_COLOR, PROMPT_NAME);
+	ft_prompt();
 }
 
 /*

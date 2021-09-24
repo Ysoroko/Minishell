@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 12:18:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 14:55:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,9 +21,14 @@
 
 static void	ft_control_c_function(void)
 {
-	//ft_putstr_fd("\b \b\b \b", STDOUT);
+	
 	//ft_putchar_fd('\n', STDOUT);
-	rl_on_newline();
+	rl_replace_line("", 0);
+	rl_on_new_line();
+	rl_redisplay();
+	ft_putchar_fd('\n', STDOUT);
+	rl_replace_line("  ", 1);
+	rl_on_new_line();
 	rl_redisplay();
 	//ft_prompt();
 }
@@ -41,6 +46,7 @@ static void	ft_control_backslash_function(void)
 	//printf("CTRL + \\ have been pressed");
 	ft_putstr_fd("\b \b\b \b", STDIN);
 	kill(getpid(), SIGCONT);
+	exit(EXIT_SUCCESS);
 }
 
 /*

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 11:56:41 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 14:56:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -162,7 +162,8 @@ void	ft_prompt(void)
 	t_dl_lst	*input_as_dl_command_list;
 	
 	user_input_str = readline(PROMPT_NAME);
-	if (!user_input_str || !user_input_str[0])
+	printf("user input: [%s]\n", user_input_str);
+	if (!user_input_str || ft_str_only_has_chars_from_charset(user_input_str, SPACES))
 		return ;
 	add_history(user_input_str);
 	if (ft_strcmp(user_input_str, "exit") == 0)

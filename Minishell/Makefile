@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/24 12:18:29 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/09/24 14:29:47 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -47,9 +47,15 @@ NAME		=	minishell.a
 
 FLAGS		=	-Wall -Wextra -Werror -lreadline
 
+# Readline related flags
+USER		=	ysoroko
+
+RPATH		=	/Users/$(USER)/.brew/opt/readline/
+
 READLINE_FLAGS	=	-L $(RPATH)lib -I $(RPATH)include -lreadline -Wno-unused-command-line-argument
 
 RL_FLAGS	=	-L/usr/include  -lreadline
+#-------------------------
 
 LINK		=	ar rcs
 

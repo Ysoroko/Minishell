@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 16:28:16 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 16:34:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@
 
 static void	ft_control_c_function(void)
 {
+	exit(EXIT_SUCCESS);
 	ft_putchar_fd('\n', STDOUT);
 	rl_on_new_line();
 	rl_replace_line("", 0);
@@ -36,8 +37,8 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	kill(getpid(), SIGCONT);
-	exit(EXIT_SUCCESS);
+	kill(getpid(), SIGQUIT);
+	//exit(EXIT_SUCCESS);
 }
 
 /*

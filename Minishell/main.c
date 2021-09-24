@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 16:20:39 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 16:48:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,7 +54,12 @@ static void	ft_setup_signals(void)
 int	ft_user_input_error(char *str)
 {
 	if (!str)
-		return (1);
+	{
+		//
+		rl_replace_line("exit", 0);
+		rl_redisplay();
+		exit(EXIT_SUCCESS);
+	}
 	if (ft_str_only_has_chars_from_charset(str, SPACES))
 		return (1);
 	if (ft_str_has_unclosed_quotes(str))

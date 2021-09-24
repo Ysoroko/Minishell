@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 11:56:51 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 16:11:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,7 +29,14 @@
 # include <readline/history.h>
 
 extern int errno;
-char	**g_env;
+
+typedef	struct s_glob
+{
+	char	**env;
+}	t_glob;
+
+t_glob	g_glob;
+
 /*
 ** MINISHELL PROMPT DISPLAY CONSTANTS
 */

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/23 17:31:20 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 15:45:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -138,7 +138,7 @@ void	ft_execute(t_dl_lst *command_list)
 		{
 			ft_fds_and_pipes(command_list, cmd, pfd, j);
 			ft_close_pipes(npipes, pfd);
-			execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_env);
+			execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_glob.env);
 		}
 		command_list = command_list->next;
 		j += 2;

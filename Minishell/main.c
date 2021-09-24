@@ -6,52 +6,11 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 14:56:44 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/24 16:11:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "./include/minishell.h"
-
-/*
-** FT_DISPLAY_PROMPT
-** This function is used to display the prompt name on STDOUT in the specified
-** color
-** The last line is used to reset the color after displaying the prompt
-** so that the input is written in standard white
-*/
-
-void	ft_display_prompt(char *color, char *prompt_name)
-{
-	write(STDOUT, color, 10);
-	write(STDOUT, prompt_name, (int)ft_strlen(prompt_name));
-	write(STDOUT, "\x1b[0m", 5);
-}
-
-/*
-** FT_EXTRACT_USER_INPUT_TO_STRING
-** This function will transform user's input input into one string
-** It will also check for unclosed quotes in the input
-*/
-
-static void	ft_extract_user_input_to_string(char **str)
-{
-	char	*temp;
-	char	unclosed_quote;
-	int		read_ret;
-	
-	*str = ft_calloc_exit(sizeof(char), INPUT_SIZE);
-	read_ret = ft_read_exit(STDIN, *str, INPUT_SIZE);
-	if (!read_ret)
-		ft_signal_handler(SIGUSR1);
-	if (!ft_strchr(*str, '\n'))
-		printf("\nEOF Seen\n");
-	if (!read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
-		ft_signal_handler(SIGUSR1);
-	else if (read_ret && *str && !ft_str_only_has_chars_from_charset(*str, SPACES))
-		ft_check_for_unclosed_quotes(str);
-	else
-		ft_free_str(str);
-}
 
 /*
 ** FT_CLEANUP_AND_FREE
@@ -65,33 +24,6 @@ static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 {
 	ft_free_str(str);
 	ft_dl_lstclear(lst, &ft_free_t_command);
-}
-
-/*
-** FT_CHECK_FOR_UNCLOSED_QUOTES
-** This function is used to analyze user's input
-** and if it has unclosed quotes, it will display ">"
-** in prompt until the unclosed quote is provided in input
-*/
-
-void	ft_check_for_unclosed_quotes(char **input)
-{
-	char	*additional_input;
-
-	if (!input || !*input)
-		return ;
-	if (ft_str_has_unclosed_quotes(*input))
-	{
-		additional_input = ft_calloc_exit(sizeof(char), INPUT_SIZE);
-		while (ft_str_has_unclosed_quotes(*input))
-		{
-			ft_display_prompt(BOLDCYAN, "> ");
-			ft_read_exit(STDIN, additional_input, INPUT_SIZE);
-			*input = ft_strjoin_free_pref_exit(input, additional_input);
-		}
-		ft_free_str(&additional_input);
-	}
-	*input = ft_strtrim_exit_replace_src(input, SPACES);
 }
 
 /*
@@ -119,41 +51,18 @@ static void	ft_setup_signals(void)
 ** Cleans up and frees all used data after each user's input
 */
 
-void	print(char **tab)
+int	ft_user_input_error(char *str)
 {
-	int i;
-
-	i = 0;
-	while (tab[i])
+	if (!str)
+		return (1);
+	if (ft_str_only_has_chars_from_charset(str, SPACES))
+		return (1);
+	if (ft_str_has_unclosed_quotes(str))
 	{
-		printf("[%s]\n", tab[i]);
-		i++;
-	}
-	printf("\n\n");
-}
-
-int	ft_check_spaces(char c, char *set)
-{
-	while (*set)
-	{
-		if (c == *set)
-			return (1);
-		set++;
+		ft_putendl_fd("Minishell: Unclosed quotes error", STDERR);
+		return (1);
 	}
 	return (0);
-}
-
-int	ft_empty_input(char *input)
-{
-	if (!input)
-		return (0);
-	while (*input)
-	{
-		if (!ft_check_spaces(*input, SPACES))
-			return (1);
-		input++;
-	}
-	return (-1);
 }
 
 void	ft_prompt(void)
@@ -162,8 +71,8 @@ void	ft_prompt(void)
 	t_dl_lst	*input_as_dl_command_list;
 	
 	user_input_str = readline(PROMPT_NAME);
-	printf("user input: [%s]\n", user_input_str);
-	if (!user_input_str || ft_str_only_has_chars_from_charset(user_input_str, SPACES))
+	printf("user input :[%s]\n", user_input_str);
+	if (ft_user_input_error(user_input_str))
 		return ;
 	add_history(user_input_str);
 	if (ft_strcmp(user_input_str, "exit") == 0)
@@ -187,7 +96,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 
 	ft_setup_signals();
-	g_env = env;
+	g_glob.env = env;
 	while (1)
 	{
 		ft_prompt();

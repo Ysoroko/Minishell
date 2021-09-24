@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/24 14:29:47 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/09/24 16:11:21 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -57,6 +57,8 @@ READLINE_FLAGS	=	-L $(RPATH)lib -I $(RPATH)include -lreadline -Wno-unused-comman
 RL_FLAGS	=	-L/usr/include  -lreadline
 #-------------------------
 
+REMOVE_CONTROL_CHARACTERS = stty -echoctl
+
 LINK		=	ar rcs
 
 INCLUDE		=	-I include
@@ -79,10 +81,12 @@ $(NAME): $(OBJS)
 		@$(LIBFT)
 		@$(LINK) $(NAME) $(OBJS)
 		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) $(TERMCAP) -o $(EXECUTABLE)
+		@$(REMOVE_CONTROL_CHARACTERS)
 		@$(MINISHELL_COMPILED)
 
 # Compiles everything with warning flags and runs the executable
 run:	$(NAME)
+		@$(REMOVE_CONTROL_CHARACTERS)
 		@./$(EXECUTABLE)
 
 # Compiles everything without warning flags and runs the executable

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 16:11:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 15:11:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -147,6 +147,7 @@ int			ft_is_a_redir_arg_macro(int macro);
 
 int			ft_check_file_permissions(char *filename);
 void		ft_prompt(void);
+void		ft_setup_signals(void);
 /*
 ** COLORS
 */

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 16:48:08 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 15:11:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,40 +26,11 @@ static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 	ft_dl_lstclear(lst, &ft_free_t_command);
 }
 
-/*
-** FT_SETUP_SIGNALS
-** This function modifies the behaviour when specific actions are done
-** When we press CTRL+C, instead of quitting it will call the function
-** ft_signal handlerz
-*/
-
-static void	ft_setup_signals(void)
-{
-	signal(SIGINT, ft_signal_handler);
-	signal(SIGQUIT, ft_signal_handler);
-	signal(SIGUSR1, ft_signal_handler);
-}
-
-/*
-** MAIN
-** Central hub of the minishell project
-** Here we display the "minishell" prompt and extract user's input.
-** The parsing then transforms user's input from a string format to a double
-** linked list format (a linked list where each element has the address of both
-** the next and the previous element of the list)
-** It executes all of the commands from the user's input one by one
-** Cleans up and frees all used data after each user's input
-*/
-
 int	ft_user_input_error(char *str)
 {
+	char	*st;
 	if (!str)
-	{
-		//
-		rl_replace_line("exit", 0);
-		rl_redisplay();
-		exit(EXIT_SUCCESS);
-	}
+		kill(getpid(), SIGUSR1);
 	if (ft_str_only_has_chars_from_charset(str, SPACES))
 		return (1);
 	if (ft_str_has_unclosed_quotes(str))
@@ -99,10 +70,10 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 
-	ft_setup_signals();
 	g_glob.env = env;
 	while (1)
 	{
+		ft_setup_signals();
 		ft_prompt();
 	}
 	return (1);

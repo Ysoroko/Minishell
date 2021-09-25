@@ -6,9 +6,11 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/25 15:55:32 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/09/25 16:10:05 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
+
+# ------------------------------ Sources ------------------------------
 
 INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/ft_extract_next_t_command.c \
@@ -33,7 +35,23 @@ LIBRARIES			=	libft/libft.a \
 
 OBJS				=	$(SRC:.c=.o)
 
-# Colors
+# ------------------------------ Flags / Commands ------------------------------
+
+LINK				=	ar rcs
+
+INCLUDE				=	-I include
+
+EXECUTABLE			=	minishell
+
+LIBFT				=	cd libft && make bonus
+
+NAME				=	minishell.a
+
+FLAGS				=	-Wall -Wextra -Werror -lreadline
+
+
+# ------------------------------ Colors ------------------------------
+
 BOLD_PURPLE			=	\033[1;35m
 
 BOLD_CYAN			=	\033[1;36m
@@ -42,13 +60,9 @@ BOLD_YELLOW			=	\033[1;33m
 
 NO_COLOR			=	\033[0m
 
-LIBFT		=	cd libft && make bonus
 
-NAME		=	minishell.a
+# ------------------------------ Readline ------------------------------
 
-FLAGS		=	-Wall -Wextra -Werror -lreadline
-
-# Readline related flags
 USER		=	ysoroko
 
 RPATH		=	/Users/$(USER)/.brew/opt/readline/
@@ -56,16 +70,12 @@ RPATH		=	/Users/$(USER)/.brew/opt/readline/
 READLINE_FLAGS	=	-L $(RPATH)lib -I $(RPATH)include -lreadline -Wno-unused-command-line-argument
 
 RL_FLAGS	=	-L/usr/include  -lreadline
-#-------------------------
 
 # This terminal setup line will get rid of "^C", "^D" etc. when pressing CTRL + C/D in minishell
 REMOVE_CONTROL_CHARACTERS = stty -echoctl
 
-LINK		=	ar rcs
 
-INCLUDE		=	-I include
-
-EXECUTABLE	=	minishell
+# ------------------------------ Messages------------------------------
 
 MINISHELL_COMPILED = echo "\n🐚 $(BOLD_PURPLE)Executable $(BOLD_CYAN)\"$(EXECUTABLE)\" $(BOLD_PURPLE)created and ready for use!\n$(NO_COLOR)"
 
@@ -73,6 +83,8 @@ CLEANED		=	echo "\n🧼 $(BOLD_YELLOW)Clean: $(NO_COLOR)Removed all the \".o\" f
 
 FCLEANED	=	echo "\n🧽 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed all the \".a\" files and the \"minishell\" executable \n"						
 
+
+# ------------------------------ Rules ------------------------------
 
 .c.o:
 	@${CC} ${CFLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
@@ -110,4 +122,4 @@ fclean:	clean
 
 re:		fclean all
 
-.PHONY: all clean fclean re run wrun compiling_minishell .c.o minishell.a
+.PHONY: all clean fclean re run wrun compiling_minishell .c.o

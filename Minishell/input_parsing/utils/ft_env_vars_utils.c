@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:29:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 16:31:35 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,6 +92,7 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 	if (ft_char_is_a_start_quote(str, *i + 1))
 		return ;
 	env_name = ft_extract_env_variable_name(str, ENV_VAR_SEPS);
+	//PROTECTION
 	env_value = getenv(env_name);
 	k = 1;
 	while (str[k] && ft_is_env_name_char(str[k]))

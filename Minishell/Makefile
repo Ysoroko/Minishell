@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/09/24 16:19:26 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/09/25 15:55:32 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/utils/ft_extract_role_macros_tab.c \
 
 EXECUTE				=	execute/ft_execute.c \
+						execute/ft_check_redir_and_binary.c \
 						execute/ft_print_command_list.c \
 
 SIGNALS				=	signals/ft_signal_handler.c

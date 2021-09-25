@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 15:13:34 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 15:36:52 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,12 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	exit(EXIT_SUCCESS);
+	if (!(getpid() == g_glob.main_pid))
+	{
+		ft_putendl_fd("Quit: 3", STDOUT);
+		exit(EXIT_SUCCESS);
+	}
+	ft_putstr_fd(PROMPT_NAME, STDOUT);
 }
 
 /*

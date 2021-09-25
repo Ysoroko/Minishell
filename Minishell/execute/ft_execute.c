@@ -6,19 +6,11 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/24 15:45:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 15:59:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/*
-** FT_EXECUTE
-** This function is the main bridge between parsing and executing commands
-** It takes the parsing as a t_list* structure, passes it to a different
-** function which will execute all the commands for every element of 
-** the t_list* structure
-*/
 
 void	ft_close_pipes(int npipes, int *pfd)
 {
@@ -92,7 +84,7 @@ void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
 	*pfd = (int *)malloc(sizeof(int) * (*npipes * 2));
 	if (!(*pfd))
 		exit(EXIT_FAILURE);
-	ft_dl_lstiter(lst, ft_print_command_list);
+	ft_dl_lstiter(lst, ft_check_redir_and_binary);
 	ft_open_pipes(*npipes, *pfd);
 }
 

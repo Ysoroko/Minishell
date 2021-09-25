@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 15:11:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/25 15:25:36 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,7 +28,6 @@ static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 
 int	ft_user_input_error(char *str)
 {
-	char	*st;
 	if (!str)
 		kill(getpid(), SIGUSR1);
 	if (ft_str_only_has_chars_from_charset(str, SPACES))
@@ -71,6 +70,7 @@ int	main(int ac, char **av, char **env)
 	(void)av;
 
 	g_glob.env = env;
+	g_glob.main_pid = getpid();
 	while (1)
 	{
 		ft_setup_signals();

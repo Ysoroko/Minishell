@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 15:25:36 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/27 12:07:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,6 +73,7 @@ int	main(int ac, char **av, char **env)
 	g_glob.main_pid = getpid();
 	while (1)
 	{
+		g_glob.fork_ret = g_glob.main_pid;
 		ft_setup_signals();
 		ft_prompt();
 	}

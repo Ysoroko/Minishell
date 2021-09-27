@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 16:52:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/27 11:19:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@ extern int errno;
 typedef	struct s_glob
 {
 	pid_t	main_pid;
+	pid_t	fork_ret;
 	char	**env;
 }	t_glob;
 

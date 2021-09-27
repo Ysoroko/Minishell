@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 17:13:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/27 12:24:47 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,21 @@
 
 static void	ft_control_c_function(void)
 {
-	if (getpid() != g_glob.main_pid)
-		exit(EXIT_FAILURE);
-	ft_putchar_fd('\n', STDOUT);
-	rl_on_new_line();
-	rl_replace_line("", 0);
-	rl_redisplay();
+	if (!g_glob.fork_ret)
+	{
+		ft_putchar_fd('\n', STDOUT);
+	}
+	else if (g_glob.fork_ret == g_glob.main_pid)
+	{
+		ft_putchar_fd('\n', STDOUT);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else
+	{
+		ft_putchar_fd('\n', STDOUT);
+	}
 }
 
 /*
@@ -37,7 +46,7 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	if (getpid() != g_glob.main_pid)
+	if (g_glob.fork_ret == 0)
 	{
 		ft_putendl_fd("Quit: 3", STDOUT);
 		exit(EXIT_SUCCESS);

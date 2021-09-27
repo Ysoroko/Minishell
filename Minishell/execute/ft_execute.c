@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 16:53:49 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/27 11:50:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,7 +113,6 @@ void	ft_parent_process(int npipes, int *pfd)
 void	ft_execute(t_dl_lst *command_list)
 {
 	t_command	*cmd;
-	pid_t		p;
 	int			*pfd;
 	int			npipes;
 	int			j;
@@ -123,10 +122,10 @@ void	ft_execute(t_dl_lst *command_list)
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
-		p = fork();
-		if (p < 0)
+		g_glob.fork_ret = fork();
+		if (g_glob.fork_ret < 0)
 			exit(EXIT_FAILURE);
-		if (p == 0)
+		if (g_glob.fork_ret == 0)
 		{
 			ft_fds_and_pipes(command_list, cmd, pfd, j);
 			ft_close_pipes(npipes, pfd);

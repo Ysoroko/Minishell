@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/27 11:50:44 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/27 13:39:10 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -84,6 +84,7 @@ void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
 	*pfd = (int *)malloc(sizeof(int) * (*npipes * 2));
 	if (!(*pfd))
 		exit(EXIT_FAILURE);
+	//ft_dl_lstiter(lst, ft_print_command_list);
 	ft_dl_lstiter(lst, ft_check_redir_and_binary);
 	ft_open_pipes(*npipes, *pfd);
 }

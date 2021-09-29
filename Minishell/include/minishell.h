@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/27 11:19:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:00:42 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,19 +93,12 @@ t_glob	g_glob;
 ** To use it with "execve": array of strings with []
 */
 
-typedef struct s_path
-{
-	char	**paths;
-	char	*cmd;
-	char	*final_cmd;
-}	t_path;
-
 typedef struct s_command
 {
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
-	int		is_piped;
+	int		exists;
 	int		fdin;
 	int		fdout;
 	int		redir_type_in;

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir_and_binary.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 15:54:24 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/09/29 15:21:46 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -215,8 +215,11 @@ void	ft_check_redir_and_binary(void *current_command)
 	while (command->str_tab_all[++i])
 	{
 		m = (command->role_macros)[i];
-		if (ft_is_a_redir_arg_macro(m))
 			ft_add_redir_file(command, m, i);
+		//if (ft_is_a_redir_arg_macro(m))
+		//{
+		//	printf("LAAA\n");
+		//}
 	}
 	if (ft_check_binary(command->str_tab_for_execve[0]) != 1)
 	{

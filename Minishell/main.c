@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/27 12:07:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/06 14:21:21 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,8 +49,6 @@ void	ft_prompt(void)
 	if (ft_user_input_error(user_input_str))
 		return ;
 	add_history(user_input_str);
-	if (ft_strcmp(user_input_str, "exit") == 0)
-		exit(EXIT_SUCCESS);
 	input_as_dl_command_list = ft_input_parsing(user_input_str);
 	ft_execute(input_as_dl_command_list);
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
@@ -64,12 +62,68 @@ void	ft_prompt(void)
 // ✅ -2 ou + redirections a la suite
 // ✅ -pipe sans commande a la suite
 // ✅ "exi"
+
+int	ft_nb_env(char **env)
+{
+	int i = 0;
+
+	while (env[i])
+		i++;
+	return (i);
+}
+
+int	ft_cmp_env(char *s1, char *s2)
+{
+	while (*s1 && *s2)
+	{
+		if (*s1 != *s2)
+			return (*s1 - *s2);
+		if (*(s1 + 1) && *(s1 + 1) == '=')
+			return (0);
+		s1++;
+		s2++;
+	}
+	return (*s1 - *s2);
+}
+
+int	ft_env_index(char *s)
+{
+	int i = 0;
+	int j = ft_nb_env(g_glob.env);
+
+	while (g_glob.env[i] && i < j)
+	{
+		if (ft_cmp_env(g_glob.env[i], s) == 0)
+			return (i);
+		i++;
+	}
+	return (-1);
+}
+
+void	ft_duplicate_env(char **env)
+{
+	int i = 0;
+
+	g_glob.env = (char**)malloc(sizeof(char*) * (ft_nb_env(env) + 1));
+	if (!g_glob.env)
+	{
+		printf("%s\n", strerror(ENOMEM));
+		exit(EXIT_FAILURE);
+	}
+	while (i < ft_nb_env(env))
+	{
+		g_glob.env[i] = ft_strdup_exit(env[i]);
+			i++;
+	}
+	g_glob.env[i] = NULL;
+}
+
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
 
-	g_glob.env = env;
+	ft_duplicate_env(env);
 	g_glob.main_pid = getpid();
 	while (1)
 	{

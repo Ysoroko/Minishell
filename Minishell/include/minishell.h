@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/29 15:00:42 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/05 18:22:38 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,7 @@ typedef struct s_command
 	char	**str_tab_all;
 	char	**str_tab_for_execve;
 	int		*role_macros;
+	int		error;
 	int		exists;
 	int		fdin;
 	int		fdout;
@@ -144,6 +145,20 @@ int			ft_check_file_permissions(char *filename);
 void		ft_prompt(void);
 void		ft_setup_signals(void);
 void		ft_check_redir_and_binary(void *current_command);
+int			ft_builtin_cmd_found(char *exec_name);
+
+void		ft_env();
+void		ft_pwd();
+void		ft_exit();
+void		ft_cd(char *dst);
+char 		**ft_export(char *new_var);
+char		**ft_unset(char *var);
+
+int			ft_nb_env(char **env);
+int			ft_cmp_env(char *s1, char *s2);
+int			ft_env_index(char *s);
+void		ft_duplicate_env(char **env);
+char		*ft_getenv(char *s);
 /*
 ** COLORS
 */

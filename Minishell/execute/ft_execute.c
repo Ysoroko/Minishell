@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 14:33:08 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:47:19 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -125,7 +125,7 @@ void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
 		printf("%s\n", strerror(ENOMEM));
 		exit(EXIT_FAILURE);
 	}
-	ft_dl_lstiter(lst, ft_print_command_list);
+	//ft_dl_lstiter(lst, ft_print_command_list);
 	ft_dl_lstiter(lst, ft_check_redir_and_binary);
 	ft_open_pipes(*npipes, *pfd);
 }
@@ -145,7 +145,7 @@ void	ft_parent_process(int npipes, int *pfd)
 
 	i = 0;
 	ft_close_pipes(npipes, pfd);
-	while (i <= npipes + 1)
+	while (i <= npipes)
 	{
 		wait(NULL);
 		i++;
@@ -178,19 +178,6 @@ char	*ft_getenv(char *s)
 	return (NULL);
 }
 
-void	ft_update_env(char **var)
-{
-	int	size;
-
-	size = ft_nb_env(var);
-	while (size >= 0)
-	{
-		free(var[size]);
-		size--;
-	}
-	free(var);
-}
-
 void	ft_export_handler(t_command *cmd)
 {
 	int	i;
@@ -207,7 +194,6 @@ void	ft_export_handler(t_command *cmd)
 		}
 		else
 			g_glob.env = ft_export(cmd->str_tab_for_execve[i]);
-		ft_update_env(tmp);
 		i++;
 	}
 }
@@ -230,13 +216,12 @@ int	ft_builtin_cmd_handler(t_command *cmd)
 	int x;
 
 	x = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
-	printf("{%d}\n", x);
 	//if (x == 1)
 	//	ft_echo();
 	if (x == 2)
 		ft_cd(cmd->str_tab_for_execve[1]);
 	if (x == 3)
-		ft_pwd();
+		ft_pwd(cmd);
 	if (x == 4)
 		ft_export_handler(cmd);
 	if (x == 5)
@@ -261,12 +246,7 @@ void	ft_execute(t_dl_lst *command_list)
 	{
 		cmd = (t_command *)command_list->content;
 		if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) > 0)
-		{
-			ft_fds_and_pipes(command_list, cmd, pfd, j);
 			ft_builtin_cmd_handler(cmd);
-			ft_close_pipes(npipes, pfd);
-			return ;
-		}
 		else
 		{
 			if (cmd->exists == 1 && cmd->error == 0)

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 16:16:10 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/06 14:28:56 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:37:28 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 void	ft_env()
 {
-	int i;
+	int	i;
 
 	i = 0;
 	while (g_glob.env[i])

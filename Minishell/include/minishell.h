@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/05 18:22:38 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/06 18:37:26 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,7 +100,9 @@ typedef struct s_command
 	int		*role_macros;
 	int		error;
 	int		exists;
+	int		save_in;
 	int		fdin;
+	int		save_out;
 	int		fdout;
 	int		redir_type_in;
 	int		redir_type_out;

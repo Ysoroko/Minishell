@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 18:47:19 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/07 15:28:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -216,8 +216,8 @@ int	ft_builtin_cmd_handler(t_command *cmd)
 	int x;
 
 	x = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
-	//if (x == 1)
-	//	ft_echo();
+	if (x == 1)
+		ft_echo(cmd);
 	if (x == 2)
 		ft_cd(cmd->str_tab_for_execve[1]);
 	if (x == 3)

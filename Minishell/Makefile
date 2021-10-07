@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
+#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/06 14:27:24 by ablondel         ###   ########.fr        #
+#    Updated: 2021/10/07 15:28:47 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,6 +25,9 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 EXECUTE				=	execute/ft_execute.c \
 						execute/ft_check_redir_and_binary.c \
 						execute/ft_print_command_list.c \
+
+
+BUILTINS			=	builtins/ft_echo.c \
 						builtins/ft_cd.c \
 						builtins/ft_pwd.c \
 						builtins/ft_env.c \
@@ -34,7 +37,7 @@ EXECUTE				=	execute/ft_execute.c \
 
 SIGNALS				=	signals/ft_signal_handler.c
 
-SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS)
+SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS) $(BUILTINS)
 
 LIBRARIES			=	libft/libft.a \
 						minishell.a

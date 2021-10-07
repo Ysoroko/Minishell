@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 18:37:26 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/07 15:27:53 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -149,6 +149,7 @@ void		ft_setup_signals(void);
 void		ft_check_redir_and_binary(void *current_command);
 int			ft_builtin_cmd_found(char *exec_name);
 
+void		ft_echo(t_command *command);
 void		ft_env();
 void		ft_pwd();
 void		ft_exit();

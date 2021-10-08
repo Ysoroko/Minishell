@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 12:30:13 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/08 13:49:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,8 +55,9 @@ void	ft_prompt(void)
 }
 
 // cas d’erreur:
-// 1) "export TEST" -> ça crée une variable "TEST" sans valeur. Si tu essaies defaire "unset TEST" -> segfault
-// 2) printf écrit sur STDOUT -> on ne peut pas l'utiliser pour écrire les messages d'erreur
+// 1)	"export TEST" -> ça crée une variable "TEST" sans valeur. Si tu essaies de faire "unset TEST" -> segfault
+// 2)	printf écrit sur STDOUT -> on ne peut pas l'utiliser pour écrire les messages d'erreur
+// 		j'ai crée une fonction "ft_minishell_error(char *error_message") -> passes lui juste le résultat de strerror(), elle va écrire "minishell: [erreur] sur stderr"
 
 
 int	main(int ac, char **av, char **env)

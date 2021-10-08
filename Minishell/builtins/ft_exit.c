@@ -6,13 +6,13 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 02:22:55 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 04:53:22 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_exit()
+void	ft_exit(void)
 {
 	exit(EXIT_SUCCESS);
 }

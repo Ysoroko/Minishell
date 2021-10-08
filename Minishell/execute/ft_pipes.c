@@ -1,37 +1,45 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pwd.c                                           :+:      :+:    :+:   */
+/*   ft_pipes.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/01 18:40:43 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 04:51:36 by ablondel         ###   ########.fr       */
+/*   Created: 2021/10/08 07:19:33 by ablondel          #+#    #+#             */
+/*   Updated: 2021/10/08 07:19:56 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	len(char *s)
+void	ft_close_pipes(int npipes, int *pfd)
 {
 	int	i;
 
 	i = 0;
-	if (!s)
-		return (0);
-	while (s[i])
+	while (i < (npipes * 2))
+	{
+		if (close(pfd[i]) == -1)
+		{
+			printf("%s\n", strerror(errno));
+			exit(EXIT_FAILURE);
+		}
 		i++;
-	return (i);
+	}
 }
 
-int	main(int ac, char **av, char **env)
+void	ft_open_pipes(int npipes, int *pfd)
 {
-	char	buf[1024];
+	int	i;
 
-	(void)ac;
-	(void)av;
-	(void)env;
-	getcwd(buf, 1024);
-	printf("%s\n", buf);
-	return (0);
+	i = 0;
+	while (i < npipes)
+	{
+		if (pipe(pfd + i * 2) == -1)
+		{
+			printf("%s\n", strerror(errno));
+			exit(EXIT_FAILURE);
+		}
+		i++;
+	}
 }

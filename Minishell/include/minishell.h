@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 04:42:26 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 07:28:00 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ typedef	struct s_glob
 	pid_t	main_pid;
 	pid_t	fork_ret;
 	char	**env;
-	char	*origin;
+	char	*path;
 }	t_glob;
 
 t_glob	g_glob;
@@ -142,24 +142,53 @@ int			ft_str_is_a_redirection(char *str);
 void 		ft_extract_role_macros_tab(t_command *command);
 void		ft_print_command_list(void *current_command);
 int			ft_is_a_redir_arg_macro(int macro);
-
-int			ft_check_file_permissions(char *filename);
 void		ft_prompt(void);
 void		ft_setup_signals(void);
+int			ft_check_file_permissions(char *filename);
+void		ft_open_hdoc(t_command *cmd, int *fd);
+void		ft_close_hdoc(t_command *cmd, int *fd);
+void		ft_hdoc(t_command *cmd);
+void		ft_copy_outfile(t_command *cmd, int i);
+void		ft_add_redir_out(t_command *cmd, int m, int i);
+void		ft_copy_infile(t_command *cmd, int i);
+void		ft_add_redir_in(t_command *cmd, int m, int i);
+void		ft_add_redir_hdoc(t_command *cmd, int m, int i);
+void		ft_add_redir_files(t_command *cmd, int m, int i);
+int			ft_exec_check(char *path, char *cmd);
+char		**ft_split_paths(int *i);
+void		ft_join_paths(char **paths, char *tmp, int i);
+int			ft_set_paths(char **exec_name);
+int			ft_check_binary(char *filename);
+void		ft_check_tables(t_command *command);
+void		ft_check_if_cmd_exists(t_command *command);
 void		ft_check_redir_and_binary(void *current_command);
 int			ft_builtin_cmd_found(char *exec_name);
-
-//void		ft_env();
-//void		ft_pwd();
-void		ft_exit();
-char		**ft_unset(char *var);
-char		**ft_export(char *new_var);
-
 int			ft_nb_env(char **env);
 int			ft_cmp_env(char *s1, char *s2);
 int			ft_env_index(char *s);
 void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);
+void		ft_exit();
+char		**ft_unset(char *var);
+char		**ft_export(char *new_var);
+void		ft_close_pipes(int npipes, int *pfd);
+void		ft_open_pipes(int npipes, int *pfd);
+void		ft_fdin(t_command *cmd);
+void		ft_fdout(t_command *cmd);
+void		ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j);
+void		ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes);
+void		ft_fds_and_pipes(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
+void		ft_parent_process(int npipes, int *pfd);
+int			ft_builtin_cmd_found(char *exec_name);
+char		*ft_getenv(char *s);
+void		ft_export_handler(t_command *cmd);
+void		ft_unset_handler(t_command *cmd);
+int			ft_cmd_handler(t_command *cmd);
+void		ft_cmd_handler_no_fork(t_command *cmd, int s);
+void		ft_child_process(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
+void		ft_select_action(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
+void		ft_execute(t_dl_lst *command_list);
+int			ft_check(char *s);
 /*
 ** COLORS
 */

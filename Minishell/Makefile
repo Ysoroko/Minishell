@@ -3,14 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
+#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-<<<<<<< HEAD
-#    Updated: 2021/10/08 00:42:06 by ablondel         ###   ########.fr        #
-=======
-#    Updated: 2021/10/07 15:28:47 by ysoroko          ###   ########.fr        #
->>>>>>> a81fe95b523ee8005c33f67eb7dd90bdd951838d
+#    Updated: 2021/10/08 07:21:24 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -27,8 +23,18 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/utils/ft_extract_role_macros_tab.c \
 
 EXECUTE				=	execute/ft_execute.c \
+						execute/ft_check_if_cmd_exists.c \
 						execute/ft_check_redir_and_binary.c \
 						execute/ft_print_command_list.c \
+						execute/ft_set_paths.c \
+						execute/ft_hdoc.c \
+						execute/ft_infile.c \
+						execute/ft_outfile.c \
+						execute/ft_env_utils.c \
+						execute/ft_cmd.c \
+						execute/ft_fdin.c \
+						execute/ft_fdout.c \
+						execute/ft_pipes.c \
 						builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \

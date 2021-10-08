@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 00:28:05 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 07:13:37 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,61 +63,6 @@ void	ft_prompt(void)
 // ✅ -pipe sans commande a la suite
 // ✅ "exi"
 
-int	ft_nb_env(char **env)
-{
-	int i = 0;
-
-	while (env[i])
-		i++;
-	return (i);
-}
-
-int	ft_cmp_env(char *s1, char *s2)
-{
-	while (*s1 && *s2)
-	{
-		if (*s1 != *s2)
-			return (*s1 - *s2);
-		if (*(s1 + 1) && *(s1 + 1) == '=')
-			return (0);
-		s1++;
-		s2++;
-	}
-	return (*s1 - *s2);
-}
-
-int	ft_env_index(char *s)
-{
-	int i = 0;
-	int j = ft_nb_env(g_glob.env);
-
-	while (g_glob.env[i] && i < j)
-	{
-		if (ft_cmp_env(g_glob.env[i], s) == 0)
-			return (i);
-		i++;
-	}
-	return (-1);
-}
-
-void	ft_duplicate_env(char **env)
-{
-	int i = 0;
-
-	g_glob.env = (char**)malloc(sizeof(char*) * (ft_nb_env(env) + 1));
-	if (!g_glob.env)
-	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
-	}
-	while (i < ft_nb_env(env))
-	{
-		g_glob.env[i] = ft_strdup_exit(env[i]);
-			i++;
-	}
-	g_glob.env[i] = NULL;
-}
-
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -128,7 +73,7 @@ int	main(int ac, char **av, char **env)
 	builtins_path = NULL;
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
-	g_glob.origin = ft_strjoin_exit(origin, "/builtins/");
+	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.main_pid = getpid();
 	while (1)
 	{

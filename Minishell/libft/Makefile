@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/08 12:35:15 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/08 14:48:34 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -144,6 +144,7 @@ SRC				=	ft_atoi.c \
 					ft_str_is_alpha_only.c \
 					ft_strtab_map_single_dstr_arg.c \
 					ft_minishell_error.c \
+					ft_is_valid_export_arg.c \
 					
 
 BONUS			=	ft_lstadd_back.c \

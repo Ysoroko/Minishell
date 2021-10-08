@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 04:58:03 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 14:24:51 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,9 @@ static void	ft_control_c_function(void)
 	if (g_glob.fork_ret == g_glob.main_pid)
 	{
 		ft_putchar_fd('\n', STDOUT);
-		//rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 	else
 	{

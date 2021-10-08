@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 14:12:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/08 14:16:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,11 +41,10 @@ static void	ft_add_to_final_string(t_command *command, int i, char **final_str)
 		*final_str = ft_strdup_exit(current_element);
 	else
 	{
-		*final_str = ft_strjoin_free_pref_exit(final_str, " "); // lazy add space
+		*final_str = ft_strjoin_free_pref_exit(final_str, " "); // add space
 		*final_str = ft_strjoin_free_pref_exit(final_str, current_element);
 	}
 }
-
 
 void	ft_echo(t_command *command)
 {

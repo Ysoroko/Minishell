@@ -3,10 +3,14 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
+#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
+<<<<<<< HEAD
 #    Updated: 2021/10/08 00:42:06 by ablondel         ###   ########.fr        #
+=======
+#    Updated: 2021/10/07 15:28:47 by ysoroko          ###   ########.fr        #
+>>>>>>> a81fe95b523ee8005c33f67eb7dd90bdd951838d
 #                                                                              #
 # **************************************************************************** #
 
@@ -31,7 +35,7 @@ EXECUTE				=	execute/ft_execute.c \
 
 SIGNALS				=	signals/ft_signal_handler.c
 
-SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS)
+SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS) $(BUILTINS)
 
 LIBRARIES			=	libft/libft.a \
 						minishell.a

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/08 02:48:59 by ablondel         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/07 15:27:53 by ysoroko          ###   ########.fr       */
+>>>>>>> a81fe95b523ee8005c33f67eb7dd90bdd951838d
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -152,7 +156,6 @@ int			ft_builtin_cmd_found(char *exec_name);
 //void		ft_env();
 //void		ft_pwd();
 void		ft_exit();
-void		ft_cd(char *dst);
 char		**ft_unset(char *var);
 char		**ft_export(char *new_var);
 

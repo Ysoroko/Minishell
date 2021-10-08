@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
+#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/08 07:21:24 by ablondel         ###   ########.fr        #
+#    Updated: 2021/10/08 12:21:09 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -135,4 +135,4 @@ fclean:	clean
 
 re:		fclean all
 
-.PHONY: all clean fclean re run wrun compiling_minishell .c.o
+.PHONY: all clean fclean re run wrun .c.o

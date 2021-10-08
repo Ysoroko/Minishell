@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 07:13:37 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 12:30:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,14 +54,10 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// cas d’erreur;
-// ✅ -Input vide
-// ✅ -Input composé uniquement de whitespaces
-// ✅ -les 4 redirections si argument manquant
-// ✅ -input avec que des pipes ou plusieurs pipes a la suite
-// ✅ -2 ou + redirections a la suite
-// ✅ -pipe sans commande a la suite
-// ✅ "exi"
+// cas d’erreur:
+// 1) "export TEST" -> ça crée une variable "TEST" sans valeur. Si tu essaies defaire "unset TEST" -> segfault
+// 2) printf écrit sur STDOUT -> on ne peut pas l'utiliser pour écrire les messages d'erreur
+
 
 int	main(int ac, char **av, char **env)
 {

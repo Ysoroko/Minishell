@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:42:02 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/08 12:34:54 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,14 @@ typedef struct s_dl_lst
 	struct s_dl_lst	*next;
 	struct s_dl_lst	*previous;
 }				t_dl_lst;
+
+/*
+** MACROS
+*/
+
+# define STDIN 0
+# define STDOUT 1
+# define STDERR 2
 
 /*
 ** PROTOTYPES
@@ -186,6 +194,7 @@ int			ft_elem_is_in_int_tab(int *tab, int tab_len, int elem);
 void		ft_print_line_of_chars(char char_to_print, int len_of_the_line);
 int			ft_str_is_alpha_only(char *str);
 char		**ft_strtab_map_single_dstr_arg(char **st, char *f(char **));
+void		ft_minishell_error(char *error_message);
 
 
 #endif

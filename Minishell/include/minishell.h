@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 18:37:26 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 02:48:59 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,7 @@ typedef	struct s_glob
 	pid_t	main_pid;
 	pid_t	fork_ret;
 	char	**env;
+	char	*origin;
 }	t_glob;
 
 t_glob	g_glob;
@@ -100,9 +101,7 @@ typedef struct s_command
 	int		*role_macros;
 	int		error;
 	int		exists;
-	int		save_in;
 	int		fdin;
-	int		save_out;
 	int		fdout;
 	int		redir_type_in;
 	int		redir_type_out;
@@ -111,6 +110,7 @@ typedef struct s_command
 	char	**keyword;
 	int		keyword_index;
 	char	*buffer;
+	int		s;
 }	t_command;
 
 /*
@@ -149,12 +149,12 @@ void		ft_setup_signals(void);
 void		ft_check_redir_and_binary(void *current_command);
 int			ft_builtin_cmd_found(char *exec_name);
 
-void		ft_env();
-void		ft_pwd();
+//void		ft_env();
+//void		ft_pwd();
 void		ft_exit();
 void		ft_cd(char *dst);
-char 		**ft_export(char *new_var);
 char		**ft_unset(char *var);
+char		**ft_export(char *new_var);
 
 int			ft_nb_env(char **env);
 int			ft_cmp_env(char *s1, char *s2);

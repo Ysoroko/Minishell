@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 15:18:01 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 00:28:05 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -122,8 +122,13 @@ int	main(int ac, char **av, char **env)
 {
 	(void)ac;
 	(void)av;
+	char	origin[1024];
+	char	*builtins_path;
 
+	builtins_path = NULL;
 	ft_duplicate_env(env);
+	getcwd(origin, 1024);
+	g_glob.origin = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.main_pid = getpid();
 	while (1)
 	{

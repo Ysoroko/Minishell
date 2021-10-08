@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/06 18:47:19 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 04:36:54 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -136,6 +136,10 @@ void	ft_fds_and_pipes(t_dl_lst *lst, t_command *cmd, int *pfd, int j)
 		ft_fdin(cmd);
 	if (cmd->redir_type_out == REDIR_R || cmd->redir_type_out == REDIR_RR)
 		ft_fdout(cmd);
+	if (cmd->outfile)
+		free(cmd->outfile);
+	if (cmd->infile)
+		free(cmd->infile);
 	ft_pipe_cmd(lst, cmd, pfd, j);
 }
 
@@ -145,7 +149,7 @@ void	ft_parent_process(int npipes, int *pfd)
 
 	i = 0;
 	ft_close_pipes(npipes, pfd);
-	while (i <= npipes)
+	while (i <= npipes + 1)
 	{
 		wait(NULL);
 		i++;
@@ -154,21 +158,21 @@ void	ft_parent_process(int npipes, int *pfd)
 
 int	ft_builtin_cmd_found(char *exec_name)
 {
-	if (ft_strcmp("/bin/echo", exec_name) == 0)
-		return (1);
 	if (ft_strcmp("/usr/bin/cd", exec_name) == 0)
-		return (2);
-	if (ft_strcmp("/bin/pwd", exec_name) == 0)
-		return (3);
+		return (0);
 	if (ft_strcmp("export", exec_name) == 0)
-		return (4);
+		return (1);
 	if (ft_strcmp("unset", exec_name) == 0)
+		return (2);
+	if (ft_strcmp("exit", exec_name) == 0)
+		return (3);
+	if (ft_strcmp("/bin/echo", exec_name) == 0)
+		return (4);
+	if (ft_strcmp("/bin/pwd", exec_name) == 0)
 		return (5);
 	if (ft_strcmp("/usr/bin/env", exec_name) == 0)
 		return (6);
-	if (ft_strcmp("exit", exec_name) == 0)
-		return (7);
-	return (0);
+	return (-1);
 }
 
 char	*ft_getenv(char *s)
@@ -181,10 +185,8 @@ char	*ft_getenv(char *s)
 void	ft_export_handler(t_command *cmd)
 {
 	int	i;
-	char	**tmp;
 
 	i = 1;
-	tmp = g_glob.env;
 	while (cmd->str_tab_for_execve[i])
 	{
 		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
@@ -211,26 +213,73 @@ void	ft_unset_handler(t_command *cmd)
 	}
 }
 
-int	ft_builtin_cmd_handler(t_command *cmd)
+int	ft_cmd_handler(t_command *cmd)
 {
-	int x;
+	char	*tmp;
 
-	x = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
-	//if (x == 1)
-	//	ft_echo();
-	if (x == 2)
-		ft_cd(cmd->str_tab_for_execve[1]);
-	if (x == 3)
-		ft_pwd(cmd);
-	if (x == 4)
+	tmp = cmd->str_tab_for_execve[0];
+	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 4)
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.origin, "./ft_echo");
+	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 5)
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.origin, "./ft_pwd");
+	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 6)
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.origin, "./ft_env");
+	free(tmp);
+	if (execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_glob.env) == -1)
+	{
+		printf("minishell: %s\n", strerror(errno));
+		exit(EXIT_FAILURE);
+	}
+	return (-1);
+}
+
+void	ft_cmd_handler_no_fork(t_command *cmd, int s)
+{
+	if (s == 0)
+		if (chdir(cmd->str_tab_for_execve[1]) == -1)
+			printf("minishell: cd: %s: %s\n", cmd->str_tab_for_execve[1], strerror(errno));
+	if (s == 1)
 		ft_export_handler(cmd);
-	if (x == 5)
+	if (s == 2)
 		ft_unset_handler(cmd);
-	if (x == 6)
-		ft_env();
-	if (x == 7)
+	if (s == 3)
 		ft_exit();
-	return (0);
+}
+
+void	ft_child_process(t_dl_lst *lst, t_command *cmd, int *pfd, int j)
+{
+	int	npipes;
+
+	npipes = ft_lstsize((t_list *)lst) - 1;
+	ft_fds_and_pipes(lst, cmd, pfd, j);
+	ft_close_pipes(npipes, pfd);
+	if (cmd->s >= 4 && cmd->s <= 6)
+		ft_cmd_handler(cmd);
+	else
+	{
+		if (cmd->error == 0)
+		{
+			if (execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_glob.env) == -1)
+			{
+				printf("minishell: %s\n", strerror(errno));
+				exit(EXIT_FAILURE);
+			}
+		}
+	}
+}
+
+void	ft_select_action(t_dl_lst *lst, t_command *cmd, int *pfd, int j)
+{
+	if (cmd->s >= 0 && cmd->s <= 3)
+		ft_cmd_handler_no_fork(cmd, cmd->s);
+	else
+	{
+		g_glob.fork_ret = fork();
+		if (g_glob.fork_ret < 0)
+			exit(EXIT_FAILURE);
+		if (g_glob.fork_ret == 0)
+			ft_child_process(lst, cmd, pfd, j);
+	}
 }
 
 void	ft_execute(t_dl_lst *command_list)
@@ -245,30 +294,14 @@ void	ft_execute(t_dl_lst *command_list)
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
-		if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) > 0)
-			ft_builtin_cmd_handler(cmd);
+		cmd->s = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
+		if (cmd->s >= 0 && cmd->s <= 6)
+			cmd->exists = 1;
+		if (cmd->exists == 1 && cmd->error == 0)
+			ft_select_action(command_list, cmd, pfd, j);
 		else
-		{
-			if (cmd->exists == 1 && cmd->error == 0)
-			{
-				g_glob.fork_ret = fork();
-				if (g_glob.fork_ret < 0)
-					exit(EXIT_FAILURE);
-				if (g_glob.fork_ret == 0)
-				{
-					ft_fds_and_pipes(command_list, cmd, pfd, j);
-					ft_close_pipes(npipes, pfd);
-					if (cmd->error == 0)
-					{
-						if (execve(cmd->str_tab_for_execve[0], cmd->str_tab_for_execve, g_glob.env) == -1)
-						{
-							printf("%s\n", strerror(errno));
-							exit(EXIT_FAILURE);
-						}
-					}
-				}
-			}
-		}
+			printf("minishell: %s: command not found\n",
+			cmd->str_tab_for_execve[0]);
 		command_list = command_list->next;
 		j += 2;
 	}

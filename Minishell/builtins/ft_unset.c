@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:27:27 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/06 14:23:32 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 00:56:23 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,10 @@ char **ft_unset(char *var)
 	{
 		if (i == skip)
 			i++;
-		next_env[j] = ft_strdup_exit(g_glob.env[i]);
+		if (g_glob.env[i] != NULL)
+			next_env[j] = ft_strdup_exit(g_glob.env[i]);
+		else
+			break ;
 		i++;
 		j++;
 	}

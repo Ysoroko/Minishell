@@ -6,7 +6,7 @@
 #    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/06 14:27:24 by ablondel         ###   ########.fr        #
+#    Updated: 2021/10/08 00:42:06 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -25,12 +25,9 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 EXECUTE				=	execute/ft_execute.c \
 						execute/ft_check_redir_and_binary.c \
 						execute/ft_print_command_list.c \
-						builtins/ft_cd.c \
-						builtins/ft_pwd.c \
-						builtins/ft_env.c \
-						builtins/ft_exit.c \
 						builtins/ft_export.c \
 						builtins/ft_unset.c \
+						builtins/ft_exit.c \
 
 SIGNALS				=	signals/ft_signal_handler.c
 

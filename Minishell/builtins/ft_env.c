@@ -6,21 +6,23 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 16:16:10 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/06 18:37:28 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/08 02:23:30 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_env()
+int	main(int ac, char **av, char **env)
 {
+	(void)ac;
+	(void)av;
 	int	i;
 
 	i = 0;
-	while (g_glob.env[i])
+	while (env[i])
 	{
-		printf("%i|%s\n", i, g_glob.env[i]);
+		printf("%s\n", env[i]);
 		i++;
 	}
-	return ;
+	return (0);
 }

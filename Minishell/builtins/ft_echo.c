@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 14:16:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/10 20:41:49 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,15 +16,10 @@
 /// If it's "-n", it will modify the value of "end_of_line" character to '\0'
 /// Otherwise, "end_of_line" will remain at '\n' and the value in role_macros
 /// tab will be changed from "FLAG" to "COMMAND_ARG"
-static void	ft_apply_n_flag(t_command *command, int i, char **end_of_line)
+static void	ft_apply_n_flag(char *current_element, char **end_of_line)
 {
-	char	*current_element;
-
-	current_element = command->str_tab_all[i];
 	if (!ft_strlcmp(current_element, "-n"))
 		*end_of_line = '\0';
-	else
-		command->role_macros[i] = COMMAND_ARG;
 }
 
 /// This function will concatenate current element to *final_str string
@@ -46,7 +41,7 @@ static void	ft_add_to_final_string(t_command *command, int i, char **final_str)
 	}
 }
 
-void	ft_echo(t_command *command)
+void	ft_echo(char **str_tab_for_execve)
 {
 	int		i;
 	char	*current_element;
@@ -56,13 +51,19 @@ void	ft_echo(t_command *command)
 	end_of_line = '\n';
 	i = -1;
 	final_str = NULL;
-	while (command->str_tab_all[++i])
+	while (str_tab_for_execve[++i])
 	{
-		current_element = command->str_tab_all[i];
-		if (command->role_macros[i] == FLAG)
+		current_element = str_tab_for_execve[i];
+		if (i == 1 && current_element[0] == '-')
 			ft_apply_n_flag(command, i, &end_of_line);
-		if (command->role_macros[i] == COMMAND_ARG)
+		else
 			ft_add_to_final_string(command, i, &final_str);
 	}
 	printf("%s%c", final_str, end_of_line);
+}
+
+int	main(int argc, char **str_tab_for_execve)
+{
+	ft_echo(str_tab_for_execve);
+	return (0);
 }

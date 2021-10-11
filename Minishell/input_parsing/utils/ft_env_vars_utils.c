@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 11:21:36 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:59:36 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,9 +64,7 @@ int	ft_calculate_total_length_needed(char *str)
 		if (str[i] == '$' && ft_char_between_the_quotes(i, str) != '\'')
 		{
 			name = ft_extract_env_variable_name(&str[i], ENV_VAR_SEPS);
-			printf("env variable name: %s\n", name); //to remove
 			value = getenv(name);
-			printf("env variable value: %s\n", value); //to remove
 			if (value)
 				ret += ft_strlen(value);
 			ft_free_str(&name);
@@ -94,8 +92,10 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 	if (ft_char_is_a_start_quote(str, *i + 1))
 		return ;
 	env_name = ft_extract_env_variable_name(str, ENV_VAR_SEPS);
-	//PROTECTION
-	env_value = getenv(env_name);
+	if (!ft_strlcmp(env_name, "?"))
+		env_value = ft_itoa(g_glob.exit_status);
+	else
+		env_value = ft_strdup_exit(getenv(env_name));
 	k = 1;
 	while (str[k] && ft_is_env_name_char(str[k]))
 		k++;
@@ -103,4 +103,5 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 	ft_strcat(*dest, env_value);
 	*j += (ft_strlen(env_value) - 1);
 	ft_free_str(&env_name);
+	ft_free_str(&env_value);
 }

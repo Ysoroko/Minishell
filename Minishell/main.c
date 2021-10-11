@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 11:28:36 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 12:04:19 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,8 @@ void	ft_prompt(void)
 // 		j'ai crée une fonction "ft_minishell_error(char *error_message") -> passes lui juste le résultat de strerror(), elle va écrire "minishell: [erreur] sur stderr"
 // 3) export-> j'ai crée une fonction int	ft_is_valid_export_arg(char *arg) qui vérifie si l'argument est valide
 // 4) export sans arguments -> doit être trié dans l'ordre alphabétique
+// 5) variable SHLVL -> doit +1 quand on ouvre un nouveau minishell(dans le notre), doit -1 quand on ferme le notre
+// 6) "export TEST=4 | echo $TEST
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;
@@ -72,6 +74,7 @@ int	main(int ac, char **av, char **env)
 	getcwd(origin, 1024);
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.main_pid = getpid();
+	g_glob.exit_status = 0;
 	while (1)
 	{
 		g_glob.fork_ret = g_glob.main_pid;

@@ -6,11 +6,11 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 14:28:07 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/10 20:36:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 12:17:17 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
+#include "../include/minishell.h"
 
 int	ft_not_alpha_str(char *str)
 {
@@ -28,11 +28,12 @@ int	ft_not_alpha_str(char *str)
 /// Returns 1 if the string passed as argument is a valid.
 /// Returns 0 and displays an error mesage otherwise.
 
-int	ft_check_results(char *arg, char **before, char equal)
+int	ft_check_results(char *arg, char **before, char **after, char equal)
 {
 	char	*error_message;
 
 	error_message = NULL;
+	g_glob.exit_status = 0;
 	if (!equal)
 		return (0); // $? = 0
 	if (!*before || ft_not_alpha_str(*before)) //or before not alphabet
@@ -42,8 +43,14 @@ int	ft_check_results(char *arg, char **before, char equal)
 			"\': not a valid identifier");
 		ft_minishell_error(error_message);
 	}
+	if (*after && !ft_str_only_has_chars_from_charset(*after, REDIRS)) //$? = 258
+	{
+		ft_minishell_error("syntax error");
+		g_glob.exit_status = 258;
+	}
 	free(error_message);
 	free(*before);
+	free(*after);
 	return (1);
 }
 
@@ -75,6 +82,5 @@ int	ft_is_valid_export_arg(char *arg)
 				str_after_equal = ft_strdup_exit(&(arg[i + 1]));
 		}
 	}
-	free(str_after_equal);
-	return (ft_check_results(arg, &str_before_equal, equal_char));
+	return (ft_check_results(arg, &str_before_equal, &str_after_equal, equal_char));
 }

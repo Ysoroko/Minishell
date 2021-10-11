@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 11:10:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 12:08:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,6 +62,7 @@ int	main(int argc, char **str_tab_for_execve)
 {
 	if (argc == 1)
 		return (0);
+	system("env");
 	ft_echo(str_tab_for_execve);
 	return (0);
 }

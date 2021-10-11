@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/10 20:41:49 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:10:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 /// If it's "-n", it will modify the value of "end_of_line" character to '\0'
 /// Otherwise, "end_of_line" will remain at '\n' and the value in role_macros
 /// tab will be changed from "FLAG" to "COMMAND_ARG"
-static void	ft_apply_n_flag(char *current_element, char **end_of_line)
+static void	ft_apply_n_flag(char *current_element, char *end_of_line)
 {
 	if (!ft_strlcmp(current_element, "-n"))
 		*end_of_line = '\0';
@@ -26,12 +26,8 @@ static void	ft_apply_n_flag(char *current_element, char **end_of_line)
 /// if it's a command argument
 /// If *final_str is NULL, we just duplicate the current element in str_tab_all
 /// Otherwise, we join it to the previous value and free the old value
-static void	ft_add_to_final_string(t_command *command, int i, char **final_str)
+static void	ft_add_to_final_string(char *current_element, char **final_str)
 {
-	char	*current_element;
-	char	*temp;
-
-	current_element = command->str_tab_all[i];
 	if (!*final_str)
 		*final_str = ft_strdup_exit(current_element);
 	else
@@ -49,21 +45,23 @@ void	ft_echo(char **str_tab_for_execve)
 	char	end_of_line;
 
 	end_of_line = '\n';
-	i = -1;
+	i = 0;
 	final_str = NULL;
 	while (str_tab_for_execve[++i])
 	{
 		current_element = str_tab_for_execve[i];
 		if (i == 1 && current_element[0] == '-')
-			ft_apply_n_flag(command, i, &end_of_line);
+			ft_apply_n_flag(current_element, &end_of_line);
 		else
-			ft_add_to_final_string(command, i, &final_str);
+			ft_add_to_final_string(current_element, &final_str);
 	}
 	printf("%s%c", final_str, end_of_line);
 }
 
 int	main(int argc, char **str_tab_for_execve)
 {
+	if (argc == 1)
+		return (0);
 	ft_echo(str_tab_for_execve);
 	return (0);
 }

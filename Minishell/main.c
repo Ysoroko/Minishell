@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 14:49:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:17:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,7 +59,7 @@ void	ft_prompt(void)
 // 2)	printf écrit sur STDOUT -> on ne peut pas l'utiliser pour écrire les messages d'erreur
 // 		j'ai crée une fonction "ft_minishell_error(char *error_message") -> passes lui juste le résultat de strerror(), elle va écrire "minishell: [erreur] sur stderr"
 // 3) export-> j'ai crée une fonction int	ft_is_valid_export_arg(char *arg) qui vérifie si l'argument est valide
-
+// 4) export sans arguments -> doit être trié dans l'ordre alphabétique
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;

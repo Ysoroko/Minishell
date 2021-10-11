@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/08 12:21:09 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/11 11:05:21 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,9 +35,12 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_fdin.c \
 						execute/ft_fdout.c \
 						execute/ft_pipes.c \
-						builtins/ft_export.c \
+
+BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \
+
+BUILTINS_EXE		=	builtins/ft_echo \
 
 SIGNALS				=	signals/ft_signal_handler.c
 
@@ -107,9 +110,11 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		@$(LIBFT)
 		@$(LINK) $(NAME) $(OBJS)
-		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) $(TERMCAP) -o $(EXECUTABLE)
+		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) builtins/ft_echo.c libft/libft.a -o ft_echo ; mv ft_echo builtins/
+		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) -o $(EXECUTABLE)
 		@$(REMOVE_CONTROL_CHARACTERS)
 		@$(MINISHELL_COMPILED)
+
 
 # Compiles everything with warning flags and runs the executable
 run:	$(NAME)
@@ -131,6 +136,7 @@ fclean:	clean
 		@rm -rf $(NAME)
 		@rm -rf $(EXECUTABLE)
 		@cd libft && make fclean
+		@rm -rf $(BUILTINS_EXE)
 		@$(FCLEANED)
 
 re:		fclean all

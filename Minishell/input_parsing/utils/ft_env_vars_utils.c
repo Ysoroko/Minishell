@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 16:31:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:21:36 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,7 +64,9 @@ int	ft_calculate_total_length_needed(char *str)
 		if (str[i] == '$' && ft_char_between_the_quotes(i, str) != '\'')
 		{
 			name = ft_extract_env_variable_name(&str[i], ENV_VAR_SEPS);
+			printf("env variable name: %s\n", name); //to remove
 			value = getenv(name);
+			printf("env variable value: %s\n", value); //to remove
 			if (value)
 				ret += ft_strlen(value);
 			ft_free_str(&name);

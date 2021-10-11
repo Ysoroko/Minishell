@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 12:30:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 12:34:42 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 11:29:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,6 +18,6 @@
 /// "minishell: syntax error near unexpected token ')'"
 void	ft_minishell_error(char *error_message)
 {
-	ft_putstr_fd("\033[1m\033[36mminishell: \x1b[0m ", STDERR);
-	ft_putstr_fd(error_message, STDERR);
+	ft_putstr_fd("\033[1m\033[36mminishell: \x1b[0m", STDERR);
+	ft_putendl_fd(error_message, STDERR);
 }

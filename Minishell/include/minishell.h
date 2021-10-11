@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 11:54:50 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 15:37:01 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,7 +169,7 @@ int			ft_cmp_env(char *s1, char *s2);
 int			ft_env_index(char *s);
 void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);
-void		ft_exit();
+void		ft_exit(int n);
 char		**ft_unset(char *var);
 char		**ft_export(char *new_var);
 void		ft_close_pipes(int npipes, int *pfd);

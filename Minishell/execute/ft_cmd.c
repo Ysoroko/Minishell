@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 07:20:26 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/11 15:35:47 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,7 +63,7 @@ void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 	if (s == 2)
 		ft_unset_handler(cmd);
 	if (s == 3)
-		ft_exit();
+		ft_exit(0); //remplace le '0' par la valeur stp
 }
 
 void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)

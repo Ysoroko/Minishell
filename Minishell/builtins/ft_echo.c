@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 12:08:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 15:21:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ static void	ft_add_to_final_string(char *current_element, char **final_str)
 		*final_str = ft_strdup_exit(current_element);
 	else
 	{
-		*final_str = ft_strjoin_free_pref_exit(final_str, " "); // add space
+		*final_str = ft_strjoin_free_pref_exit(final_str, " ");
 		*final_str = ft_strjoin_free_pref_exit(final_str, current_element);
 	}
 }
@@ -60,9 +60,16 @@ void	ft_echo(char **str_tab_for_execve)
 
 int	main(int argc, char **str_tab_for_execve)
 {
+	int	i;
+
+	i = 0;
 	if (argc == 1)
 		return (0);
-	system("env");
+	while (str_tab_for_execve[++i])
+	{
+		str_tab_for_execve[i]
+			= ft_apply_quotes_and_env_vars(&(str_tab_for_execve[i]));
+	}
 	ft_echo(str_tab_for_execve);
 	return (0);
 }

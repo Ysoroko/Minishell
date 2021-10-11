@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 12:04:19 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/11 15:50:28 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,11 +57,12 @@ void	ft_prompt(void)
 // cas d’erreur:
 // 1)	"export TEST" -> ça crée une variable "TEST" sans valeur. Si tu essaies de faire "unset TEST" -> segfault
 // 2)	printf écrit sur STDOUT -> on ne peut pas l'utiliser pour écrire les messages d'erreur
-// 		j'ai crée une fonction "ft_minishell_error(char *error_message") -> passes lui juste le résultat de strerror(), elle va écrire "minishell: [erreur] sur stderr"
+// 		j'ai crée une fonction "ft_minishell_error(char *error_message") -> passe lui juste le résultat de strerror(), elle va écrire "minishell: [erreur] sur stderr"
 // 3) export-> j'ai crée une fonction int	ft_is_valid_export_arg(char *arg) qui vérifie si l'argument est valide
 // 4) export sans arguments -> doit être trié dans l'ordre alphabétique
 // 5) variable SHLVL -> doit +1 quand on ouvre un nouveau minishell(dans le notre), doit -1 quand on ferme le notre
-// 6) "export TEST=4 | echo $TEST
+// 6) "export TEST=4 | echo $TEST" --> segfault (les deux commandes fonctionnent séparément)
+// 7) Il faut modifier $? partout (utiliser ft_exit au lieu de exit)
 int	main(int ac, char **av, char **env)
 {
 	(void)ac;

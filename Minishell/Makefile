@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/11 11:05:21 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/11 15:16:29 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -110,7 +110,7 @@ all: $(NAME)
 $(NAME): $(OBJS)
 		@$(LIBFT)
 		@$(LINK) $(NAME) $(OBJS)
-		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) builtins/ft_echo.c libft/libft.a -o ft_echo ; mv ft_echo builtins/
+		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) builtins/ft_echo.c libft/libft.a minishell.a -o ft_echo ; mv ft_echo builtins/
 		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) -o $(EXECUTABLE)
 		@$(REMOVE_CONTROL_CHARACTERS)
 		@$(MINISHELL_COMPILED)

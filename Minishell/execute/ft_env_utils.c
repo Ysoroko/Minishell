@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:02:26 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 07:13:05 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 06:00:36 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,16 +24,18 @@ int	ft_nb_env(char **env)
 
 int	ft_cmp_env(char *s1, char *s2)
 {
-	while (*s1 && *s2)
+	int	i;
+
+	i = 0;
+	while (s1[i] && s2[i])
 	{
-		if (*s1 != *s2)
-			return (*s1 - *s2);
-		if (*(s1 + 1) && *(s1 + 1) == '=')
+		if (s1[i] != s2[i])
+			return (s1[i] - s2[i]);
+		if (s1[i + 1] != '\0' && s1[i + 1] == '=')
 			return (0);
-		s1++;
-		s2++;
+		i++;
 	}
-	return (*s1 - *s2);
+	return (s1[i] - s2[i]);
 }
 
 int	ft_env_index(char *s)
@@ -60,8 +62,8 @@ void	ft_duplicate_env(char **env)
 	g_glob.env = (char **)malloc(sizeof(char *) * (ft_nb_env(env) + 1));
 	if (!g_glob.env)
 	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 	while (i < ft_nb_env(env))
 	{

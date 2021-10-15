@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 06:28:01 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 06:09:27 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,14 +22,14 @@ char	**ft_split_paths(int *i)
 	tmp = getenv("PATH");
 	if (!tmp)
 	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 	paths = ft_split(tmp, ':');
 	if (!paths)
 	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 	return (paths);
 }
@@ -42,8 +42,8 @@ void	ft_join_paths(char **paths, char *tmp, int i)
 		free(tmp);
 	if (paths[i] == NULL)
 	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 }
 
@@ -65,7 +65,7 @@ int	ft_set_paths(char **exec_name)
 				free(tmp);
 			if (*exec_name == NULL)
 			{
-				printf("%s\n", strerror(ENOMEM));
+				ft_minishell_error(strerror(errno));
 				return (-1);
 			}
 			return (1);

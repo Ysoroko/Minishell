@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/11 15:35:47 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/15 09:12:03 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,8 +46,8 @@ int	ft_cmd_handler(t_command *cmd)
 	if (execve(cmd->str_tab_for_execve[0],
 			cmd->str_tab_for_execve, g_glob.env) == -1)
 	{
-		printf("minishell: %s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 	return (-1);
 }
@@ -55,15 +55,16 @@ int	ft_cmd_handler(t_command *cmd)
 void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 {
 	if (s == 0)
+	{
 		if (chdir(cmd->str_tab_for_execve[1]) == -1)
-			printf("minishell: cd: %s: %s\n",
-				cmd->str_tab_for_execve[1], strerror(errno));
+			ft_minishell_error("command not found");
+	}
 	if (s == 1)
 		ft_export_handler(cmd);
 	if (s == 2)
 		ft_unset_handler(cmd);
 	if (s == 3)
-		ft_exit(0); //remplace le '0' par la valeur stp
+		ft_exit(EXIT_SUCCESS);
 }
 
 void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
@@ -74,8 +75,8 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 		{
 			if (dup2(pfd[j + 1], 1) == -1)
 			{
-				printf("%s\n", strerror(errno));
-				exit(EXIT_FAILURE);
+				ft_minishell_error(strerror(errno));
+				ft_exit(errno);
 			}
 		}
 	}
@@ -85,8 +86,8 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 		{
 			if (dup2(pfd[j - 2], 0) == -1)
 			{
-				printf("%s\n", strerror(errno));
-				exit(EXIT_FAILURE);
+				ft_minishell_error(strerror(errno));
+				ft_exit(errno);
 			}
 		}
 	}

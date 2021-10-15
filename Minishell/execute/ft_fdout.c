@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:18:43 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 07:18:57 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 06:04:33 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void	ft_fdout(t_command *cmd)
 		cmd->fdout = open(cmd->outfile, O_RDWR | O_APPEND, 0664);
 	if (cmd->fdout == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 	if (dup2(cmd->fdout, 1) == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 	if (close(cmd->fdout) == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 }

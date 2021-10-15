@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:18:03 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 07:18:26 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 06:04:45 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,20 +21,20 @@ void	ft_fdin(t_command *cmd)
 		cmd->fdin = open("hdoc/tmp", O_RDONLY);
 	if (cmd->fdin == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 	if (dup2(cmd->fdin, 0) == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 	if (close(cmd->fdin) == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		exit(EXIT_FAILURE);
+		ft_exit(errno);
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 15:37:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/15 09:22:30 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,10 +186,10 @@ void		ft_export_handler(t_command *cmd);
 void		ft_unset_handler(t_command *cmd);
 int			ft_cmd_handler(t_command *cmd);
 void		ft_cmd_handler_no_fork(t_command *cmd, int s);
-void		ft_child_process(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
-void		ft_select_action(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
 void		ft_execute(t_dl_lst *command_list);
 int			ft_check(char *s);
+int			ft_is_valid_export_arg(char *arg);
+void		ft_free_ressources(t_command *cmd);
 /*
 ** COLORS
 */

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 06:49:53 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 06:01:49 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,8 +74,8 @@ void	ft_check_tables(t_command *command)
 	command->keyword = (char **)malloc(sizeof(char *) * 1024);
 	if (!command->keyword)
 	{
-		printf("%s\n", strerror(ENOMEM));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 }
 

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
+#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/11 15:16:29 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/15 08:04:37 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -35,6 +35,7 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_fdin.c \
 						execute/ft_fdout.c \
 						execute/ft_pipes.c \
+						execute/ft_free_ressources.c \
 
 BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
@@ -63,7 +64,7 @@ LIBFT				=	cd libft && make bonus
 
 NAME				=	minishell.a
 
-FLAGS				=	-Wall -Wextra -Werror -lreadline
+FLAGS				=	-Wall -Wextra -Werror -lreadline -fsanitize=address
 
 
 # ------------------------------ Colors ------------------------------

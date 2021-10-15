@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:47:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 06:47:43 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 07:46:24 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ void	ft_copy_infile(t_command *cmd, int i)
 		cmd->infile = ft_strdup(cmd->str_tab_all[i + 1]);
 		if (cmd->infile == NULL)
 		{
-			printf("%s\n", strerror(ENOMEM));
-			exit(EXIT_FAILURE);
+			ft_minishell_error(strerror(errno));
+			ft_exit(errno);
 		}
 	}
 	else
 	{
-		printf("minishell: syntax error\n");
-		exit(EXIT_FAILURE);
+		ft_minishell_error("syntax error");
+		ft_exit(errno);
 	}
 }
 
@@ -40,12 +40,12 @@ void	ft_add_redir_in(t_command *cmd, int m, int i)
 	cmd->fdin = open(cmd->infile, O_RDONLY);
 	if (cmd->fdin == -1 && cmd->error == 0)
 	{
-		printf("minishell: %s: %s\n", cmd->infile, strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
 	}
 	if (close(cmd->fdin) == -1 && cmd->error == 0)
 	{
-		printf("%s\n", strerror(errno));
+		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
 	}
 }

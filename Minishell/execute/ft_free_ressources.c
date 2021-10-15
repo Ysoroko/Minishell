@@ -1,45 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_pipes.c                                         :+:      :+:    :+:   */
+/*   ft_free_ressources.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/08 07:19:33 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 06:08:47 by ablondel         ###   ########.fr       */
+/*   Created: 2021/10/15 08:01:05 by ablondel          #+#    #+#             */
+/*   Updated: 2021/10/15 08:04:24 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_close_pipes(int npipes, int *pfd)
+void	ft_free_ressources(t_command *cmd)
 {
-	int	i;
-
-	i = 0;
-	while (i < (npipes * 2))
+	if (cmd->infile != NULL)
+		free(cmd->infile);
+	if (cmd->outfile != NULL)
+		free(cmd->outfile);
+	if (cmd->buffer != NULL)
+		free(cmd->buffer);
+	if (cmd->keyword_index)
 	{
-		if (close(pfd[i]) == -1)
+		while (cmd->keyword_index >= 0)
 		{
-			ft_minishell_error(strerror(errno));
-			ft_exit(errno);
+			if (cmd->keyword[cmd->keyword_index] != NULL)
+				free(cmd->keyword[cmd->keyword_index]);
+			cmd->keyword_index--;
 		}
-		i++;
 	}
-}
-
-void	ft_open_pipes(int npipes, int *pfd)
-{
-	int	i;
-
-	i = 0;
-	while (i < npipes)
-	{
-		if (pipe(pfd + i * 2) == -1)
-		{
-			ft_minishell_error(strerror(errno));
-			ft_exit(errno);
-		}
-		i++;
-	}
+	free(cmd->keyword);
 }

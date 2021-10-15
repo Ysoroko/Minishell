@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:49:19 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 06:49:34 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 07:46:29 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,14 +21,14 @@ void	ft_copy_outfile(t_command *cmd, int i)
 		cmd->outfile = ft_strdup(cmd->str_tab_all[i + 1]);
 		if (cmd->outfile == NULL)
 		{
-			printf("%s\n", strerror(ENOMEM));
-			exit(EXIT_FAILURE);
+			ft_minishell_error(strerror(errno));
+			ft_exit(errno);
 		}
 	}
 	else
 	{
-		printf("minishell: syntax error\n");
-		exit(EXIT_FAILURE);
+		ft_minishell_error("syntax error");
+		ft_exit(errno);
 	}
 }
 
@@ -47,12 +47,12 @@ void	ft_add_redir_out(t_command *cmd, int m, int i)
 	}
 	if (cmd->fdout == -1)
 	{
-		printf("%s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 	if (close(cmd->fdout) == -1)
 	{
-		printf("%s\n", strerror(errno));
-		exit(EXIT_FAILURE);
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
 	}
 }

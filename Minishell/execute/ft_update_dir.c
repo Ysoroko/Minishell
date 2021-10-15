@@ -1,40 +1,35 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_env.c                                           :+:      :+:    :+:   */
+/*   ft_update_dir.c                                    :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/09/29 16:16:10 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 11:16:50 by ablondel         ###   ########.fr       */
+/*   Created: 2021/10/15 11:15:43 by ablondel          #+#    #+#             */
+/*   Updated: 2021/10/15 11:18:53 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-int	ft_check_equal_sign(char *s)
+void	ft_update_pwd(void)
 {
-	while (*s)
-	{
-		if (*s == '=')
-			return (1);
-		s++;
-	}
-	return (0);
+	char	buf[1024];
+	char	*tmp;
+
+	tmp = g_glob.env[ft_env_index("PWD")];
+	getcwd(buf, 1024);
+	g_glob.env[ft_env_index("PWD")] = ft_strjoin("PWD=", buf);
+	free(tmp);
 }
 
-int	main(int ac, char **av, char **env)
+void	ft_update_oldpwd(void)
 {
-	int	i;
+	char	buf[1024];
+	char	*tmp;
 
-	(void)ac;
-	(void)av;
-	i = 0;
-	while (env[i])
-	{
-		if (ft_check_equal_sign(env[i]))
-			write(1, &env[i], ft_strlen(env[i]));
-		i++;
-	}
-	return (0);
+	tmp = g_glob.env[ft_env_index("OLDPWD")];
+	getcwd(buf, 1024);
+	g_glob.env[ft_env_index("OLDPWD")] = ft_strjoin("OLDPWD=", buf);
+	free(tmp);
 }

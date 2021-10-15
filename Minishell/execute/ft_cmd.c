@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 09:12:03 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/15 11:16:17 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,8 +56,10 @@ void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 {
 	if (s == 0)
 	{
+		ft_update_oldpwd();
 		if (chdir(cmd->str_tab_for_execve[1]) == -1)
-			ft_minishell_error("command not found");
+			ft_minishell_error("no such file or directory");
+		ft_update_pwd();
 	}
 	if (s == 1)
 		ft_export_handler(cmd);

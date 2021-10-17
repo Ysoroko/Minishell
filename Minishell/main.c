@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/15 06:43:21 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/17 14:29:01 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ void	ft_prompt(void)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
-	
+
 	user_input_str = readline(PROMPT_NAME);
 	if (ft_user_input_error(user_input_str))
 		return ;
@@ -54,16 +54,20 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 5) variable SHLVL -> doit +1 quand on ouvre un nouveau 
+// 1) variable SHLVL -> doit +1 quand on ouvre un nouveau 
 //minishell(dans le notre), doit -1 quand on ferme le notre
+// 2) mettre à jour $? dans export + toutes les fonctions
+//		qu'on appelle avec exeve
+// 3) "extern int	errno;" dans minishell.h ->non accepté par la norme
+// 		(Global variable must start with g_)
 
 int	main(int ac, char **av, char **env)
 {
-	(void)ac;
-	(void)av;
 	char	origin[1024];
 	char	*builtins_path;
 
+	(void)ac;
+	(void)av;
 	builtins_path = NULL;
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);

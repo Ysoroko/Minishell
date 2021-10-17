@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/20 09:48:32 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/24 11:32:18 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 14:19:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,13 +62,13 @@ static int	ft_wordcount(char const *str, char *seps)
 }
 
 /*
-** char	**ft_malloc_exit(char const *str, char *seps)
+** char	**ft_malloc_str_tab_exit(char const *str, char *seps)
 ** This function is used to malloc the string array
 ** ft_split will return.
 ** In case of malloc error it will exit the program straight away.
 */
 
-static char	**ft_malloc_exit(char const *str, char *seps)
+static char	**ft_malloc_str_tab_exit(char const *str, char *seps)
 {
 	int		len;
 	char	**tab_str;
@@ -122,25 +122,27 @@ static int	ft_next_word_count(char const *str, char *sep, int i)
 ** str_arr[7] = NULL
 */
 
+/// Useless function to respect the norm and get less lines
+static void	ft_initialize_variables(int *s, int *i)
+{
+	*s = 0;
+	*i = -1;
+}
+
 // < infile wc -l | ls -la > outfile
 char	**ft_split_seps_included_exit(char const *str, char *seps)
 {
 	int		s;
 	int		i;
 	int		j;
-	int		wordcount;
 	char	**tab_str;
 
-	s = 0;
-	i = -1;
-	tab_str = ft_malloc_exit(str, seps);
-	wordcount = ft_wordcount(str, seps);
-	while (++i < wordcount)
+	ft_initialize_variables(&s, &i);
+	tab_str = ft_malloc_str_tab_exit(str, seps);
+	while (++i < ft_wordcount(str, seps))
 	{
 		j = 0;
-		tab_str[i] = malloc(ft_next_word_count(str, seps, s) + 1);
-		if (!tab_str[i])
-			exit(EXIT_FAILURE);
+		tab_str[i] = ft_malloc_exit(ft_next_word_count(str, seps, s) + 1);
 		if (!ft_strchr_nq(str, s, seps))
 		{
 			while (str[s] && !ft_strchr_nq(str, s, seps))

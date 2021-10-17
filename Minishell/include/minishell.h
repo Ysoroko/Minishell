@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/15 11:13:52 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/17 14:24:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,9 +28,9 @@
 # include <readline/readline.h>
 # include <readline/history.h>
 
-extern int errno;
+extern int	errno;
 
-typedef	struct s_glob
+typedef struct s_glob
 {
 	pid_t	main_pid;
 	pid_t	fork_ret;
@@ -39,7 +39,7 @@ typedef	struct s_glob
 	int		exit_status;
 }	t_glob;
 
-t_glob	g_glob;
+t_glob		g_glob;
 
 /*
 ** MINISHELL PROMPT DISPLAY CONSTANTS
@@ -140,7 +140,7 @@ void		ft_display_prompt(char *color, char *prompt_name);
 void		ft_extract_str_tab_all(char *next_command_str, t_command *command);
 void		ft_extract_str_tab_for_execve(t_command *command);
 int			ft_str_is_a_redirection(char *str);
-void 		ft_extract_role_macros_tab(t_command *command);
+void		ft_extract_role_macros_tab(t_command *command);
 void		ft_print_command_list(void *current_command);
 int			ft_is_a_redir_arg_macro(int macro);
 void		ft_prompt(void);
@@ -176,7 +176,8 @@ void		ft_close_pipes(int npipes, int *pfd);
 void		ft_open_pipes(int npipes, int *pfd);
 void		ft_fdin(t_command *cmd);
 void		ft_fdout(t_command *cmd);
-void		ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j);
+void		ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd,
+				int j);
 void		ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes);
 void		ft_fds_and_pipes(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
 void		ft_parent_process(int npipes, int *pfd);

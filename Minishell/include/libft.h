@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/08 14:48:50 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 14:23:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -186,8 +186,8 @@ void		ft_display_first_n_chars_with_i(char *str,
 int			ft_is_a_valid_double_quote(char *str, int i);
 int			ft_isspace(int c);
 char		**ft_split_seps_included_exit(char const *str, char *seps);
-char		**ft_strtab_map_str_exit(char **str_tab, char *f(char *, char *)
-				, char *arg);
+char		**ft_strtab_map_str_exit(char **str_tab, char *f(char *, char *),
+				char *arg);
 void		*ft_free_str_tab(char ***str_tab, void *to_return);
 void		*ft_free_int_tab(int **int_tab, void *to_return);
 int			ft_elem_is_in_int_tab(int *tab, int tab_len, int elem);
@@ -196,6 +196,6 @@ int			ft_str_is_alpha_only(char *str);
 char		**ft_strtab_map_single_dstr_arg(char **st, char *f(char **));
 void		ft_minishell_error(char *error_message);
 int			ft_is_valid_export_arg(char *arg);
-
+void		*ft_malloc_exit(size_t size);
 
 #endif

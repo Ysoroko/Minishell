@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 15:21:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 15:43:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,6 +56,8 @@ void	ft_echo(char **str_tab_for_execve)
 			ft_add_to_final_string(current_element, &final_str);
 	}
 	printf("%s%c", final_str, end_of_line);
+	free(final_str);
+	g_glob.exit_status = 0;
 }
 
 int	main(int argc, char **str_tab_for_execve)

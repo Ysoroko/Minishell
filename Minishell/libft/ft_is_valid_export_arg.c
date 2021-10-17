@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 14:28:07 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 14:22:31 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 15:17:02 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,11 +38,12 @@ int	ft_check_results(char *arg, char **before, char **after, char equal)
 	g_glob.exit_status = 0;
 	if (!equal)
 		return (0);
-	if (!*before || ft_not_alpha_str(*before))
+	if (!*before || ft_not_alpha_str(*before) || !ft_strlcmp(*before, "?"))
 	{
 		error_message = ft_strjoin_exit("export: \'", arg);
 		error_message = ft_strjoin_free_pref_exit(&error_message,
 				"\': not a valid identifier");
+		g_glob.exit_status = 1;
 		ft_minishell_error(error_message);
 	}
 	if (*after && !ft_str_only_has_chars_from_charset(*after, REDIRS))
@@ -61,7 +62,8 @@ int	ft_check_results(char *arg, char **before, char **after, char equal)
 /// Example of invalid arguments:
 /// 1) "export test" (test -> no '=' char, this does nothing)
 /// 2) "export 1456=ok" (1456 -> not alphabet characters in name)
-/// 3) "export =test" (=test ->no variable name before '=') 
+/// 3) "export =test" (=test ->no variable name before '=')
+/// 4) "export ?=48" : bash: export: `?=48': not a valid identifier
 int	ft_is_valid_export_arg(char *arg)
 {
 	int		i;

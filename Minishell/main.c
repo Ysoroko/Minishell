@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 14:32:24 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 15:59:46 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,10 @@
 
 static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 {
-	ft_free_str(str);
-	ft_dl_lstclear(lst, &ft_free_t_command);
+	if (str)
+		ft_free_str(str);
+	if (lst)
+		ft_dl_lstclear(lst, &ft_free_t_command);
 }
 
 int	ft_user_input_error(char *str)
@@ -47,19 +49,25 @@ void	ft_prompt(void)
 
 	user_input_str = readline(PROMPT_NAME);
 	if (ft_user_input_error(user_input_str))
+	{
+		free(user_input_str);
 		return ;
+	}
 	add_history(user_input_str);
 	input_as_dl_command_list = ft_input_parsing(user_input_str);
-	ft_execute(input_as_dl_command_list);
+	ft_execute(input_as_dl_command_list); // LEAKS ICI
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
 // 1) variable SHLVL -> doit +1 quand on ouvre un nouveau 
 //minishell(dans le notre), doit -1 quand on ferme le notre
-// 2) mettre à jour $? dans export + toutes les fonctions
-//		qu'on appelle avec exeve
-// 3) "extern int	errno;" dans minishell.h ->non accepté par la norme
-// 		(Global variable must start with g_)
+// 2) Leaks dans ft_execute
+// 3) Impossible de mofidier la valeur de g_glob.exit_status
+// 4) "< ok" --> fait planter minishell ("< main.c" est valide dans bash)
+// 5) Utiliser wait pour récupere la valeur de exit_status de nos executables
+//		et mettre à jour la g_glob.exit_status
+//	waitpid(ms->p_ids[i], &status, 0);
+//	g_glob.exit_status = WEXITSTATUS(status);
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -68,6 +76,7 @@ int	main(int ac, char **av, char **env)
 	(void)ac;
 	(void)av;
 	builtins_path = NULL;
+	ft_setup_signals();
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
@@ -76,7 +85,6 @@ int	main(int ac, char **av, char **env)
 	while (1)
 	{
 		g_glob.fork_ret = g_glob.main_pid;
-		ft_setup_signals();
 		ft_prompt();
 	}
 	return (1);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 14:29:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/17 14:32:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,6 @@ void	ft_prompt(void)
 //		qu'on appelle avec exeve
 // 3) "extern int	errno;" dans minishell.h ->non accepté par la norme
 // 		(Global variable must start with g_)
-
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

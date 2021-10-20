@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_set_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 11:44:50 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 13:07:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ int	ft_set_paths(char **exec_name)
 		if (ft_exec_check(paths[i], *exec_name) == 1)
 		{
 			tmp = *exec_name;
-			*exec_name = ft_strjoin(paths[i], *exec_name);
+			*exec_name = ft_strjoin_exit(paths[i], *exec_name);
 			ft_free_str_tab(&paths, NULL);
 			free(tmp);
 			if (*exec_name == NULL)

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 09:26:13 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 11:01:58 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,7 +69,7 @@ int	ft_exec_check(char *path, char *cmd)
 
 void	ft_check_tables(t_command *command)
 {
-	command->keyword = (char **)malloc(sizeof(char *) * 1024);
+	command->keyword = (char **)malloc(sizeof(char *) * 12);
 	if (!command->keyword && command->error == 0)
 	{
 		ft_minishell_error(strerror(errno));

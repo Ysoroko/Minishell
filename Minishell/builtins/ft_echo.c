@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 15:43:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/20 09:44:40 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,11 +60,13 @@ void	ft_echo(char **str_tab_for_execve)
 	g_glob.exit_status = 0;
 }
 
-int	main(int argc, char **str_tab_for_execve)
+int	main(int argc, char **str_tab_for_execve, char **env)
 {
+	(void)env;
 	int	i;
 
 	i = 0;
+	printf("{%d}\n", g_glob.exit_status);
 	if (argc == 1)
 		return (0);
 	while (str_tab_for_execve[++i])

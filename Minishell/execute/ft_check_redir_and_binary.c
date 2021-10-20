@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir_and_binary.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 11:01:58 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:23:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,10 @@ int	ft_exec_check(char *path, char *cmd)
 	while (d != NULL)
 	{
 		if (strcmp(cmd, d->d_name) == 0)
+		{
+			closedir(dir);
 			return (1);
+		}
 		d = readdir(dir);
 	}
 	closedir(dir);

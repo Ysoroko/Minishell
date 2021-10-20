@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_if_cmd_exists.c                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:26:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 06:44:54 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:26:48 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_check_if_cmd_exists(t_command *command)
 			command->exists = 0;
 		}
 	}
+	
 	if (ft_check_binary(command->str_tab_for_execve[0]) == 1)
 		command->exists = 1;
 	else

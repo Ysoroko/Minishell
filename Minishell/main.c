@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 11:44:09 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 14:31:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ int	main(int ac, char **av, char **env)
 	{
 		g_glob.fork_ret = g_glob.main_pid;
 		ft_prompt();
-		system("leaks minishell");
+		// system("leaks minishell");
 	}
 	return (1);
 }

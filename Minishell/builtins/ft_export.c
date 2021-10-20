@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/17 15:48:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/20 14:41:12 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,12 +17,12 @@ char	**ft_export(char *new_var)
 	int		i;
 	char	**next_env;
 
-	i = 0;
+	i = 1;
 	next_env = NULL;
-	next_env = (char **)malloc(sizeof(char *) * (ft_nb_env(g_glob.env) + 2));
+	next_env = (char **)malloc(sizeof(char *) * (ft_nb_env(g_glob.env) + 1));
 	if (!next_env)
 		return (NULL);
-	next_env[i] = ft_strdup_exit(g_glob.env[i]);
+	next_env[0] = ft_strdup_exit(g_glob.env[0]);
 	while (i < ft_nb_env(g_glob.env))
 	{
 		next_env[i] = ft_strdup_exit(g_glob.env[i]);
@@ -32,6 +32,7 @@ char	**ft_export(char *new_var)
 	}
 	next_env[i] = ft_strdup_exit(new_var);
 	next_env[i + 1] = NULL;
+	ft_free_str_tab(&g_glob.env, NULL);
 	return (next_env);
 }
 

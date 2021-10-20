@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/15 11:06:27 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 08:57:36 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,12 +28,14 @@ void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
 void	ft_parent_process(int npipes, int *pfd)
 {
 	int	i;
+	int	status;
 
 	i = 0;
 	ft_close_pipes(npipes, pfd);
 	while (i <= npipes + 1)
 	{
-		wait(NULL);
+		waitpid(g_glob.fork_ret, &status, 0);
+		g_glob.exit_status = WEXITSTATUS(status);
 		i++;
 	}
 }
@@ -51,7 +53,11 @@ void	ft_pipe_and_exec(t_dl_lst *lst, int *pfd, int j, int npipes)
 	{
 		if (cmd->error == 0)
 		{
-			if (execve(cmd->str_tab_for_execve[0],
+			if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 7)
+			{
+				ft_up_shlvl();
+			}
+			else if (execve(cmd->str_tab_for_execve[0],
 					cmd->str_tab_for_execve, g_glob.env) == -1)
 			{
 				ft_minishell_error(strerror(errno));
@@ -90,15 +96,15 @@ void	ft_execute(t_dl_lst *command_list)
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
-		cmd->s = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
-		if (cmd->s >= 0 && cmd->s <= 6)
-			cmd->exists = 1;
-		if (cmd->exists == 1 && cmd->error == 0)
-			ft_handle_cmd(command_list, pfd, j, npipes);
-		else
+		if (cmd->error == 0)
 		{
-			if (cmd->error == 0)
-				ft_minishell_error("command not found\n");
+			cmd->s = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);
+			if (cmd->s >= 0 && cmd->s <= 6)
+				cmd->exists = 1;
+			if (cmd->exists == 1 && cmd->error == 0)
+				ft_handle_cmd(command_list, pfd, j, npipes);
+			else if (cmd->error == 0)
+				ft_minishell_error("command not found");
 		}
 		ft_free_ressources(cmd);
 		command_list = command_list->next;

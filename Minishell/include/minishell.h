@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 15:48:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/20 08:56:24 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -191,6 +191,8 @@ int			ft_is_valid_export_arg(char *arg);
 void		ft_free_ressources(t_command *cmd);
 void		ft_update_pwd(void);
 void		ft_update_oldpwd(void);
+void		ft_up_shlvl(void);
+void		ft_down_shlvl(void);
 /*
 ** COLORS
 */

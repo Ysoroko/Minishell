@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:49:19 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 07:46:29 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 06:19:04 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ void	ft_add_redir_out(t_command *cmd, int m, int i)
 		cmd->fdout = open(cmd->outfile, O_CREAT | O_APPEND, 0664);
 		cmd->redir_type_out = 2;
 	}
-	if (cmd->fdout == -1)
+	if (cmd->fdout == -1 && cmd->error == 0)
 	{
 		ft_minishell_error(strerror(errno));
+		cmd->error = 1;
 		ft_exit(errno);
 	}
-	if (close(cmd->fdout) == -1)
+	if (close(cmd->fdout) == -1 && cmd->error == 0)
 	{
 		ft_minishell_error(strerror(errno));
+		cmd->error = 1;
 		ft_exit(errno);
 	}
 }

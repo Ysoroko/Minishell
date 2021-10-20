@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/17 15:59:46 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/20 09:41:29 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,19 +55,10 @@ void	ft_prompt(void)
 	}
 	add_history(user_input_str);
 	input_as_dl_command_list = ft_input_parsing(user_input_str);
-	ft_execute(input_as_dl_command_list); // LEAKS ICI
+	ft_execute(input_as_dl_command_list);
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) variable SHLVL -> doit +1 quand on ouvre un nouveau 
-//minishell(dans le notre), doit -1 quand on ferme le notre
-// 2) Leaks dans ft_execute
-// 3) Impossible de mofidier la valeur de g_glob.exit_status
-// 4) "< ok" --> fait planter minishell ("< main.c" est valide dans bash)
-// 5) Utiliser wait pour récupere la valeur de exit_status de nos executables
-//		et mettre à jour la g_glob.exit_status
-//	waitpid(ms->p_ids[i], &status, 0);
-//	g_glob.exit_status = WEXITSTATUS(status);
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -86,6 +77,7 @@ int	main(int ac, char **av, char **env)
 	{
 		g_glob.fork_ret = g_glob.main_pid;
 		ft_prompt();
+		//system("leaks minishell");
 	}
 	return (1);
 }

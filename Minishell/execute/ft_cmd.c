@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 11:16:17 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 08:58:14 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,8 @@ int	ft_builtin_cmd_found(char *exec_name)
 		return (5);
 	if (ft_strcmp("/usr/bin/env", exec_name) == 0)
 		return (6);
+	if (ft_strcmp("minishell", exec_name) == 0)
+		return (7);
 	return (-1);
 }
 
@@ -66,7 +68,10 @@ void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 	if (s == 2)
 		ft_unset_handler(cmd);
 	if (s == 3)
+	{
+		ft_down_shlvl();
 		ft_exit(EXIT_SUCCESS);
+	}
 }
 
 void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
@@ -75,7 +80,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 	{
 		if (cmd->redir_type_out != REDIR_R || cmd->redir_type_out != REDIR_RR)
 		{
-			if (dup2(pfd[j + 1], 1) == -1)
+			if (dup2(pfd[j + 1], 1) == -1 && cmd->error == 0)
 			{
 				ft_minishell_error(strerror(errno));
 				ft_exit(errno);
@@ -86,7 +91,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 	{
 		if (cmd->redir_type_in != REDIR_L || cmd->redir_type_in != REDIR_LL)
 		{
-			if (dup2(pfd[j - 2], 0) == -1)
+			if (dup2(pfd[j - 2], 0) == -1 && cmd->error == 0)
 			{
 				ft_minishell_error(strerror(errno));
 				ft_exit(errno);

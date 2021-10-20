@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/15 06:01:49 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 09:26:13 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,8 @@ int	ft_exec_check(char *path, char *cmd)
 	char			*tmp;
 
 	i = 0;
+	if (cmd == NULL)
+		return (-1);
 	dir = opendir(path);
 	d = readdir(dir);
 	while (d != NULL)
@@ -67,12 +69,8 @@ int	ft_exec_check(char *path, char *cmd)
 
 void	ft_check_tables(t_command *command)
 {
-	if (!command || !command->str_tab_all || !command->str_tab_all[0]
-		|| !command->str_tab_for_execve || ! command->str_tab_for_execve[0]
-		|| !command->role_macros || !command->role_macros[0])
-		exit(EXIT_FAILURE);
 	command->keyword = (char **)malloc(sizeof(char *) * 1024);
-	if (!command->keyword)
+	if (!command->keyword && command->error == 0)
 	{
 		ft_minishell_error(strerror(errno));
 		ft_exit(errno);
@@ -94,5 +92,11 @@ void	ft_check_redir_and_binary(void *current_command)
 	{
 		m = (command->role_macros)[i];
 		ft_add_redir_files(command, m, i);
+	}
+	if (command->str_tab_for_execve[0] == NULL && command->error == 0)
+	{
+		command->error = 1;
+		command->exists = 0;
+		ft_minishell_error("command not found");
 	}
 }

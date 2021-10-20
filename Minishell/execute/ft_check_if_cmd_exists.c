@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:26:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 08:48:16 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/20 06:44:54 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	ft_check_if_cmd_exists(t_command *command)
 		if (ft_set_paths(&command->str_tab_for_execve[0]) == -1
 			&& command->error == 0)
 		{
-			command->error = 1;
-			ft_export("?=127");
 			ft_minishell_error("command not found");
+			command->error = 1;
+			command->exists = 0;
 		}
 	}
 	if (ft_check_binary(command->str_tab_for_execve[0]) == 1)
@@ -45,10 +45,9 @@ void	ft_check_if_cmd_exists(t_command *command)
 		if (ft_builtin_cmd_found(command->str_tab_for_execve[0]) == 0
 			&& command->error == 0)
 		{
-			ft_export("?=127");
 			ft_minishell_error("command not found");
 			command->error = 1;
-			command->exists = 0;
+			command->exists = 1;
 		}
 	}
 }

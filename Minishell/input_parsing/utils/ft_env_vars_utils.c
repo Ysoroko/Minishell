@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 11:59:36 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 11:47:51 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,7 +93,7 @@ void	ft_append_env_var_value(char *str, char **dest, int *i, int *j)
 		return ;
 	env_name = ft_extract_env_variable_name(str, ENV_VAR_SEPS);
 	if (!ft_strlcmp(env_name, "?"))
-		env_value = ft_itoa(g_glob.exit_status);
+		env_value = ft_strdup_exit(getenv(EXIT_STATUS));
 	else
 		env_value = ft_strdup_exit(getenv(env_name));
 	k = 1;

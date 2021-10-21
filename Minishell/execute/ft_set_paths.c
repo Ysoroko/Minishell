@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 14:23:46 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 12:09:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,7 +25,7 @@ char	**ft_split_paths(int *i)
 		ft_minishell_error(strerror(errno));
 		ft_exit(errno);
 	}
-	paths = ft_split(tmp, ':');
+	paths = ft_split_exit(tmp, ':');
 	if (!paths)
 	{
 		ft_minishell_error(strerror(errno));

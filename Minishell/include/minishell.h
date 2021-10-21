@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 08:56:24 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/21 14:51:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -68,6 +68,7 @@ t_glob		g_glob;
 # define COMMAND_NAMES "echo cd pwd export unset env exit"
 # define LINE_LENGTH 70
 # define PLACE_FOR_I -2
+# define EXIT_STATUS "EXIT_STATUS"
 
 /*
 ** INT_TAB_MACROS
@@ -193,6 +194,8 @@ void		ft_update_pwd(void);
 void		ft_update_oldpwd(void);
 void		ft_up_shlvl(void);
 void		ft_down_shlvl(void);
+void		ft_exit_cmd(t_command *cmd);
+
 /*
 ** COLORS
 */

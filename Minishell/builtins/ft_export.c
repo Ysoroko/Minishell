@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 14:41:12 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/21 13:39:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ char	**ft_export(char *new_var)
 	}
 	next_env[i] = ft_strdup_exit(new_var);
 	next_env[i + 1] = NULL;
-	ft_free_str_tab(&g_glob.env, NULL);
+	ft_free_str_tab(&(g_glob.env), NULL); // double free ici
 	return (next_env);
 }
 

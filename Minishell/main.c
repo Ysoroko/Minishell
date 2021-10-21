@@ -3,14 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/21 15:02:28 by ablondel         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/21 13:41:13 by ysoroko          ###   ########.fr       */
->>>>>>> f9a020be7e662cab842c87e679a84e2a3df15941
+/*   Updated: 2021/10/21 15:09:41 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,12 +59,6 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) rajouter des vérifications d'erreurs dans ft_export
-// (j'ai crée une fonction "int	ft_is_valid_export_arg(char *arg)" qui retourne
-// 1 si l'argument est valide, 0 + écrit un message d'erreur s'il trouve une erreur)
-
-// 2) "export TEST=4", ensuite "export TEST=4" ->double free (qui vient de ft_free_str_tab dans ft_export)
-//
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -83,11 +73,11 @@ int	main(int ac, char **av, char **env)
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.main_pid = getpid();
 	g_glob.exit_status = 0;
-	g_glob.env = ft_export("EXIT_STATUS=0");
 	while (1)
 	{
 		g_glob.fork_ret = g_glob.main_pid;
 		ft_prompt();
+		//system("leaks minishell");
 	}
 	return (1);
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 11:56:15 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 12:01:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_prompt(void)
 // 1) rajouter des vérifications d'erreurs dans ft_export
 // (j'ai crée une fonction "int	ft_is_valid_export_arg(char *arg)" qui retourne
 // 1 si l'argument est valide, 0 + écrit un message d'erreur s'il trouve une erreur)
-// 2) la builtin "cd"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

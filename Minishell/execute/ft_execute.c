@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 13:04:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 16:47:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,7 +78,7 @@ void	ft_handle_cmd(t_dl_lst *lst, int *pfd, int j, int npipes)
 	{
 		g_glob.fork_ret = fork();
 		if (g_glob.fork_ret < 0)
-			ft_exit(errno);
+			ft_exit_cmd(cmd);
 		if (g_glob.fork_ret == 0)
 			ft_pipe_and_exec(lst, pfd, j, npipes);
 	}

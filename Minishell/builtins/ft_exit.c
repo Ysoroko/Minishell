@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 15:08:56 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/21 17:25:34 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,14 +45,16 @@ void	ft_exit_cmd(t_command *cmd)
 {
 	int		exit_arg;
 	char	*exit_arg_str;
+	int		non_num;
 
 	exit_arg_str = cmd->str_tab_for_execve[1];
+	non_num = !ft_str_only_has_chars_from_charset(exit_arg_str, "0123456789");
 	if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
 	{
 		ft_exit_error("too many arguments", NULL);
 		g_glob.env = ft_export("EXIT_STATUS=1");
 	}
-	else if (!(ft_str_only_has_chars_from_charset(exit_arg_str, "0123456789")))
+	else if (exit_arg_str && non_num)
 	{
 		ft_exit_error(exit_arg_str, ": numeric argument required");
 		ft_exit(1);

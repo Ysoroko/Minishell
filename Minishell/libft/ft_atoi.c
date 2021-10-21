@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 11:23:49 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/04/02 11:04:48 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 16:45:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,6 +69,8 @@ int	ft_atoi(const char *str)
 	unsigned long long	extreme;
 	char				*my_str;
 
+	if (!str)
+		return (0);
 	i = 0;
 	sign = 1;
 	number = 0;

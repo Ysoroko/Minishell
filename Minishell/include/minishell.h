@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 11:46:21 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/21 14:51:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -194,6 +194,8 @@ void		ft_update_pwd(void);
 void		ft_update_oldpwd(void);
 void		ft_up_shlvl(void);
 void		ft_down_shlvl(void);
+void		ft_exit_cmd(t_command *cmd);
+
 /*
 ** COLORS
 */

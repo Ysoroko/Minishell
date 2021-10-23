@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 16:47:27 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 16:34:54 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,7 @@ void	ft_parent_process(int npipes, int *pfd)
 		g_glob.exit_status = WEXITSTATUS(status);
 		i++;
 	}
+	free(pfd);
 }
 
 void	ft_pipe_and_exec(t_dl_lst *lst, int *pfd, int j, int npipes)
@@ -111,5 +112,4 @@ void	ft_execute(t_dl_lst *command_list)
 		j += 2;
 	}
 	ft_parent_process(npipes, pfd);
-	free(pfd);
 }

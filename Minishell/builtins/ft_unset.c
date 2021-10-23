@@ -3,47 +3,34 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:27:27 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 14:31:24 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 16:29:29 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_unset_init(int *i, int *j, int *skip, char *var)
+void	ft_unset(char *var)
 {
-	*i = 1;
-	*j = 1;
-	*skip = ft_env_index(var);
-}
+	t_list	*lst;
 
-char	**ft_unset(char *var)
-{
-	int		i;
-	int		j;
-	int		skip;
-	char	**next_env;
-
-	ft_unset_init(&i, &j, &skip, var);
-	next_env = (char **)malloc(sizeof(char *) * (ft_nb_env(g_glob.env) + 1));
-	if (!next_env)
+	lst = ft_tab_to_list();
+	if (!lst)
 	{
 		ft_minishell_error(strerror(errno));
 		ft_exit(errno);
 	}
-	next_env[0] = ft_strdup_exit(g_glob.env[0]);
-	while (g_glob.env[i])
-	{
-		if (g_glob.env[i] != NULL && i != skip)
-			next_env[j++] = ft_strdup_exit(g_glob.env[i++]);
-		else
-			break ;
-	}
 	ft_free_str_tab(&g_glob.env, NULL);
-	next_env[j] = NULL;
-	return (next_env);
+	ft_delete(&lst, var);
+	g_glob.env = ft_list_to_tab(lst);
+	if (!g_glob.env)
+	{
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
+	}
+	ft_lstclear(&lst, &ft_clear_node);
 }
 
 void	ft_unset_handler(t_command *cmd)
@@ -54,7 +41,7 @@ void	ft_unset_handler(t_command *cmd)
 	while (cmd->str_tab_for_execve[i])
 	{
 		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
-			g_glob.env = ft_unset(cmd->str_tab_for_execve[i]);
+			ft_unset(cmd->str_tab_for_execve[i]);
 		i++;
 	}
 }

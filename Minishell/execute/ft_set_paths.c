@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_set_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 12:09:11 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 16:33:29 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,10 +55,8 @@ int	ft_set_paths(char **exec_name)
 	if (!paths)
 		return (-1);
 	i = -1;
-	
 	while (paths[++i])
 	{
-		
 		ft_join_paths(paths, tmp, i);
 		if (ft_exec_check(paths[i], *exec_name) == 1)
 		{
@@ -67,10 +65,7 @@ int	ft_set_paths(char **exec_name)
 			ft_free_str_tab(&paths, NULL);
 			free(tmp);
 			if (*exec_name == NULL)
-			{
-				ft_minishell_error(strerror(errno));
 				return (-1);
-			}
 			return (1);
 		}
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 16:38:12 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 14:55:17 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -169,8 +169,8 @@ int			ft_env_index(char *s);
 void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);
 void		ft_exit(int n);
-char		**ft_unset(char *var);
-char		**ft_export(char *new_var);
+void		ft_unset(char *var);
+void		ft_export(char *new_var);
 void		ft_close_pipes(int npipes, int *pfd);
 void		ft_open_pipes(int npipes, int *pfd);
 void		ft_fdin(t_command *cmd);
@@ -195,6 +195,10 @@ void		ft_update_oldpwd(void);
 void		ft_up_shlvl(void);
 void		ft_down_shlvl(void);
 void		ft_exit_cmd(t_command *cmd);
+t_list		*ft_tab_to_list(void);
+void		ft_clear_node(void *content);
+char		**ft_list_to_tab(t_list *lst);
+void		ft_delete(t_list **lst, char *var);
 
 /*
 ** COLORS

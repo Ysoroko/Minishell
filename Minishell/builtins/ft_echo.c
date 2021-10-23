@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 11:48:15 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 16:31:01 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,9 +62,9 @@ void	ft_echo(char **str_tab_for_execve)
 
 int	main(int argc, char **str_tab_for_execve, char **env)
 {
-	(void)env;
 	int	i;
 
+	(void)env;
 	i = 0;
 	if (argc == 1)
 		return (0);

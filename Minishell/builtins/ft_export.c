@@ -6,60 +6,36 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/22 08:54:20 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/23 16:27:59 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-char	**ft_export(char *new_var)
-{
-	int		i;
-	char	**next_env;
-
-	i = 1;
-	next_env = NULL;
-	next_env = (char **)malloc(sizeof(char *) * (ft_nb_env(g_glob.env) + 1));
-	if (!next_env)
-		return (NULL);
-	next_env[0] = ft_strdup_exit(g_glob.env[0]);
-	printf("%d|%s\n", 0, next_env[0]);
-	free(g_glob.env[0]);
-	while (i < ft_nb_env(g_glob.env))
-	{
-		next_env[i] = ft_strdup_exit(g_glob.env[i]);
-		printf("%d|%s\n", i, next_env[i]);
-		free(g_glob.env[i]);
-		if (!next_env[i])
-			return (NULL);
-		i++;
-	}
-	next_env[i] = ft_strdup_exit(new_var);
-	next_env[i + 1] = NULL;
-	free(g_glob.env);
-	return (next_env);
-}
-
 void	ft_format(char *s)
 {
 	int	i;
+	int	equal;
 
 	i = 0;
+	equal = 0;
 	while (s[i])
 	{
+		if (s[i] == '=')
+			equal = 1;
 		if (s[i - 1] == '=')
-		{
 			write(1, "\"", 1);
-		}
 		write(1, &s[i], 1);
-		if (s[i + 1] == '\0')
+		if (s[i + 1] == '\0' && equal == 1)
 		{
 			write(1, "\"\n", 2);
 			return ;
 		}
 		i++;
 	}
-	write(1, "\"\n", 2);
+	if (equal == 1)
+		write(1, "\"", 1);
+	write(1, "\n", 1);
 }
 
 char	**ft_copy_for_print(char **sorted)
@@ -117,6 +93,34 @@ void	ft_print(void)
 	ft_free_str_tab(&sorted, NULL);
 }
 
+void	ft_export(char *new_var)
+{
+	t_list	*lst;
+	t_list	*new;
+
+	lst = ft_tab_to_list();
+	if (!lst)
+	{
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
+	}
+	ft_free_str_tab(&g_glob.env, NULL);
+	new = ft_lstnew(ft_strdup(new_var));
+	if (!new)
+	{
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
+	}
+	ft_lstadd_back(&lst, ft_lstnew(ft_strdup(new_var)));
+	g_glob.env = ft_list_to_tab(lst);
+	if (!g_glob.env)
+	{
+		ft_minishell_error(strerror(errno));
+		ft_exit(errno);
+	}
+	ft_lstclear(&lst, &ft_clear_node);
+}
+
 void	ft_export_handler(t_command *cmd)
 {
 	int		i;
@@ -129,11 +133,11 @@ void	ft_export_handler(t_command *cmd)
 	{
 		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
 		{
-			g_glob.env = ft_unset(cmd->str_tab_for_execve[i]);
-			g_glob.env = ft_export(cmd->str_tab_for_execve[i]);
+			ft_unset(cmd->str_tab_for_execve[i]);
+			ft_export(cmd->str_tab_for_execve[i]);
 		}
 		else
-			g_glob.env = ft_export(cmd->str_tab_for_execve[i]);
+			ft_export(cmd->str_tab_for_execve[i]);
 		i++;
 	}
 }

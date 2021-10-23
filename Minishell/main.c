@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/22 08:51:12 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/23 15:41:19 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,12 +73,12 @@ int	main(int ac, char **av, char **env)
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.main_pid = getpid();
 	g_glob.exit_status = 0;
-	g_glob.env = ft_export("EXIT_STATUS=0");
+	ft_export("EXIT_STATUS=0");
 	while (1)
 	{
 		g_glob.fork_ret = g_glob.main_pid;
 		ft_prompt();
-		system("leaks minishell");
+		//system("leaks minishell");
 	}
 	return (1);
 }

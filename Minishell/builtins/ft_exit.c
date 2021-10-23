@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 17:25:34 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 15:05:11 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,7 @@ void	ft_exit(int n)
 	n_str = ft_itoa_exit(n);
 	temp = ft_strjoin_exit("EXIT_STATUS=", n_str);
 	g_glob.exit_status = n;
-	g_glob.env = ft_export(temp);
+	ft_export(temp);
 	free(n_str);
 	free(temp);
 	exit(n);
@@ -52,7 +52,7 @@ void	ft_exit_cmd(t_command *cmd)
 	if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
 	{
 		ft_exit_error("too many arguments", NULL);
-		g_glob.env = ft_export("EXIT_STATUS=1");
+		ft_export("EXIT_STATUS=1");
 	}
 	else if (exit_arg_str && non_num)
 	{

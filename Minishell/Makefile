@@ -6,7 +6,7 @@
 #    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/20 10:37:53 by ablondel         ###   ########.fr        #
+#    Updated: 2021/10/23 14:36:22 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,6 +42,7 @@ EXECUTE				=	execute/ft_execute.c \
 BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \
+						builtins/ft_lstenv.c \
 
 BUILTINS_EXE		=	builtins/ft_echo \
 

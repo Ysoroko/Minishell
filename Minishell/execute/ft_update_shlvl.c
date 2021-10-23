@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_update_shlvl.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 08:44:54 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 12:08:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/23 15:07:22 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,10 +24,9 @@ void	ft_up_shlvl(void)
 	free(tmp);
 	tmp = g_glob.env[ft_env_index("SHLVL")];
 	g_glob.env[ft_env_index("SHLVL")] = ft_strjoin("SHLVL=", ft_itoa_exit(n));
+	free(tmp);
 	if (g_glob.env[ft_env_index("SHLVL")] == NULL)
 		ft_minishell_error(strerror(errno));
-	else
-		free(tmp);
 }
 
 void	ft_down_shlvl(void)
@@ -41,8 +40,7 @@ void	ft_down_shlvl(void)
 	free(tmp);
 	tmp = g_glob.env[ft_env_index("SHLVL")];
 	g_glob.env[ft_env_index("SHLVL")] = ft_strjoin("SHLVL=", ft_itoa_exit(n));
+	free(tmp);
 	if (g_glob.env[ft_env_index("SHLVL")] == NULL)
 		ft_minishell_error(strerror(errno));
-	else
-		free(tmp);
 }

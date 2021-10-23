@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 15:12:01 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/22 08:54:20 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,12 @@ char	**ft_export(char *new_var)
 	if (!next_env)
 		return (NULL);
 	next_env[0] = ft_strdup_exit(g_glob.env[0]);
+	printf("%d|%s\n", 0, next_env[0]);
+	free(g_glob.env[0]);
 	while (i < ft_nb_env(g_glob.env))
 	{
 		next_env[i] = ft_strdup_exit(g_glob.env[i]);
+		printf("%d|%s\n", i, next_env[i]);
 		free(g_glob.env[i]);
 		if (!next_env[i])
 			return (NULL);

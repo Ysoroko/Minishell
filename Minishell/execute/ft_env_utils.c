@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:02:26 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 11:15:45 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 12:46:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_duplicate_env(char **env)
 
 char	*ft_getenv(char *s)
 {
-	if (ft_env_index >= 0)
+	if (ft_env_index(s) >= 0)
 		return (g_glob.env[ft_env_index(s)] + (ft_strlen(s) + 1));
 	return (NULL);
 }

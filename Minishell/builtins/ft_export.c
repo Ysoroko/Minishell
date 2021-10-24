@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 16:27:59 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 13:00:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -105,20 +105,17 @@ void	ft_export(char *new_var)
 		ft_exit(errno);
 	}
 	ft_free_str_tab(&g_glob.env, NULL);
-	new = ft_lstnew(ft_strdup(new_var));
-	if (!new)
-	{
-		ft_minishell_error(strerror(errno));
-		ft_exit(errno);
-	}
-	ft_lstadd_back(&lst, ft_lstnew(ft_strdup(new_var)));
+	new = ft_lstnew_exit(ft_strdup_exit(new_var));
+	ft_lstadd_back(&lst, ft_lstnew(ft_strdup_exit(new_var)));
 	g_glob.env = ft_list_to_tab(lst);
 	if (!g_glob.env)
 	{
 		ft_minishell_error(strerror(errno));
 		ft_exit(errno);
 	}
-	ft_lstclear(&lst, &ft_clear_node);
+	ft_lstclear(&lst, &free);
+	free(new->content);
+	free(new);
 }
 
 void	ft_export_handler(t_command *cmd)

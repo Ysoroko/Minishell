@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/23 16:34:54 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 12:58:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,13 +29,16 @@ void	ft_parent_process(int npipes, int *pfd)
 {
 	int	i;
 	int	status;
+	int	status_code;
 
 	i = 0;
+	waitpid(g_glob.fork_ret, &status, 0);
+	if (WIFEXITED(status))
+		status_code = WEXITSTATUS(status);
+	//ft_modify_exit_status(status_code);
 	ft_close_pipes(npipes, pfd);
 	while (i <= npipes + 1)
 	{
-		waitpid(g_glob.fork_ret, &status, 0);
-		g_glob.exit_status = WEXITSTATUS(status);
 		i++;
 	}
 	free(pfd);

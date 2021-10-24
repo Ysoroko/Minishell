@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2020/11/17 15:32:25 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 12:08:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 12:30:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -199,5 +199,6 @@ int			ft_is_valid_export_arg(char *arg);
 void		*ft_malloc_exit(size_t size);
 char		*ft_itoa_exit(int n);
 char		**ft_split_exit(char const *str, char charset);
+void		ft_modify_exit_status(int new_value);
 
 #endif

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 15:17:15 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 15:47:32 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,9 +63,7 @@ void	ft_pipe_and_exec(t_dl_lst *lst, int *pfd, int j, int npipes)
 		if (cmd->error == 0)
 		{
 			if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 7)
-			{
 				ft_up_shlvl();
-			}
 			else if (execve(cmd->str_tab_for_execve[0],
 					cmd->str_tab_for_execve, g_glob.env) == -1)
 			{

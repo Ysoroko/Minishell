@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 15:02:29 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 15:36:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,7 @@ int	ft_user_input_error(char *str)
 	if (ft_str_has_unclosed_quotes(str))
 	{
 		ft_minishell_error("Unclosed quotes error");
+		ft_modify_exit_status(1);
 		return (1);
 	}
 	return (0);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/23 15:41:19 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 12:00:48 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,7 +31,10 @@ static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 int	ft_user_input_error(char *str)
 {
 	if (!str)
-		kill(getpid(), SIGUSR1);
+	{
+		ft_putendl_fd("exit", STDOUT);
+		exit(EXIT_SUCCESS);
+	}
 	if (ft_str_only_has_chars_from_charset(str, SPACES))
 		return (1);
 	if (ft_str_has_unclosed_quotes(str))
@@ -59,6 +62,8 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
+
+// 1) Export TEST=4 TEST2=5 --> doit créer "TEST=4" mais ne le fait pas
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 14:59:09 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 12:01:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,20 +54,6 @@ static void	ft_control_backslash_function(void)
 }
 
 /*
-** ft_control_d_empty_input_function(void)
-** Not an actual signal.
-** This signal is caught when CTRL+D is pressed and the input is empty
-** It exits the process and displays "exit" in terminal.
-** Does not dump core ("unlike CTRL + \").
-*/
-
-static void	ft_control_d_empty_input_function(void)
-{
-	ft_putendl_fd("exit", STDOUT);
-	exit(EXIT_SUCCESS);
-}
-
-/*
 ** FT_SIGNAL_HANDLER
 ** This function will be called in our "signal()" function to intercept the
 ** CTRL+C signal and instead of quitting our minishell we will just execute
@@ -87,8 +73,6 @@ void	ft_signal_handler(int sig)
 		ft_control_c_function();
 	else if (sig == SIGQUIT)
 		ft_control_backslash_function();
-	else if (sig == SIGUSR1)
-		ft_control_d_empty_input_function();
 }
 
 /*
@@ -103,5 +87,4 @@ void	ft_setup_signals(void)
 {
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGQUIT, ft_signal_handler);
-	signal(SIGUSR1, ft_signal_handler);
 }

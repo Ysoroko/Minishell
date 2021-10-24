@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 16:27:59 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 13:35:05 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_export(char *new_var)
 	t_list	*lst;
 	t_list	*new;
 
+	if (ft_env_index(new_var) >= 0)
+		ft_unset(new_var);
 	lst = ft_tab_to_list();
 	if (!lst)
 	{
@@ -131,6 +133,8 @@ void	ft_export_handler(t_command *cmd)
 		ft_print();
 	while (cmd->str_tab_for_execve[i])
 	{
+		printf("%d\n", ft_env_index(cmd->str_tab_for_execve[i]));
+		//printf("\n%s|%s\n", g_glob.env[ft_env_index(cmd->str_tab_for_execve[i])], cmd->str_tab_for_execve[i]);
 		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
 		{
 			ft_unset(cmd->str_tab_for_execve[i]);

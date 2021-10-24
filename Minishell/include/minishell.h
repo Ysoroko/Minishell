@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/23 14:55:17 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 13:29:42 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -164,7 +164,7 @@ void		ft_check_if_cmd_exists(t_command *command);
 void		ft_check_redir_and_binary(void *current_command);
 int			ft_builtin_cmd_found(char *exec_name);
 int			ft_nb_env(char **env);
-int			ft_cmp_env(char *s1, char *s2);
+int			ft_cmp_env(char *s1, char *s2, size_t n);
 int			ft_env_index(char *s);
 void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);

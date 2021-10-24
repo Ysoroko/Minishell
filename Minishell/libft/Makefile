@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/21 12:08:33 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/24 12:31:08 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -148,6 +148,7 @@ SRC				=	ft_atoi.c \
 					ft_malloc_exit.c \
 					ft_itoa_exit.c \
 					ft_split_exit.c \
+					ft_modify_exit_status.c \
 					
 
 BONUS			=	ft_lstadd_back.c \

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 13:29:42 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 13:46:52 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,6 @@
 
 typedef struct s_glob
 {
-	pid_t	main_pid;
 	pid_t	fork_ret;
 	char	**env;
 	char	*path;

@@ -3,10 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
+<<<<<<< HEAD
 /*   Updated: 2021/10/24 13:45:51 by ablondel         ###   ########.fr       */
+=======
+/*   Updated: 2021/10/24 13:03:46 by ysoroko          ###   ########.fr       */
+>>>>>>> 09592f96ae9449f67f3eb1b29463885e949f5193
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,10 +32,17 @@ static void	ft_cleanup_and_free(char **str, t_dl_lst *lst)
 		ft_dl_lstclear(lst, &ft_free_t_command);
 }
 
+/// Possible "errors":
+// 1) CTRL + D sends an EOF to the STDIN, so the input becomes a NULL string
+// 2) Only spaces in input
+// 3) Unclosed quotes in input
 int	ft_user_input_error(char *str)
 {
 	if (!str)
-		kill(getpid(), SIGUSR1);
+	{
+		ft_putendl_fd("exit", STDOUT);
+		exit(EXIT_SUCCESS);
+	}
 	if (ft_str_only_has_chars_from_charset(str, SPACES))
 		return (1);
 	if (ft_str_has_unclosed_quotes(str))
@@ -59,6 +70,12 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
+// 1) Export TEST=4 TEST2=5 --> doit créer "TEST=4" mais ne le fait pas
+// 2) J'ai rajouté 2 lignes de code dans ft_export pour règler les leaks
+//		-> vérifie si ça peut causer une erreur stp (double free,
+//			est-ce qu'il faut rajouter une conditon avant de free? etc.)
+// 3) ft_export duplique les variables
+// 3) (Pour moi) "export TEST=echo" "$TEST bonjour" doit afficher "Bonjour"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -71,12 +88,13 @@ int	main(int ac, char **av, char **env)
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
-	g_glob.main_pid = getpid();
 	g_glob.exit_status = 0;
 	ft_export("EXIT_STATUS=0");
+	ft_export("EXIT_STATUS=1");
+	ft_export("EXIT_STATUS=2");
 	while (1)
 	{
-		g_glob.fork_ret = g_glob.main_pid;
+		g_glob.fork_ret = 0;
 		ft_prompt();
 		//system("leaks minishell");
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/21 14:59:09 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 12:08:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,50 +21,37 @@
 
 static void	ft_control_c_function(void)
 {
-	if (g_glob.fork_ret == g_glob.main_pid)
+	if (g_glob.fork_ret)
 	{
 		ft_putchar_fd('\n', STDOUT);
-		//rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
 	}
 	else
 	{
 		ft_putchar_fd('\n', STDOUT);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
 /*
 ** void	ft_control_backslash_function(void)
-** This function is reposnsible for reaction to "CTRL + D" input from the user
-** CTRL + D sends a "quit" signal, which exits current process and dumps core
+** This function is reposnsible for reaction to "CTRL + \" input from the user
+** CTRL + \ sends a "quit" signal, which exits the child process and dumps core
+** Does nothing in the main process.
 */
 
 static void	ft_control_backslash_function(void)
 {
-	if (g_glob.fork_ret == g_glob.main_pid)
+	if (g_glob.fork_ret)
+	{
+		ft_putendl_fd("Quit: 3", STDOUT);
+	}
+	else
 	{
 		rl_on_new_line();
 		rl_redisplay();
 	}
-	else
-	{
-		ft_putendl_fd("Quit: 3", STDOUT);
-	}
-}
-
-/*
-** ft_control_d_empty_input_function(void)
-** Not an actual signal.
-** This signal is caught when CTRL+D is pressed and the input is empty
-** It exits the process and displays "exit" in terminal.
-** Does not dump core ("unlike CTRL + \").
-*/
-
-static void	ft_control_d_empty_input_function(void)
-{
-	ft_putendl_fd("exit", STDOUT);
-	exit(EXIT_SUCCESS);
 }
 
 /*
@@ -87,8 +74,6 @@ void	ft_signal_handler(int sig)
 		ft_control_c_function();
 	else if (sig == SIGQUIT)
 		ft_control_backslash_function();
-	else if (sig == SIGUSR1)
-		ft_control_d_empty_input_function();
 }
 
 /*
@@ -103,5 +88,4 @@ void	ft_setup_signals(void)
 {
 	signal(SIGINT, ft_signal_handler);
 	signal(SIGQUIT, ft_signal_handler);
-	signal(SIGUSR1, ft_signal_handler);
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 12:00:48 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 12:05:11 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,6 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-
 // 1) Export TEST=4 TEST2=5 --> doit créer "TEST=4" mais ne le fait pas
 int	main(int ac, char **av, char **env)
 {
@@ -81,7 +80,7 @@ int	main(int ac, char **av, char **env)
 	ft_export("EXIT_STATUS=0");
 	while (1)
 	{
-		g_glob.fork_ret = g_glob.main_pid;
+		g_glob.fork_ret = 0;
 		ft_prompt();
 		//system("leaks minishell");
 	}

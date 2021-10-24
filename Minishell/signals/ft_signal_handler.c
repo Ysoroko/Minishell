@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 12:01:00 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 12:08:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,35 +21,36 @@
 
 static void	ft_control_c_function(void)
 {
-	if (g_glob.fork_ret == g_glob.main_pid)
+	if (g_glob.fork_ret)
 	{
 		ft_putchar_fd('\n', STDOUT);
-		//rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
 	}
 	else
 	{
 		ft_putchar_fd('\n', STDOUT);
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
 /*
 ** void	ft_control_backslash_function(void)
-** This function is reposnsible for reaction to "CTRL + D" input from the user
-** CTRL + D sends a "quit" signal, which exits current process and dumps core
+** This function is reposnsible for reaction to "CTRL + \" input from the user
+** CTRL + \ sends a "quit" signal, which exits the child process and dumps core
+** Does nothing in the main process.
 */
 
 static void	ft_control_backslash_function(void)
 {
-	if (g_glob.fork_ret == g_glob.main_pid)
+	if (g_glob.fork_ret)
 	{
-		rl_on_new_line();
-		rl_redisplay();
+		ft_putendl_fd("Quit: 3", STDOUT);
 	}
 	else
 	{
-		ft_putendl_fd("Quit: 3", STDOUT);
+		rl_on_new_line();
+		rl_redisplay();
 	}
 }
 

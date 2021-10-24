@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/24 13:47:13 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/24 15:08:02 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -98,6 +98,8 @@ void	ft_export(char *new_var)
 	t_list	*lst;
 	t_list	*new;
 
+	if (!ft_is_valid_export_arg(new_var))
+		return ;
 	if (ft_env_index(new_var) >= 0)
 		ft_unset(new_var);
 	lst = ft_tab_to_list();
@@ -116,8 +118,7 @@ void	ft_export(char *new_var)
 		ft_exit(errno);
 	}
 	ft_lstclear(&lst, &free);
-	free(new->content);
-	free(new);
+	ft_lstdelone(new, &free);
 }
 
 void	ft_export_handler(t_command *cmd)
@@ -126,12 +127,11 @@ void	ft_export_handler(t_command *cmd)
 	char	*tmp;
 
 	i = 1;
+	ft_modify_exit_status(0);
 	if (cmd->str_tab_for_execve[i] == NULL)
 		ft_print();
 	while (cmd->str_tab_for_execve[i])
 	{
-		printf("%d\n", ft_env_index(cmd->str_tab_for_execve[i]));
-		//printf("\n%s|%s\n", g_glob.env[ft_env_index(cmd->str_tab_for_execve[i])], cmd->str_tab_for_execve[i]);
 		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
 		{
 			ft_unset(cmd->str_tab_for_execve[i]);

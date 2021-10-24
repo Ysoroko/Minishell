@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 14:34:24 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/24 13:00:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/24 14:18:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_delete(t_list **lst, char *var)
 
 	tmp = *lst;
 	prev = NULL;
-	if (ft_cmp_env(tmp->content, var) == 0)
+	if (ft_cmp_env(tmp->content, var, ft_strlen(var)) == 0)
 	{
 		*lst = tmp->next;
 		free(tmp->content);
@@ -76,7 +76,7 @@ void	ft_delete(t_list **lst, char *var)
 	}
 	else
 	{
-		while (ft_cmp_env(tmp->content, var) != 0)
+		while (ft_cmp_env(tmp->content, var, ft_strlen(var)) != 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;

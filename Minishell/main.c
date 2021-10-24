@@ -6,11 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-<<<<<<< HEAD
-/*   Updated: 2021/10/24 13:45:51 by ablondel         ###   ########.fr       */
-=======
-/*   Updated: 2021/10/24 13:03:46 by ysoroko          ###   ########.fr       */
->>>>>>> 09592f96ae9449f67f3eb1b29463885e949f5193
+/*   Updated: 2021/10/24 15:02:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -70,12 +66,7 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) Export TEST=4 TEST2=5 --> doit créer "TEST=4" mais ne le fait pas
-// 2) J'ai rajouté 2 lignes de code dans ft_export pour règler les leaks
-//		-> vérifie si ça peut causer une erreur stp (double free,
-//			est-ce qu'il faut rajouter une conditon avant de free? etc.)
-// 3) ft_export duplique les variables
-// 3) (Pour moi) "export TEST=echo" "$TEST bonjour" doit afficher "Bonjour"
+// 1) (Pour moi) "export TEST=echo" "$TEST bonjour" doit afficher "Bonjour"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -90,8 +81,6 @@ int	main(int ac, char **av, char **env)
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.exit_status = 0;
 	ft_export("EXIT_STATUS=0");
-	ft_export("EXIT_STATUS=1");
-	ft_export("EXIT_STATUS=2");
 	while (1)
 	{
 		g_glob.fork_ret = 0;

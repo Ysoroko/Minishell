@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 12:42:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/25 16:45:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	ft_echo(char **str_tab_for_execve)
 
 	end_of_line = '\n';
 	i = 0;
-	final_str = NULL;
+	final_str = 0;
 	while (str_tab_for_execve[++i])
 	{
 		current_element = str_tab_for_execve[i];
@@ -64,15 +64,18 @@ int	main(int argc, char **str_tab_for_execve, char **env)
 {
 	int	i;
 
+	if (argc == 1)
+	{
+		printf("\n");
+		return (0);
+	}
+	else if (argc == 2 && !(ft_strlcmp(str_tab_for_execve[1], "-n")))
+	{
+		printf("");
+		return (0);
+	}
 	g_glob.env = env;
 	i = 0;
-	if (argc == 1)
-		return (0);
-	while (str_tab_for_execve[++i])
-	{
-		str_tab_for_execve[i]
-			= ft_apply_quotes_and_env_vars(&(str_tab_for_execve[i]));
-	}
 	ft_echo(str_tab_for_execve);
 	return (0);
 }

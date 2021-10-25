@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 15:47:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/25 11:51:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,7 +35,7 @@ void	ft_parent_process(int npipes, int *pfd)
 	if (g_glob.fork_ret)
 	{
 		waitpid(g_glob.fork_ret, &status, 0);
-		if (WIFSIGNALED(status) || WIFEXITED(status))
+		if (WIFEXITED(status) && !WIFSIGNALED(status))
 		{
 			status_code = WEXITSTATUS(status);
 			ft_modify_exit_status(status_code);

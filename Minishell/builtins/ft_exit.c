@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 15:05:11 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:54:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,7 @@ void	ft_exit(int n)
 	ft_export(temp);
 	free(n_str);
 	free(temp);
+	ft_modify_exit_status(n);
 	exit(n);
 }
 
@@ -52,7 +53,7 @@ void	ft_exit_cmd(t_command *cmd)
 	if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
 	{
 		ft_exit_error("too many arguments", NULL);
-		ft_export("EXIT_STATUS=1");
+		ft_modify_exit_status(1);
 	}
 	else if (exit_arg_str && non_num)
 	{

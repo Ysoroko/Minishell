@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_unset.c                                         :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 14:27:27 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 16:29:29 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:59:30 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,4 +44,5 @@ void	ft_unset_handler(t_command *cmd)
 			ft_unset(cmd->str_tab_for_execve[i]);
 		i++;
 	}
+	ft_modify_exit_status(0);
 }

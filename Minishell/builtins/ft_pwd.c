@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_pwd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 18:40:43 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/08 04:51:36 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/25 16:58:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,5 +33,6 @@ int	main(int ac, char **av, char **env)
 	(void)env;
 	getcwd(buf, 1024);
 	printf("%s\n", buf);
+	ft_modify_exit_status(0);
 	return (0);
 }

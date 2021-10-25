@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/29 16:16:10 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/24 16:15:48 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/25 16:51:40 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,5 +40,6 @@ int	main(int ac, char **av, char **env)
 			write(1, &env[i], ft_strlen(env[i]));
 		i++;
 	}
+	ft_modify_exit_status(0);
 	return (0);
 }

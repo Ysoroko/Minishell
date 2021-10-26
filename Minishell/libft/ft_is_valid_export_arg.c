@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 14:28:07 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/24 15:31:58 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 17:37:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,7 +43,6 @@ int	ft_check_results(char *arg, char **before, char **after, char equal)
 	char	*error_message;
 
 	error_message = NULL;
-	g_glob.exit_status = 0;
 	if (!(*before) || !ft_isalpha((arg)[0]))
 	{
 		error_message = ft_strjoin_exit("export: \'", arg);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 16:40:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 17:37:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,11 +67,18 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) echo -n "               "
-// 2)	minishell: export TEST=4
-// 		minishell: export TEST=5
-// 		minishell: unset EXIT_STATUS
-// 		---> segfault
+// 1)	(pour moi) echo -n "               " 
+// 2)	export EXIT_STATUS =10 --> segfault
+// 3)	unset EXIT_STATUS --> segfault
+// 4)	export EXIT_STATUS, ensuite "env" ->segfault
+// 		---------------------------------------------
+//		Dans la fiche de correction:
+// 5)	si on unset PATH -> rien ne doit fonctionner
+//		"Unset the $PATH and check if it is not working anymore"
+// 6)	aussi:
+//		"Set the $PATH to a multiple directory value
+//		(directory1:directory2) and check that directories
+//		are checked in order from left to right"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -85,7 +92,6 @@ int	main(int ac, char **av, char **env)
 	getcwd(origin, 1024);
 	ft_up_shlvl();
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
-	g_glob.exit_status = 0;
 	ft_export("EXIT_STATUS=0");
 	while (1)
 	{

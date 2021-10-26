@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_modify_exit_status.c                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/24 12:27:34 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 11:04:51 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 17:32:23 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,8 @@ void	ft_modify_exit_status(int new_value)
 
 	new_value_as_str = ft_itoa_exit(new_value);
 	str = ft_strjoin_exit("EXIT_STATUS=", new_value_as_str);
-	ft_unset("EXIT_STATUS");
+	if (ft_env_index("EXIT_STATUS"))
+		ft_unset("EXIT_STATUS");
 	ft_export(str);
 	free(new_value_as_str);
 	free(str);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 14:44:06 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 15:52:22 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -176,7 +176,7 @@ void		ft_fdin(t_command *cmd);
 void		ft_fdout(t_command *cmd);
 void		ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd,
 				int j);
-void		ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes);
+void		ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes, int *j);
 void		ft_fds_and_pipes(t_dl_lst *lst, t_command *cmd, int *pfd, int j);
 void		ft_parent_process(int npipes, int *pfd);
 int			ft_builtin_cmd_found(char *exec_name);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 14:45:00 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 15:52:02 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 		ft_down_shlvl();
 		ft_exit_cmd(cmd);
 	}
-	
 }
 
 void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)

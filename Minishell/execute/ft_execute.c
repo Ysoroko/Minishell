@@ -3,17 +3,18 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 14:37:50 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 15:47:37 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes)
+void	ft_setup_for_exec(t_dl_lst *lst, int **pfd, int *npipes, int *j)
 {
+	*j = 0;
 	*npipes = ft_lstsize((t_list *)lst) - 1;
 	*pfd = (int *)malloc(sizeof(int) * (*npipes * 2));
 	if (!(*pfd))
@@ -32,18 +33,17 @@ void	ft_parent_process(int npipes, int *pfd)
 	int	status_code;
 
 	i = 0;
-	if (g_glob.fork_ret)
-	{
-		waitpid(g_glob.fork_ret, &status, 0);
-		if (WIFEXITED(status) && !WIFSIGNALED(status))
-		{
-			status_code = WEXITSTATUS(status);
-			ft_modify_exit_status(status_code);
-		}
-	}	
-	ft_close_pipes(npipes, pfd);
 	while (i <= npipes + 1)
 	{
+		waitpid(g_glob.fork_ret, &status, 0);
+		if (g_glob.fork_ret > 0)
+		{
+			if (WIFEXITED(status) && !WIFSIGNALED(status))
+			{
+				status_code = WEXITSTATUS(status);
+				ft_modify_exit_status(status_code);
+			}
+		}
 		i++;
 	}
 	free(pfd);
@@ -98,8 +98,7 @@ void	ft_execute(t_dl_lst *command_list)
 	int			npipes;
 	int			j;
 
-	j = 0;
-	ft_setup_for_exec(command_list, &pfd, &npipes);
+	ft_setup_for_exec(command_list, &pfd, &npipes, &j);
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
@@ -117,5 +116,6 @@ void	ft_execute(t_dl_lst *command_list)
 		command_list = command_list->next;
 		j += 2;
 	}
+	ft_close_pipes(npipes, pfd);
 	ft_parent_process(npipes, pfd);
 }

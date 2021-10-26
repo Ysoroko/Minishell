@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 14:34:24 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/25 16:46:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:04:04 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,7 @@ void	ft_delete(t_list **lst, char *var)
 
 	tmp = *lst;
 	prev = NULL;
-	if (ft_cmp_env(tmp->content, var, ft_strlen(var)) == 0)
+	if (ft_cmp_env(tmp->content, var) == 0)
 	{
 		*lst = tmp->next;
 		free(tmp->content);
@@ -76,7 +76,7 @@ void	ft_delete(t_list **lst, char *var)
 	}
 	else
 	{
-		while (ft_cmp_env(tmp->content, var, ft_strlen(var)) != 0)
+		while (ft_cmp_env(tmp->content, var) != 0)
 		{
 			prev = tmp;
 			tmp = tmp->next;

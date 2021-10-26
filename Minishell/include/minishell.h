@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/25 16:31:42 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:29:38 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -163,7 +163,7 @@ void		ft_check_if_cmd_exists(t_command *command);
 void		ft_check_redir_and_binary(void *current_command);
 int			ft_builtin_cmd_found(char *exec_name);
 int			ft_nb_env(char **env);
-int			ft_cmp_env(char *s1, char *s2, size_t n);
+int			ft_cmp_env(char *s1, char *s2);
 int			ft_env_index(char *s);
 void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);
@@ -198,6 +198,7 @@ t_list		*ft_tab_to_list(void);
 void		ft_clear_node(void *content);
 char		**ft_list_to_tab(t_list *lst);
 void		ft_delete(t_list **lst, char *var);
+char		*ft_until(char *src, char c);
 
 /*
 ** COLORS

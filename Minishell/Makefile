@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
+#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/25 16:17:31 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/26 11:31:48 by ablondel         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -44,6 +44,7 @@ BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \
 						builtins/ft_lstenv.c \
+						builtins/ft_export_utils.c \
 
 BUILTINS_EXE		=	builtins/ft_echo \
 

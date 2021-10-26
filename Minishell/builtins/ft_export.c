@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/24 15:40:40 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:30:14 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -100,8 +100,6 @@ void	ft_export(char *new_var)
 
 	if (!ft_is_valid_export_arg(new_var))
 		return ;
-	if (ft_env_index(new_var) >= 0)
-		ft_unset(new_var);
 	lst = ft_tab_to_list();
 	if (!lst)
 	{
@@ -132,13 +130,11 @@ void	ft_export_handler(t_command *cmd)
 		ft_print();
 	while (cmd->str_tab_for_execve[i])
 	{
-		if (ft_env_index(cmd->str_tab_for_execve[i]) >= 0)
-		{
-			ft_unset(cmd->str_tab_for_execve[i]);
-			ft_export(cmd->str_tab_for_execve[i]);
-		}
-		else
-			ft_export(cmd->str_tab_for_execve[i]);
+		tmp = ft_until(cmd->str_tab_for_execve[i], '=');
+		if (ft_env_index(tmp) >= 0)
+			ft_unset(tmp);
+		free(tmp);
+		ft_export(cmd->str_tab_for_execve[i]);
 		i++;
 	}
 }

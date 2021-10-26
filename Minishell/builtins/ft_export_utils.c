@@ -1,27 +1,33 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_modify_exit_status.c                            :+:      :+:    :+:   */
+/*   ft_export_utils.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/24 12:27:34 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 11:04:51 by ablondel         ###   ########.fr       */
+/*   Created: 2021/10/26 11:29:00 by ablondel          #+#    #+#             */
+/*   Updated: 2021/10/26 11:29:28 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../include/libft.h"
 #include "../include/minishell.h"
 
-void	ft_modify_exit_status(int new_value)
+char	*ft_until(char *src, char c)
 {
-	char	*str;
-	char	*new_value_as_str;
+	int		i;
+	int		len;
+	char	*dst;
 
-	new_value_as_str = ft_itoa_exit(new_value);
-	str = ft_strjoin_exit("EXIT_STATUS=", new_value_as_str);
-	ft_unset("EXIT_STATUS");
-	ft_export(str);
-	free(new_value_as_str);
-	free(str);
+	i = -1;
+	len = 0;
+	dst = NULL;
+	while (src[len] && src[len] != c)
+		len++;
+	dst = malloc(sizeof(char) * (len + 1));
+	if (!dst)
+		return (NULL);
+	while (src[++i] && src[i] != c)
+		dst[i] = src[i];
+	dst[i] = '\0';
+	return (dst);
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/25 17:09:24 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:32:35 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,6 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) ft_getenv -> mauvaise ligne retournée
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -86,7 +85,6 @@ int	main(int ac, char **av, char **env)
 	{
 		g_glob.fork_ret = 0;
 		ft_prompt();
-		//system("leaks minishell");
 	}
 	return (1);
 }

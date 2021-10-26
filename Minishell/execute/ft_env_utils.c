@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:02:26 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/25 16:31:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 11:07:11 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,19 +22,15 @@ int	ft_nb_env(char **env)
 	return (i);
 }
 
-int	ft_cmp_env(char *s1, char *s2, size_t n)
+int	ft_cmp_env(char *s1, char *s2)
 {
 	size_t	i;
 
 	i = 0;
-	while (s1[i] && s2[i] && i < (n - 1))
-	{
-		if (s1[i] != s2[i])
-			return (s1[i] - s2[i]);
+	while (s1[i] == s2[i])
 		i++;
-		if (s1[i - 1] == '=' || s2[i] == '\0')
-			return (0);
-	}
+	if (s1[i] == '=' && s2[i] == '\0')
+		return (0);
 	return (s1[i] - s2[i]);
 }
 
@@ -47,7 +43,7 @@ int	ft_env_index(char *s)
 	j = ft_nb_env(g_glob.env);
 	while (g_glob.env[i] && i < j)
 	{
-		if (ft_cmp_env(g_glob.env[i], s, ft_strlen(s)) == 0)
+		if (ft_cmp_env(g_glob.env[i], s) == 0)
 			return (i);
 		i++;
 	}

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 15:47:37 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 16:29:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void	ft_execute(t_dl_lst *command_list)
 			if (cmd->exists == 1 && cmd->error == 0)
 				ft_handle_cmd(command_list, pfd, j, npipes);
 			else if (cmd->error == 0)
-				ft_err_gen(cmd->str_tab_for_execve[0], 0, "command not found");
+				ft_err(cmd->str_tab_for_execve[0], 0, "command not found", 127);
 		}
 		ft_free_ressources(cmd);
 		command_list = command_list->next;

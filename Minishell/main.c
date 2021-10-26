@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 14:27:57 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 16:40:53 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,7 +67,11 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 5) "env | grep OLD" -> boucle infinie
+// 1) echo -n "               "
+// 2)	minishell: export TEST=4
+// 		minishell: export TEST=5
+// 		minishell: unset EXIT_STATUS
+// 		---> segfault
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

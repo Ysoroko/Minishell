@@ -1,18 +1,18 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_update_dir.c                                    :+:      :+:    :+:   */
+/*   ft_cd.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2021/10/15 11:15:43 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 13:17:00 by ysoroko          ###   ########.fr       */
+/*   Created: 2021/10/26 13:49:00 by ysoroko           #+#    #+#             */
+/*   Updated: 2021/10/26 15:01:16 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
 
-void	ft_update_pwd(void)
+static void	ft_update_pwd(void)
 {
 	char	buf[1024];
 	char	*tmp;
@@ -23,17 +23,39 @@ void	ft_update_pwd(void)
 	free(tmp);
 }
 
-void	ft_update_oldpwd(void)
+static void	ft_update_oldpwd(char *str)
 {
-	char	buf[1024];
 	int		index;
 	char	*tmp;
 
 	index = ft_env_index("OLDPWD");
 	if (index == -1)
+	{
+		tmp = ft_strjoin_exit("OLDPWD=", str);
+		ft_export(tmp);
 		return ;
+	}
 	tmp = g_glob.env[index];
-	getcwd(buf, 1024);
-	g_glob.env[ft_env_index("OLDPWD")] = ft_strjoin_exit("OLDPWD=", buf);
+	g_glob.env[ft_env_index("OLDPWD")] = ft_strjoin_exit("OLDPWD=", str);
 	free(tmp);
+}
+
+void	ft_cd(t_command *cmd)
+{
+	char	*arg;
+	char	oldpwd[1024];
+
+	arg = (cmd->str_tab_for_execve)[1];
+	if (!arg)
+		arg = ft_getenv("HOME");
+	getcwd(oldpwd, 1024);
+	if (chdir(arg) == -1)
+	{
+		ft_err_gen("cd", arg, "No such file or directory");
+		ft_modify_exit_status(1);
+		return ;
+	}
+	ft_update_oldpwd(oldpwd);
+	ft_update_pwd();
+	ft_modify_exit_status(0);
 }

@@ -3,10 +3,10 @@
 #                                                         :::      ::::::::    #
 #    Makefile                                           :+:      :+:    :+:    #
 #                                                     +:+ +:+         +:+      #
-#    By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+         #
+#    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/26 11:31:48 by ablondel         ###   ########.fr        #
+#    Updated: 2021/10/26 14:09:04 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -37,7 +37,6 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_fdout.c \
 						execute/ft_pipes.c \
 						execute/ft_free_ressources.c \
-						execute/ft_update_dir.c \
 						execute/ft_update_shlvl.c \
 
 BUILTINS			=	builtins/ft_export.c \
@@ -45,6 +44,7 @@ BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_exit.c \
 						builtins/ft_lstenv.c \
 						builtins/ft_export_utils.c \
+						builtins/ft_cd.c \
 
 BUILTINS_EXE		=	builtins/ft_echo \
 

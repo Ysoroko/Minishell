@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 11:29:38 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 14:44:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -189,8 +189,6 @@ void		ft_execute(t_dl_lst *command_list);
 int			ft_check(char *s);
 int			ft_is_valid_export_arg(char *arg);
 void		ft_free_ressources(t_command *cmd);
-void		ft_update_pwd(void);
-void		ft_update_oldpwd(void);
 void		ft_up_shlvl(void);
 void		ft_down_shlvl(void);
 void		ft_exit_cmd(t_command *cmd);
@@ -199,6 +197,7 @@ void		ft_clear_node(void *content);
 char		**ft_list_to_tab(t_list *lst);
 void		ft_delete(t_list **lst, char *var);
 char		*ft_until(char *src, char c);
+void		ft_cd(t_command *cmd);
 
 /*
 ** COLORS

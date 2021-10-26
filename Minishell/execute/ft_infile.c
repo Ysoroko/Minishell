@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_infile.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:47:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 06:08:21 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 14:33:09 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	ft_copy_infile(t_command *cmd, int i)
 		free(cmd->infile);
 	if (cmd->str_tab_all[i + 1] != NULL)
 	{
-		cmd->infile = ft_strdup(cmd->str_tab_all[i + 1]);
+		cmd->infile = ft_strdup_exit(cmd->str_tab_all[i + 1]);
 		if (cmd->infile == NULL)
 		{
 			ft_minishell_error(strerror(errno));

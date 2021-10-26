@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 12:57:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 14:27:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,10 +67,7 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1) cd sans arguments
-// 2) "export l=10 m=5 s=3" [echo "$l"] -> ft_getenv ne voit pas la valeur 
-// 3) SHLVL
-// 4) cd exit status
+// 5) "env | grep OLD" -> boucle infinie
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
@@ -82,6 +79,7 @@ int	main(int ac, char **av, char **env)
 	ft_setup_signals();
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
+	ft_up_shlvl();
 	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
 	g_glob.exit_status = 0;
 	ft_export("EXIT_STATUS=0");

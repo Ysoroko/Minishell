@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/20 14:23:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 14:35:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,7 +72,7 @@ int	ft_exec_check(char *path, char *cmd)
 
 void	ft_check_tables(t_command *command)
 {
-	command->keyword = (char **)malloc(sizeof(char *) * 12);
+	command->keyword = (char **)ft_malloc_exit(sizeof(char *) * 12);
 	if (!command->keyword && command->error == 0)
 	{
 		ft_minishell_error(strerror(errno));

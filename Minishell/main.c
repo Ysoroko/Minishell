@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 11:32:35 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 11:58:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,11 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
+// 1) cd sans arguments
+// 2) "export l=10 m=5 s=3" [echo "$l"] -> ft_getenv ne voit pas la valeur 
+// 3) SHLVL
+// 4) cd exit status
+// 5) exit not showing 'EXIT'
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

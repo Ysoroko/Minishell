@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 10:47:44 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 12:54:46 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 static void	ft_exit_error(char *str, char *str2)
 {
-	ft_putendl_fd("exit", STDOUT);
 	ft_putstr_fd(PROMPT_NAME, STDERR);
 	ft_putstr_fd("exit: ", STDERR);
 	ft_putstr_fd(str, STDERR);
@@ -25,15 +24,6 @@ static void	ft_exit_error(char *str, char *str2)
 
 void	ft_exit(int n)
 {
-	char	*temp;
-	char	*n_str;
-
-	n_str = ft_itoa_exit(n);
-	temp = ft_strjoin_exit("EXIT_STATUS=", n_str);
-	g_glob.exit_status = n;
-	ft_export(temp);
-	free(n_str);
-	free(temp);
 	ft_modify_exit_status(n);
 	exit(n);
 }
@@ -48,6 +38,7 @@ void	ft_exit_cmd(t_command *cmd)
 	char	*exit_arg_str;
 	int		non_num;
 
+	ft_putendl_fd("exit", STDOUT);
 	exit_arg_str = cmd->str_tab_for_execve[1];
 	non_num = !ft_str_only_has_chars_from_charset(exit_arg_str, "0123456789");
 	if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
@@ -58,7 +49,7 @@ void	ft_exit_cmd(t_command *cmd)
 	else if (exit_arg_str && non_num)
 	{
 		ft_exit_error(exit_arg_str, ": numeric argument required");
-		ft_exit(1);
+		ft_exit(255);
 	}
 	else
 	{

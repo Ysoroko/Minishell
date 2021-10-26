@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 14:52:19 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 13:28:33 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,12 +56,19 @@ int	ft_cmd_handler(t_command *cmd)
 
 void	ft_cmd_handler_no_fork(t_command *cmd, int s)
 {
+	char	*arg;
+
+	arg = cmd->str_tab_for_execve[1];
 	if (s == 0)
 	{
 		ft_update_oldpwd();
-		if (chdir(cmd->str_tab_for_execve[1]) == -1)
-			ft_minishell_error("no such file or directory");
+		if (chdir(arg) == -1)
+		{
+			ft_minishell_err_three("cd", arg, "No such file or directory");
+			ft_modify_exit_status(1);
+		}
 		ft_update_pwd();
+		ft_modify_exit_status(0);
 	}
 	if (s == 1)
 		ft_export_handler(cmd);

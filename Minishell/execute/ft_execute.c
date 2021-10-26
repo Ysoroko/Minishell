@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/25 16:47:45 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 13:32:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -111,7 +111,7 @@ void	ft_execute(t_dl_lst *command_list)
 			if (cmd->exists == 1 && cmd->error == 0)
 				ft_handle_cmd(command_list, pfd, j, npipes);
 			else if (cmd->error == 0)
-				ft_minishell_error("command not found");
+				ft_err_gen(cmd->str_tab_for_execve[0], 0,"command not found");
 		}
 		ft_free_ressources(cmd);
 		command_list = command_list->next;

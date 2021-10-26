@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 12:54:46 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/26 13:04:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,6 +32,7 @@ void	ft_exit(int n)
 // 1) Non num argument [bash: exit: exit: numeric argument required] [$? = 255]
 //	Will exit anyway,then display an error message
 // 2) >1 argument [bash: exit: too many arguments] [$? = 1]
+// 3) ./minishell à l'intérieur du minishell -> crée un 2e "EXIT_STATUS"
 void	ft_exit_cmd(t_command *cmd)
 {
 	int		exit_arg;

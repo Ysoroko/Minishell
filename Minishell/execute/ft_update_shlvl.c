@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_update_shlvl.c                                  :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 08:44:54 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 15:07:22 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/26 16:24:01 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,13 +18,16 @@ void	ft_up_shlvl(void)
 	char	*tmp;
 	char	*next;
 	int		n;
+	char	*itoad;
 
 	tmp = ft_strdup(g_glob.env[ft_env_index("SHLVL")]);
 	n = ft_atoi(tmp + 6) + 1;
 	free(tmp);
 	tmp = g_glob.env[ft_env_index("SHLVL")];
-	g_glob.env[ft_env_index("SHLVL")] = ft_strjoin("SHLVL=", ft_itoa_exit(n));
+	itoad = ft_itoa_exit(n);
+	g_glob.env[ft_env_index("SHLVL")] = ft_strjoin("SHLVL=", itoad);
 	free(tmp);
+	free(itoad);
 	if (g_glob.env[ft_env_index("SHLVL")] == NULL)
 		ft_minishell_error(strerror(errno));
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 11:53:27 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 13:56:16 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,6 +77,12 @@ void	ft_prompt(void)
 //		"Set the $PATH to a multiple directory value
 //		(directory1:directory2) and check that directories
 //		are checked in order from left to right"
+//
+
+// << eof ---> dit "command not found"
+// cat Makefile | grep include < out1 --> ne doit rien afficher
+// << eof << --> quitte minishell
+// << eof --> affiche "eof" quand on le met à la fin
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

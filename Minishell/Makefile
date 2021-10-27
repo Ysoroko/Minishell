@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/27 13:07:38 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/27 13:57:00 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -62,6 +62,8 @@ PWD_SRC				=	builtins/ft_pwd.c \
 PWD_OBJ				=	$(PWD_SRC:.c=.o)
 
 BUILTINS_EXE		=	builtins/ft_echo \
+						builtins/ft_env \
+						builtins/ft_pwd
 
 # -----------------------------------------------------------------
 
@@ -148,6 +150,9 @@ clean:
 		@cd libft && make clean
 		@rm -rf $(OBJS)
 		@rm -rf $(BUILTINS_OBJS)
+		@rm -rf $(ECHO_OBJ)
+		@rm -rf $(PWD_OBJ)
+		@rm -rf $(ENV_OBJ)
 		@$(CLEANED)
 
 # Remove all ".o / .a / minishell executable" files
@@ -171,7 +176,7 @@ mini: $(OBJS)
 ft_echo: $(ECHO_OBJ)
 	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(ECHO_OBJ) libft/libft.a minishell.a -o ft_echo ; mv ft_echo builtins/
 
-ft_env: #$(ENV_OBJ)
+ft_env: $(ENV_OBJ)
 	@gcc $(FLAGS) $(ENV_SRC) libft/libft.a minishell.a -o ft_env ; mv ft_env builtins/
 
 ft_pwd: $(PWD_OBJ)

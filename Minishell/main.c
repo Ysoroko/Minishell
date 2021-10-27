@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 14:15:26 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 15:20:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,10 +66,6 @@ void	ft_prompt(void)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// 1)	export EXIT_STATUS =10 --> segfault
-// 2)	unset EXIT_STATUS --> segfault
-// 3)	export EXIT_STATUS, ensuite "env" ->segfault
-// 		---------------------------------------------
 //		Dans la fiche de correction:
 // 4)	si on unset PATH -> rien ne doit fonctionner
 //		"Unset the $PATH and check if it is not working anymore"

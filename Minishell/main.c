@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 13:56:16 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 14:15:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,10 +79,10 @@ void	ft_prompt(void)
 //		are checked in order from left to right"
 //
 
-// << eof ---> dit "command not found"
-// cat Makefile | grep include < out1 --> ne doit rien afficher
-// << eof << --> quitte minishell
-// << eof --> affiche "eof" quand on le met à la fin
+// << eof ---> heredoc se lance, mais dit "command not found" (essaie d'executer <<, RREDIR)
+// cat main.c | grep PHONY < Makefile --> doit afficher ".PHONY: all clean fclean re run wrun .c.o"
+// << eof << --> dit "syntax error" (ok), mais quitte minishell
+// << eof cat --> affiche "eof" à la fin (ne doit pas le faire)
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

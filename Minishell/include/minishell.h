@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 16:39:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:42:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,6 +42,7 @@ t_glob		g_glob;
 
 # define PROMPT_NAME "\033[1m\033[36mminishell: \x1b[0m"
 # define PROMPT_COLOR "\033[1m\033[36m"
+# define PROMPT_ERROR "\033[1m\033[31mminishell: \x1b[0m"
 
 /*
 ** CONSTANT PARAMETERS

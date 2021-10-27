@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/27 15:49:13 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:31:52 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ char	**ft_split_paths(int *i)
 void	ft_join_paths(char **paths, char *tmp, int i)
 {
 	(void)tmp;
-	paths[i] = ft_strjoin(&(paths[i]), "/");
+	paths[i] = ft_strjoin_free_pref_exit(&(paths[i]), "/");
 	if (paths[i] == NULL)
 	{
 		ft_minishell_error(strerror(errno));

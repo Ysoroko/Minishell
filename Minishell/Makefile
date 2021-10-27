@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/27 13:57:00 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/27 14:31:05 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -165,7 +165,7 @@ fclean:	clean
 
 re:		fclean all
 
-comp_start:
+comp_start: # $(OBJS)
 	@$(COMP_START)
 	@$(LIBFT)
 

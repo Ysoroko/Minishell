@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/26 13:32:02 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/27 14:29:18 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -164,16 +164,11 @@ BONUS			=	ft_lstadd_back.c \
 
 BOLD_GREEN			=	\033[1;32m
 
+COPMILING_LIBFT	=	@echo "\n📚 $(BOLD_GREEN)Compiling Libft... \n";
+
+LIBFT_COMPILED	=	@echo "✅ Libft compiled! \n$(NO_COLOR)";
+
 NO_COLOR			=	\033[0m
-
-COPMILING_LIBFT:
-					@echo "\n📚 $(BOLD_GREEN)Compiling Libft... \n";
-
-LIBFT_COMPILED:
-					@echo "✅ Libft compiled! \n$(NO_COLOR)";
-					
-.c.o:	
-	@${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o} \
 
 MAIN_PART		=	$(filter-out $(BONUS), $(SRC))
 
@@ -187,11 +182,13 @@ LINK			=	ar rc
 
 all: 		$(NAME)
 
-$(NAME):	COPMILING_LIBFT $(MAIN_PART_OBJS) LIBFT_COMPILED
+$(NAME):	$(MAIN_PART_OBJS) 
 			@$(LINK) $(NAME) $(MAIN_PART_OBJS)
+			@$(LIBFT_COMPILED)
 
-bonus:		COPMILING_LIBFT $(OBJS) LIBFT_COMPILED
+bonus:		$(OBJS)
 			@$(LINK) $(NAME) $(OBJS)
+			@$(LIBFT_COMPILED)
 
 clean:
 			@rm -f $(OBJS)
@@ -200,5 +197,9 @@ fclean:		clean
 			@rm -f $(NAME)
 
 re:			fclean all
+
+
+.c.o:	
+	@${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o} \
 
 .PHONY:		all clean fclean re bonus

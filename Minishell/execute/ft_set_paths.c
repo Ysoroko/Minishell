@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_set_paths.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/23 16:33:29 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/27 15:49:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,12 +19,9 @@ char	**ft_split_paths(int *i)
 
 	*i = -1;
 	paths = NULL;
-	tmp = getenv("PATH");
+	tmp = ft_getenv("PATH");
 	if (!tmp)
-	{
-		ft_minishell_error(strerror(errno));
-		ft_exit(errno);
-	}
+		return (NULL);
 	paths = ft_split_exit(tmp, ':');
 	if (!paths)
 	{
@@ -37,7 +34,7 @@ char	**ft_split_paths(int *i)
 void	ft_join_paths(char **paths, char *tmp, int i)
 {
 	(void)tmp;
-	paths[i] = ft_strjoin_free_pref_exit(&(paths[i]), "/");
+	paths[i] = ft_strjoin(&(paths[i]), "/");
 	if (paths[i] == NULL)
 	{
 		ft_minishell_error(strerror(errno));

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 17:37:19 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 13:03:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,9 @@ int	main(int argc, char **str_tab_for_execve, char **env)
 {
 	int	i;
 
+	i = -1;
+	while (env[++i])
+		printf("%s\n", env[i]);
 	if (argc == 1)
 	{
 		printf("\n");

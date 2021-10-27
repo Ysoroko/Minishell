@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/26 14:09:04 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/27 13:07:38 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_free_ressources.c \
 						execute/ft_update_shlvl.c \
 
+# -------------------------------- Builtins sources  ---------------------------
 BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \
@@ -46,7 +47,23 @@ BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_export_utils.c \
 						builtins/ft_cd.c \
 
+BUILTINS_OBJS		=	$(BUILTINS:.c=.o)
+
+ECHO_SRC			=	builtins/ft_echo.c \
+
+ECHO_OBJ			=	$(ECHO_SRC:.c=.o)
+
+ENV_SRC				=	builtins/ft_env.c \
+
+ENV_OBJ				=	$(ENV_SRC:.c=.o)
+
+PWD_SRC				=	builtins/ft_pwd.c \
+
+PWD_OBJ				=	$(PWD_SRC:.c=.o)
+
 BUILTINS_EXE		=	builtins/ft_echo \
+
+# -----------------------------------------------------------------
 
 SIGNALS				=	signals/ft_signal_handler.c
 
@@ -99,6 +116,8 @@ REMOVE_CONTROL_CHARACTERS = stty -echoctl
 
 # ------------------------------ Messages------------------------------
 
+COMP_START	=	echo "\n🚧 $(BOLD_YELLOW)Make: $(NO_COLOR)Starting the compilation...\n"
+
 MINISHELL_COMPILED = echo "\n🐚 $(BOLD_PURPLE)Executable $(BOLD_CYAN)\"$(EXECUTABLE)\" $(BOLD_PURPLE)created and ready for use!\n$(NO_COLOR)"
 
 CLEANED		=	echo "\n🧼 $(BOLD_YELLOW)Clean: $(NO_COLOR)Removed all the \".o\" files \n"
@@ -108,16 +127,9 @@ FCLEANED	=	echo "\n🧽 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed all the \".a\" 
 
 # ------------------------------ Rules ------------------------------
 
-.c.o:
-	@${CC} ${CFLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
-
 all: $(NAME)
 
-$(NAME): $(OBJS)
-		@$(LIBFT)
-		@$(LINK) $(NAME) $(OBJS)
-		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) builtins/ft_echo.c libft/libft.a minishell.a -o ft_echo ; mv ft_echo builtins/
-		@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) -o $(EXECUTABLE)
+$(NAME): comp_start mini ft_echo ft_env ft_pwd
 		@$(REMOVE_CONTROL_CHARACTERS)
 		@$(MINISHELL_COMPILED)
 
@@ -133,8 +145,9 @@ wrun:	$(NAME)
 
 # Remove all ".o" files
 clean:
-		@rm -rf $(OBJS)
 		@cd libft && make clean
+		@rm -rf $(OBJS)
+		@rm -rf $(BUILTINS_OBJS)
 		@$(CLEANED)
 
 # Remove all ".o / .a / minishell executable" files
@@ -146,5 +159,25 @@ fclean:	clean
 		@$(FCLEANED)
 
 re:		fclean all
+
+comp_start:
+	@$(COMP_START)
+	@$(LIBFT)
+
+mini: $(OBJS)
+	@$(LINK) $(NAME) $(OBJS)
+	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(LIBRARIES) -o $(EXECUTABLE)
+
+ft_echo: $(ECHO_OBJ)
+	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(ECHO_OBJ) libft/libft.a minishell.a -o ft_echo ; mv ft_echo builtins/
+
+ft_env: #$(ENV_OBJ)
+	@gcc $(FLAGS) $(ENV_SRC) libft/libft.a minishell.a -o ft_env ; mv ft_env builtins/
+
+ft_pwd: $(PWD_OBJ)
+	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(PWD_OBJ) libft/libft.a minishell.a -o ft_pwd ; mv ft_pwd builtins/
+
+.c.o:
+	@${CC} ${CFLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
 
 .PHONY: all clean fclean re run wrun .c.o

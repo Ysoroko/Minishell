@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 15:35:49 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/11 12:02:10 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:35:41 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ static void	ft_add_new_command_to_dl_lst(t_dl_lst *lst, t_command *new_command)
 ** arguments / redirections
 */
 
-t_dl_lst	*ft_input_parsing(char *input)
+t_dl_lst	*ft_input_parsing(char *input, char *path)
 {
 	t_dl_lst	*command_list;
 	int			i;
@@ -57,6 +57,7 @@ t_dl_lst	*ft_input_parsing(char *input)
 	while (input[++i])
 	{
 		command = ft_extract_next_t_command(&input[i], &i);
+		command->path = path;
 		ft_add_new_command_to_dl_lst(command_list, command);
 		if (!input[i])
 			break ;

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 13:54:15 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:39:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,6 @@ typedef struct s_glob
 {
 	pid_t	fork_ret;
 	char	**env;
-	char	*path;
 }	t_glob;
 
 t_glob		g_glob;
@@ -109,13 +108,14 @@ typedef struct s_command
 	int		keyword_index;
 	char	*buffer;
 	int		s;
+	char	*path;
 }	t_command;
 
 /*
 ** PROTOTYPES
 */
 
-t_dl_lst	*ft_input_parsing(char *input);
+t_dl_lst	*ft_input_parsing(char *input, char *path);
 void		ft_free_t_command(void *command_pointer);
 void		ft_update_str_read_so_far(char *input_checkpt, int i, char **prev);
 t_command	*ft_extract_next_t_command(char *input_checkpnt, int *i);
@@ -140,7 +140,7 @@ int			ft_str_is_a_redirection(char *str);
 void		ft_extract_role_macros_tab(t_command *command);
 void		ft_print_command_list(void *current_command);
 int			ft_is_a_redir_arg_macro(int macro);
-void		ft_prompt(void);
+void		ft_prompt(char *path);
 void		ft_setup_signals(void);
 int			ft_check_file_permissions(char *filename);
 void		ft_open_hdoc(t_command *cmd, int *fd);

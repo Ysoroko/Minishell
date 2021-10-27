@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 15:20:08 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:35:23 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,7 +49,7 @@ int	ft_user_input_error(char *str)
 	return (0);
 }
 
-void	ft_prompt(void)
+void	ft_prompt(char *path)
 {
 	char		*user_input_str;
 	t_dl_lst	*input_as_dl_command_list;
@@ -61,7 +61,7 @@ void	ft_prompt(void)
 		return ;
 	}
 	add_history(user_input_str);
-	input_as_dl_command_list = ft_input_parsing(user_input_str);
+	input_as_dl_command_list = ft_input_parsing(user_input_str, path);
 	ft_execute(input_as_dl_command_list);
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
@@ -82,6 +82,7 @@ void	ft_prompt(void)
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];
+	char	*path;
 	char	*builtins_path;
 
 	(void)ac;
@@ -91,12 +92,13 @@ int	main(int ac, char **av, char **env)
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
 	ft_up_shlvl();
-	g_glob.path = ft_strjoin_exit(origin, "/builtins/");
+	path = ft_strjoin_exit(origin, "/builtins/");
 	ft_export("EXIT_STATUS=0");
 	while (1)
 	{
 		g_glob.fork_ret = 0;
-		ft_prompt();
+		ft_prompt(path);
 	}
+	free(path);
 	return (1);
 }

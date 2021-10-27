@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 14:32:11 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:37:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -61,11 +61,6 @@ void	ft_echo(char **str_tab_for_execve)
 
 int	main(int argc, char **str_tab_for_execve, char **env)
 {
-	int	i;
-
-	i = -1;
-	while (env[++i])
-		printf("%s\n", env[i]);
 	if (argc == 1)
 	{
 		printf("\n");
@@ -77,7 +72,6 @@ int	main(int argc, char **str_tab_for_execve, char **env)
 		return (0);
 	}
 	g_glob.env = env;
-	i = 0;
 	ft_echo(str_tab_for_execve);
 	return (0);
 }

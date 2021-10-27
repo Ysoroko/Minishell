@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/27 12:19:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/27 16:36:35 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,14 +36,16 @@ int	ft_builtin_cmd_found(char *exec_name)
 int	ft_cmd_handler(t_command *cmd)
 {
 	char	*tmp;
+	char	*path;
 
+	path = cmd->path;
 	tmp = cmd->str_tab_for_execve[0];
 	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 4)
-		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.path, "./ft_echo");
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(path, "./ft_echo");
 	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 5)
-		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.path, "./ft_pwd");
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(path, "./ft_pwd");
 	if (ft_builtin_cmd_found(cmd->str_tab_for_execve[0]) == 6)
-		cmd->str_tab_for_execve[0] = ft_strjoin_exit(g_glob.path, "./ft_env");
+		cmd->str_tab_for_execve[0] = ft_strjoin_exit(path, "./ft_env");
 	free(tmp);
 	if (execve(cmd->str_tab_for_execve[0],
 			cmd->str_tab_for_execve, g_glob.env) == -1)

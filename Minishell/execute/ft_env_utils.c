@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_env_utils.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:02:26 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 11:07:11 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/28 16:19:42 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,6 +17,8 @@ int	ft_nb_env(char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		return (0);
 	while (env[i])
 		i++;
 	return (i);
@@ -40,6 +42,8 @@ int	ft_env_index(char *s)
 	int	j;
 
 	i = 0;
+	if (!g_glob.env)
+		return (-1);
 	j = ft_nb_env(g_glob.env);
 	while (g_glob.env[i] && i < j)
 	{

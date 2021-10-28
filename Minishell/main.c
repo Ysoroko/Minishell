@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 12:17:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:25:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -66,17 +66,10 @@ void	ft_prompt(char *path)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-//		Dans la fiche de correction:
-// 4)	si on unset PATH -> rien ne doit fonctionner
-//		"Unset the $PATH and check if it is not working anymore"
-// 5)	aussi:
-//		"Set the $PATH to a multiple directory value
-//		(directory1:directory2) and check that directories
-//		are checked in order from left to right"
-//
-
-// << eof ---> heredoc se lance, mais dit "command not found" (essaie d'executer <<, RREDIR)
-// cat main.c | grep PHONY < Makefile --> doit afficher ".PHONY: all clean fclean re run wrun .c.o"
+// << eof ---> heredoc se lance, mais dit "command not found"
+//	(essaie d'executer <<, RREDIR)
+// cat main.c | grep PHONY < Makefile -->
+//	doit afficher ".PHONY: all clean fclean re run wrun .c.o"
 // << eof << --> dit "syntax error" (ok), mais quitte minishell
 // << eof cat --> affiche "eof" à la fin (ne doit pas le faire)
 int	main(int ac, char **av, char **env)
@@ -87,8 +80,10 @@ int	main(int ac, char **av, char **env)
 
 	(void)ac;
 	(void)av;
+	if (!env)
+		return (1);
 	builtins_path = NULL;
-	ft_setup_signals();
+	g_glob.fork_ret = 0;
 	ft_duplicate_env(env);
 	getcwd(origin, 1024);
 	ft_up_shlvl();
@@ -96,6 +91,7 @@ int	main(int ac, char **av, char **env)
 	if (ft_env_index("EXIT_STATUS") != -1)
 		ft_unset("EXIT_STATUS");
 	ft_export("EXIT_STATUS=0");
+	ft_setup_signals();
 	while (1)
 	{
 		g_glob.fork_ret = 0;

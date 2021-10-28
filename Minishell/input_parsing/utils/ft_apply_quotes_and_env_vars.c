@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 16:43:56 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/25 15:27:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 15:56:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,7 +21,7 @@ static void	ft_initialize_variables(char **str, int *i, int *j, char **ret)
 {
 	*i = -1;
 	*j = 0;
-	*ret = ft_calloc_exit(ft_calculate_total_length_needed(*str), 1);
+	*ret = ft_calloc_exit(ft_calculate_total_length_needed(*str) + 1, 1);
 }
 
 /*

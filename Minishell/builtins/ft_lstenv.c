@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_lstenv.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 14:34:24 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 11:04:04 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/28 16:22:23 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,9 +22,7 @@ t_list	*ft_tab_to_list(void)
 	lst = NULL;
 	while (g_glob.env[i])
 	{
-		new = ft_lstnew(ft_strdup((char *)g_glob.env[i]));
-		if (!new)
-			return (NULL);
+		new = ft_lstnew(ft_strdup_exit((char *)g_glob.env[i]));
 		ft_lstadd_back(&lst, new);
 		i++;
 	}

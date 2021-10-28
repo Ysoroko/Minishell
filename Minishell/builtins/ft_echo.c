@@ -6,21 +6,11 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 11:53:03 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:55:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
-
-/// This function will check the flag element in str_tab_all.
-/// If it's "-n", it will modify the value of "end_of_line" character to '\0'
-/// Otherwise, "end_of_line" will remain at '\n' and the value in role_macros
-/// tab will be changed from "FLAG" to "COMMAND_ARG"
-static void	ft_apply_n_flag(char *current_element, char *end_of_line)
-{
-	if (!ft_strlcmp(current_element, "-n"))
-		*end_of_line = '\0';
-}
 
 /// This function will concatenate current element to *final_str string
 /// if it's a command argument
@@ -50,8 +40,8 @@ void	ft_echo(char **str_tab_for_execve)
 	while (str_tab_for_execve[++i])
 	{
 		current_element = str_tab_for_execve[i];
-		if (i == 1 && current_element[0] == '-')
-			ft_apply_n_flag(current_element, &end_of_line);
+		if (i == 1 && !ft_strlcmp(current_element, "-n"))
+			end_of_line = '\0';
 		else
 			ft_add_to_final_string(current_element, &final_str);
 	}

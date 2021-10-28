@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 17:03:02 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:27:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,6 +78,10 @@ void	ft_prompt(char *path)
 // << eof << --> dit "syntax error" (ok), mais quitte minishell
 // << eof cat --> affiche "eof" à la fin (ne doit pas le faire)
 // "|||" --> imprime 3 fois "command not found"
+//
+// Pour moi:
+// - les signaux dans heredoc ne quittent pas heredoc
+// - si on unset PATH les builtins ne marchent plus
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

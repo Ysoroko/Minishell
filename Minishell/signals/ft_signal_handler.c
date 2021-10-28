@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 14:11:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 18:23:46 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,10 +22,7 @@
 static void	ft_control_c_function(void)
 {
 	if (g_glob.fork_ret)
-	{
-		ft_modify_exit_status(130);
 		ft_putchar_fd('\n', STDOUT);
-	}
 	else
 	{
 		ft_modify_exit_status(1);
@@ -46,10 +43,7 @@ static void	ft_control_c_function(void)
 static void	ft_control_backslash_function(void)
 {
 	if (g_glob.fork_ret)
-	{
-		ft_modify_exit_status(131);
 		ft_putendl_fd("Quit: 3", STDOUT);
-	}
 	else
 	{
 		rl_on_new_line();

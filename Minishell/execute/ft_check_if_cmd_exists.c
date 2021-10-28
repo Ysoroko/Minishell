@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:26:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/21 16:53:57 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 17:44:16 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,7 +33,8 @@ void	ft_check_if_cmd_exists(t_command *command)
 		if (ft_set_paths(&command->str_tab_for_execve[0]) == -1
 			&& command->error == 0)
 		{
-			ft_minishell_error("command not found");
+			ft_err(command->str_tab_for_execve[0], NULL, "command not found",
+				127);
 			command->error = 1;
 			command->exists = 0;
 		}

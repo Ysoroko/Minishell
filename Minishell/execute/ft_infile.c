@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:47:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 14:33:09 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:00:49 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,7 +34,7 @@ void	ft_copy_infile(t_command *cmd, int i)
 	}
 }
 
-void	ft_add_redir_in(t_command *cmd, int m, int i)
+void	ft_add_redir_in(t_command *cmd, int i)
 {
 	ft_copy_infile(cmd, i);
 	cmd->fdin = open(cmd->infile, O_RDONLY);

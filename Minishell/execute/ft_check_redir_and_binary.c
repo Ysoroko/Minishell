@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 14:35:41 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:00:57 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,9 +38,9 @@ void	ft_add_redir_files(t_command *cmd, int m, int i)
 	else if (m == REDIR_L || m == REDIR_LL)
 	{
 		if (m == REDIR_L)
-			ft_add_redir_in(cmd, m, i);
+			ft_add_redir_in(cmd, i);
 		else if (m == REDIR_LL)
-			ft_add_redir_hdoc(cmd, m, i);
+			ft_add_redir_hdoc(cmd, i);
 	}
 	return ;
 }
@@ -50,7 +50,6 @@ int	ft_exec_check(char *path, char *cmd)
 	int				i;
 	DIR				*dir;
 	struct dirent	*d;
-	char			*tmp;
 
 	i = 0;
 	if (cmd == NULL)

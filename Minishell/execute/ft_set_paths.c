@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:27:28 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/27 16:31:52 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 10:59:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -31,9 +31,8 @@ char	**ft_split_paths(int *i)
 	return (paths);
 }
 
-void	ft_join_paths(char **paths, char *tmp, int i)
+void	ft_join_paths(char **paths, int i)
 {
-	(void)tmp;
 	paths[i] = ft_strjoin_free_pref_exit(&(paths[i]), "/");
 	if (paths[i] == NULL)
 	{
@@ -54,7 +53,7 @@ int	ft_set_paths(char **exec_name)
 	i = -1;
 	while (paths[++i])
 	{
-		ft_join_paths(paths, tmp, i);
+		ft_join_paths(paths, i);
 		if (ft_exec_check(paths[i], *exec_name) == 1)
 		{
 			tmp = *exec_name;

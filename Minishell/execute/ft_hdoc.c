@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hdoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:45:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/15 07:46:17 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/28 10:59:55 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,7 @@ void	ft_close_hdoc(t_command *cmd, int *fd)
 	}
 }
 
-void	ft_add_redir_hdoc(t_command *cmd, int m, int i)
+void	ft_add_redir_hdoc(t_command *cmd, int i)
 {
 	cmd->redir_type_in = 4;
 	if (cmd->str_tab_all[i + 1] != NULL)

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 12:55:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 10:56:43 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -25,6 +25,7 @@ char	*ft_extract_env_variable_name(char *str, char *separators)
 	int		j;
 	char	*temp;
 
+	(void)separators;
 	i = 1;
 	if (!str || str[0] != '$')
 		return (0);

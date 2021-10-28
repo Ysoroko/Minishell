@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 16:42:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:00:53 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -150,12 +150,12 @@ void		ft_hdoc(t_command *cmd);
 void		ft_copy_outfile(t_command *cmd, int i);
 void		ft_add_redir_out(t_command *cmd, int m, int i);
 void		ft_copy_infile(t_command *cmd, int i);
-void		ft_add_redir_in(t_command *cmd, int m, int i);
-void		ft_add_redir_hdoc(t_command *cmd, int m, int i);
+void		ft_add_redir_in(t_command *cmd, int i);
+void		ft_add_redir_hdoc(t_command *cmd, int i);
 void		ft_add_redir_files(t_command *cmd, int m, int i);
 int			ft_exec_check(char *path, char *cmd);
 char		**ft_split_paths(int *i);
-void		ft_join_paths(char **paths, char *tmp, int i);
+void		ft_join_paths(char **paths, int i);
 int			ft_set_paths(char **exec_name);
 int			ft_check_binary(char *filename);
 void		ft_check_tables(t_command *command);

@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/27 15:19:23 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/28 10:57:33 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,7 +21,6 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/utils/ft_extract_str_tab_all.c \
 						input_parsing/utils/ft_extract_str_tab_for_execve.c \
 						input_parsing/utils/ft_extract_role_macros_tab.c \
-						input_parsing/utils/ft_getenv_val.c \
 
 EXECUTE				=	execute/ft_execute.c \
 						execute/ft_check_if_cmd_exists.c \
@@ -183,6 +182,6 @@ ft_pwd: $(PWD_OBJ)
 	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(PWD_OBJ) libft/libft.a minishell.a -o ft_pwd ; mv ft_pwd builtins/
 
 .c.o:
-	@${CC} ${CFLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
+	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
 
 .PHONY: all clean fclean re run wrun .c.o

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/27 13:57:12 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:03:12 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,6 @@ void	ft_format(char *s)
 char	**ft_copy_for_print(char **sorted)
 {
 	int		i;
-	char	*tmp;
 
 	i = 0;
 	sorted = NULL;
@@ -72,6 +71,7 @@ void	ft_print(void)
 	char	**sorted;
 
 	i = 0;
+	sorted = NULL;
 	sorted = ft_copy_for_print(sorted);
 	while (i + 1 < ft_nb_env(sorted))
 	{

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/20 08:44:54 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 16:24:01 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:01:36 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,7 @@
 
 void	ft_up_shlvl(void)
 {
-	char	buf[1024];
 	char	*tmp;
-	char	*next;
 	int		n;
 	char	*itoad;
 
@@ -34,7 +32,6 @@ void	ft_up_shlvl(void)
 
 void	ft_down_shlvl(void)
 {
-	char	buf[1024];
 	char	*tmp;
 	int		n;
 

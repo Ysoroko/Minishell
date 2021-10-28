@@ -6,11 +6,16 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 14:34:24 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 16:22:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:39:07 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+/*
+** condition if (!g_glob.env) added to satisfy fsanitize
+**
+*/
 
 t_list	*ft_tab_to_list(void)
 {
@@ -20,6 +25,13 @@ t_list	*ft_tab_to_list(void)
 
 	i = 0;
 	lst = NULL;
+	if (!g_glob.env)
+	{
+		g_glob.env = malloc(sizeof(char *) * 2);
+		g_glob.env[0] = ft_strdup_exit("EXIT_STATUS=0");
+		g_glob.env[1] = NULL;
+		ft_export("EXIT_STATUS=1");
+	}
 	while (g_glob.env[i])
 	{
 		new = ft_lstnew(ft_strdup_exit((char *)g_glob.env[i]));

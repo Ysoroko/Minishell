@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 16:25:56 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:29:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,10 +78,10 @@ int	main(int ac, char **av, char **env)
 	char	*path;
 	char	*builtins_path;
 
-	(void)ac;
-	(void)av;
 	if (!env)
 		return (1);
+	(void)ac;
+	(void)av;
 	builtins_path = NULL;
 	g_glob.fork_ret = 0;
 	ft_duplicate_env(env);

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:02:26 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 16:19:42 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:37:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,8 @@ void	ft_duplicate_env(char **env)
 	int	i;
 
 	i = 0;
+	if (!env)
+		exit(EXIT_FAILURE);
 	g_glob.env = (char **)malloc(sizeof(char *) * (ft_nb_env(env) + 1));
 	if (!g_glob.env)
 	{

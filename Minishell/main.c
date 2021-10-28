@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 16:29:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 17:03:02 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,7 @@ int	ft_user_input_error(char *str)
 		ft_putendl_fd("exit", STDOUT);
 		exit(EXIT_SUCCESS);
 	}
-	if (ft_str_only_has_chars_from_charset(str, SPACES))
+	if (!str[0])
 		return (1);
 	if (ft_str_has_unclosed_quotes(str))
 	{
@@ -61,6 +61,11 @@ void	ft_prompt(char *path)
 		return ;
 	}
 	add_history(user_input_str);
+	if (ft_str_only_has_chars_from_charset(user_input_str, SPACES))
+	{
+		free(user_input_str);
+		return ;
+	}
 	input_as_dl_command_list = ft_input_parsing(user_input_str, path);
 	ft_execute(input_as_dl_command_list);
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
@@ -72,6 +77,7 @@ void	ft_prompt(char *path)
 //	doit afficher ".PHONY: all clean fclean re run wrun .c.o"
 // << eof << --> dit "syntax error" (ok), mais quitte minishell
 // << eof cat --> affiche "eof" à la fin (ne doit pas le faire)
+// "|||" --> imprime 3 fois "command not found"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

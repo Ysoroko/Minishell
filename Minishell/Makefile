@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/28 11:20:07 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/28 11:50:37 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -99,6 +99,8 @@ BOLD_YELLOW			=	\033[1;33m
 
 NO_COLOR			=	\033[0m
 
+BOLD_GREEN			=	\033[1;32m
+
 
 # ------------------------------ Readline ------------------------------
 
@@ -116,30 +118,30 @@ REMOVE_CONTROL_CHARACTERS = stty -echoctl
 
 COMP_START	=	echo "\n🚧 $(BOLD_YELLOW)Make: $(NO_COLOR)Starting the compilation...\n"
 
+COMPILING_LIBFT	=	@echo "\n📚 $(BOLD_GREEN)Compiling Libft... \n";
+
 MINISHELL_COMPILED = echo "\n🐚 $(BOLD_PURPLE)Executable $(BOLD_CYAN)\"$(EXECUTABLE)\" $(BOLD_PURPLE)created and ready for use!\n$(NO_COLOR)"
 
 CLEANED		=	echo "\n🧼 $(BOLD_YELLOW)Clean: $(NO_COLOR)Removed all the \".o\" files \n"
 
-FCLEANED	=	echo "\n🧽 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed all the \".a\" files and the \"minishell\" executable \n"						
+FCLEANED	=	echo "\n🧽 $(BOLD_YELLOW)Fclean: $(NO_COLOR)Removed all the \".a\" files and the executables \n"						
 
 
 # ------------------------------ Rules ------------------------------
 
 all: $(NAME)
 
-$(NAME): comp_start mini ft_echo ft_env ft_pwd
+$(NAME): $(OBJS) $(ECHO_OBJ) $(PWD_OBJ) $(ENV_OBJ)
+		@make comp_start
+		@make mini
+		@make ft_echo
+		@make ft_env ft_pwd
 		@$(REMOVE_CONTROL_CHARACTERS)
 		@$(MINISHELL_COMPILED)
 
-
 # Compiles everything with warning flags and runs the executable
 run:	$(NAME)
-		@$(REMOVE_CONTROL_CHARACTERS)
 		@./$(EXECUTABLE)
-
-# Compiles everything without warning flags and runs the executable
-wrun:	$(NAME)
-		@gcc $(LIBRARIES) $(TERMCAP) -o $(EXECUTABLE) && ./$(EXECUTABLE)
 
 # Remove all ".o" files
 clean:
@@ -161,8 +163,9 @@ fclean:	clean
 
 re:		fclean all
 
-comp_start: # $(OBJS)
+comp_start:
 	@$(COMP_START)
+	@$(COMPILING_LIBFT)
 	@$(LIBFT)
 
 mini: $(OBJS)
@@ -179,6 +182,6 @@ ft_pwd: $(PWD_OBJ)
 	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(PWD_OBJ) libft/libft.a minishell.a -o ft_pwd ; mv ft_pwd builtins/
 
 .c.o:
-	@${CC} ${FLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
+	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
 
 .PHONY: all clean fclean re run wrun .c.o

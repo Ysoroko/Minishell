@@ -6,13 +6,13 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2020/11/17 16:06:56 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/27 14:29:18 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/28 11:32:41 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
-CC				=	gcc
+GCC				=	gcc
 
-CFLAGS			=	-Wall -Wextra -Werror
+FLAGS			=	-Wall -Wextra -Werror
 
 SRC				=	ft_atoi.c \
 					ft_bzero.c \
@@ -164,7 +164,7 @@ BONUS			=	ft_lstadd_back.c \
 
 BOLD_GREEN			=	\033[1;32m
 
-COPMILING_LIBFT	=	@echo "\n📚 $(BOLD_GREEN)Compiling Libft... \n";
+COMPILING_LIBFT	=	@echo "\n📚 $(BOLD_GREEN)Compiling Libft... \n";
 
 LIBFT_COMPILED	=	@echo "✅ Libft compiled! \n$(NO_COLOR)";
 
@@ -198,8 +198,7 @@ fclean:		clean
 
 re:			fclean all
 
-
-.c.o:	
-	@${CC} ${CFLAGS} -I includes -c $< -o ${<:.c=.o} \
+.c.o:
+	@$(GCC) $(FLAGS) -I includes -c $< -o ${<:.c=.o} \
 
 .PHONY:		all clean fclean re bonus

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 11:00:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 11:41:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -203,7 +203,7 @@ void		ft_cd(t_command *cmd);
 ** COLORS
 */
 
-# define COLOR_RESET   "\x1b[0m"
+# define COLOR_RESET "\x1b[0m"
 
 # define BOLDRED "\033[1m\033[31m"
 # define BOLDGREEN "\033[1m\033[32m"

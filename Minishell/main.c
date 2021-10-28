@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/27 16:35:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 12:17:23 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,6 +93,8 @@ int	main(int ac, char **av, char **env)
 	getcwd(origin, 1024);
 	ft_up_shlvl();
 	path = ft_strjoin_exit(origin, "/builtins/");
+	if (ft_env_index("EXIT_STATUS") != -1)
+		ft_unset("EXIT_STATUS");
 	ft_export("EXIT_STATUS=0");
 	while (1)
 	{

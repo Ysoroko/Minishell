@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/30 15:52:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 10:56:00 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 12:18:05 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,56 +40,6 @@ static char	**ft_quotes_env_variables_and_update_macros(t_command *command)
 	}
 	return ((char **)(ft_free_str_tab(&str_tab_all, temp)));
 }
-
-/*
-** int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
-** This function is used to count the length of str_tab needed to malloc.
-** It doesn't count the words in s_tab composed solely of characters
-** present in *excl argument.
-** In minishell it's used to avoid counting strings composed only of spaces
-*/
-
-// static int	ft_str_tab_len_without_str_with_only_excl(char **s_tab, char *excl)
-// {
-// 	int	i;
-// 	int	count;
-// 
-// 	i = -1;
-// 	count = 0;
-// 	while (s_tab[++i])
-// 	{
-// 		if (!ft_str_only_has_chars_from_charset(s_tab[i], excl))
-// 			count++;
-// 	}
-// 	return (count);
-// }
-
-/*
-** char **ft_copy_str_tab_except_for(char **str_tab, char *except)
-** This function is used to copy **str_tab but not copy
-** strings composed only of characters present in *except argument
-** In minishell, this is used to avoid copying strings composed
-** only of spaces.
-*/
-
-// static char	**ft_copy_str_tab_except_for(char **str_tab, char *except)
-// {
-// 	char	**ret;
-// 	int		len;
-// 	int		i;
-// 	int		j;
-// 
-// 	len = ft_str_tab_len_without_str_with_only_excl(str_tab, except);
-// 	ret = ft_calloc_exit(len + 1, sizeof(*str_tab));
-// 	i = -1;
-// 	j = -1;
-// 	while (str_tab[++i])
-// 	{
-// 		if (!ft_str_only_has_chars_from_charset(str_tab[i], except))
-// 			ret[++j] = ft_strdup_exit(str_tab[i]);
-// 	}
-// 	return (ret);
-// }
 
 /*
 ** FT_EXTRACT_NEXT_COMMAND

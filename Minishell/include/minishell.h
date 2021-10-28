@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 16:32:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/28 16:57:38 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,10 @@ typedef struct s_glob
 	pid_t	fork_ret;
 	char	**env;
 }	t_glob;
+
+/*
+** LA VARIABLE GLOBALE
+*/
 
 t_glob		g_glob;
 

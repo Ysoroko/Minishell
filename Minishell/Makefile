@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/10/28 10:57:33 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/10/28 11:20:07 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -38,13 +38,23 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_free_ressources.c \
 						execute/ft_update_shlvl.c \
 
-# -------------------------------- Builtins sources  ---------------------------
+SIGNALS				=	signals/ft_signal_handler.c
+
 BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \
 						builtins/ft_exit.c \
 						builtins/ft_lstenv.c \
 						builtins/ft_export_utils.c \
 						builtins/ft_cd.c \
+
+SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS) $(BUILTINS)
+
+OBJS				=	$(SRC:.c=.o)
+
+LIBRARIES			=	libft/libft.a \
+						minishell.a
+
+# -------------------------------- Builtins exe sources  ---------------------------
 
 BUILTINS_OBJS		=	$(BUILTINS:.c=.o)
 
@@ -63,17 +73,6 @@ PWD_OBJ				=	$(PWD_SRC:.c=.o)
 BUILTINS_EXE		=	builtins/ft_echo \
 						builtins/ft_env \
 						builtins/ft_pwd
-
-# -----------------------------------------------------------------
-
-SIGNALS				=	signals/ft_signal_handler.c
-
-SRC					=	main.c $(INPUT_PARSING) $(EXECUTE) $(SIGNALS) $(BUILTINS)
-
-LIBRARIES			=	libft/libft.a \
-						minishell.a
-
-OBJS				=	$(SRC:.c=.o)
 
 # ------------------------------ Flags / Commands ------------------------------
 
@@ -102,8 +101,6 @@ NO_COLOR			=	\033[0m
 
 
 # ------------------------------ Readline ------------------------------
-
-USER		=	ysoroko
 
 RPATH		=	/Users/$(USER)/.brew/opt/readline/
 
@@ -182,6 +179,6 @@ ft_pwd: $(PWD_OBJ)
 	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) $(PWD_OBJ) libft/libft.a minishell.a -o ft_pwd ; mv ft_pwd builtins/
 
 .c.o:
-	@gcc $(FLAGS) $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
+	@${CC} ${FLAGS} $(READLINE_FLAGS) $(RL_FLAGS) -I include -c $< -o ${<:.c=.o}
 
 .PHONY: all clean fclean re run wrun .c.o

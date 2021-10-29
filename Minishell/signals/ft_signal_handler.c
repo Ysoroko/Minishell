@@ -3,14 +3,22 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/29 11:49:31 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:27:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../include/minishell.h"
+
+void	ft_display_signal_message(int status_code)
+{
+	if (status_code == 131)
+		ft_putendl_fd("Quit: 3", STDOUT);
+	else if (status_code == 130)
+		ft_putchar_fd('\n', STDOUT);
+}
 
 /*
 ** void	ft_control_c_function(void)
@@ -21,9 +29,7 @@
 
 static void	ft_control_c_function(void)
 {
-	if (g_glob.fork_ret)
-		ft_putchar_fd('\n', STDOUT);
-	else
+	if (!g_glob.fork_ret)
 	{
 		ft_modify_exit_status(1);
 		ft_putchar_fd('\n', STDOUT);
@@ -42,9 +48,7 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	if (g_glob.fork_ret)
-		ft_putendl_fd("Quit: 3", STDOUT);
-	else
+	if (!g_glob.fork_ret)
 	{
 		rl_on_new_line();
 		rl_redisplay();

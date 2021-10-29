@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/29 11:48:35 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/29 14:08:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,10 +92,10 @@ int	main(int ac, char **av, char **env)
 	if (ft_env_index("EXIT_STATUS") != -1)
 		ft_unset("EXIT_STATUS");
 	ft_export("EXIT_STATUS=0");
-	ft_setup_signals();
 	while (1)
 	{
 		g_glob.fork_ret = 0;
+		ft_setup_signals();
 		ft_prompt(path);
 	}
 	free(path);

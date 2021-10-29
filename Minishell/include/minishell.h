@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 16:57:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 14:27:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,7 +202,7 @@ char		**ft_list_to_tab(t_list *lst);
 void		ft_delete(t_list **lst, char *var);
 char		*ft_until(char *src, char c);
 void		ft_cd(t_command *cmd);
-
+void		ft_display_signal_message(int status_code);
 /*
 ** COLORS
 */

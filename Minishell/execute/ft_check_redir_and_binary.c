@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_check_redir_and_binary.c                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 11:00:57 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 16:11:46 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,6 +99,7 @@ void	ft_check_redir_and_binary(void *current_command)
 	{
 		command->error = 1;
 		command->exists = 0;
-		ft_minishell_error("command not found");
+		if (command->keyword[0] == 0)
+			ft_minishell_error("command not found");
 	}
 }

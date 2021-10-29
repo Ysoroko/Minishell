@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hdoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:45:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/29 15:48:02 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 16:24:08 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,6 +71,17 @@ void	ft_add_redir_hdoc(t_command *cmd, int i)
 	cmd->keyword[cmd->keyword_index] = 0;
 }
 
+void	ft_read_and_write_hdoc(t_command *cmd, int fd)
+{
+	if (cmd->buffer != NULL)
+		free(cmd->buffer);
+	cmd->buffer = readline("> ");
+	if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
+		write(fd, cmd->buffer, ft_strlen(cmd->buffer));
+	if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
+		write(fd, "\n", 1);
+}
+
 void	ft_hdoc(t_command *cmd)
 {
 	int	fd;
@@ -79,13 +90,7 @@ void	ft_hdoc(t_command *cmd)
 	{
 		while (1)
 		{
-			if (cmd->buffer != NULL)
-				free(cmd->buffer);
-			cmd->buffer = readline("> ");
-			if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
-				write(fd, cmd->buffer, ft_strlen(cmd->buffer));
-			if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
-				write(fd, "\n", 1);
+			ft_read_and_write_hdoc(cmd, fd);
 			if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) == 0)
 			{
 				if (close(fd) == -1)

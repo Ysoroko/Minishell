@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/29 14:27:08 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 15:46:29 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -148,7 +148,7 @@ int			ft_is_a_redir_arg_macro(int macro);
 void		ft_prompt(char *path);
 void		ft_setup_signals(void);
 int			ft_check_file_permissions(char *filename);
-void		ft_open_hdoc(t_command *cmd, int *fd);
+int			ft_open_hdoc(t_command *cmd, int *fd);
 void		ft_close_hdoc(t_command *cmd, int *fd);
 void		ft_hdoc(t_command *cmd);
 void		ft_copy_outfile(t_command *cmd, int i);

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:26:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/29 11:43:09 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/29 15:12:47 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -26,19 +26,45 @@ int	ft_check_binary(char *filename)
 	return (-1);
 }
 
+int	ft_builtin_cmd_no_path(char *exec_name)
+{
+	if (ft_strcmp("cd", exec_name) == 0)
+		return (0);
+	if (ft_strcmp("export", exec_name) == 0)
+		return (1);
+	if (ft_strcmp("unset", exec_name) == 0)
+		return (2);
+	if (ft_strcmp("exit", exec_name) == 0)
+		return (3);
+	if (ft_strcmp("echo", exec_name) == 0)
+		return (4);
+	if (ft_strcmp("pwd", exec_name) == 0)
+		return (5);
+	if (ft_strcmp("env", exec_name) == 0)
+		return (6);
+	if (ft_strcmp("minishell", exec_name) == 0)
+		return (7);
+	return (-1);
+}
+
+void	ft_path_error(t_command *command)
+{
+	if (ft_set_paths(&command->str_tab_for_execve[0]) == -1
+		&& command->error == 0)
+	{
+		ft_err(command->str_tab_for_execve[0], NULL, "command not found",
+			127);
+		command->error = 1;
+		command->exists = 0;
+	}
+}
+
 void	ft_check_if_cmd_exists(t_command *command)
 {
+	if (ft_builtin_cmd_no_path(command->str_tab_for_execve[0]) != -1)
+		return ;
 	if (ft_check_binary(command->str_tab_for_execve[0]) != 1)
-	{
-		if (ft_set_paths(&command->str_tab_for_execve[0]) == -1
-			&& command->error == 0)
-		{
-			ft_err(command->str_tab_for_execve[0], NULL, "command not found",
-				127);
-			command->error = 1;
-			command->exists = 0;
-		}
-	}
+		ft_path_error(command);
 	if (ft_check_binary(command->str_tab_for_execve[0]) == 1)
 		command->exists = 1;
 	else

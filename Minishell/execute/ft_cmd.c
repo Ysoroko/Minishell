@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/29 11:31:53 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/10/29 15:13:52 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	ft_builtin_cmd_found(char *exec_name)
 {
-	if (ft_strcmp("/usr/bin/cd", exec_name) == 0)
+	if (ft_strcmp("cd", exec_name) == 0)
 		return (0);
 	if (ft_strcmp("export", exec_name) == 0)
 		return (1);
@@ -22,11 +22,11 @@ int	ft_builtin_cmd_found(char *exec_name)
 		return (2);
 	if (ft_strcmp("exit", exec_name) == 0)
 		return (3);
-	if (ft_strcmp("/bin/echo", exec_name) == 0)
+	if (ft_strcmp("echo", exec_name) == 0)
 		return (4);
-	if (ft_strcmp("/bin/pwd", exec_name) == 0)
+	if (ft_strcmp("pwd", exec_name) == 0)
 		return (5);
-	if (ft_strcmp("/usr/bin/env", exec_name) == 0)
+	if (ft_strcmp("env", exec_name) == 0)
 		return (6);
 	if (ft_strcmp("minishell", exec_name) == 0)
 		return (7);

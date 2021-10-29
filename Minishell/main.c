@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 18:27:58 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 11:48:35 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,15 +71,6 @@ void	ft_prompt(char *path)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// << eof ---> heredoc se lance, mais dit "command not found"
-//	(essaie d'executer <<, RREDIR)
-// cat main.c | grep PHONY < Makefile -->
-//	doit afficher ".PHONY: all clean fclean re run wrun .c.o"
-// << eof << --> dit "syntax error" (ok), mais quitte minishell
-// << eof cat --> affiche "eof" à la fin (ne doit pas le faire)
-// "|||" --> imprime 3 fois "command not found"
-//
-// Pour moi:
 // - les signaux dans heredoc ne quittent pas heredoc
 // - si on unset PATH les builtins ne marchent plus
 int	main(int ac, char **av, char **env)

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_cmd.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/27 16:36:35 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 11:31:53 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -75,7 +75,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 {
 	if (command_list->next)
 	{
-		if (cmd->redir_type_out != REDIR_R || cmd->redir_type_out != REDIR_RR)
+		if (cmd->redir_type_out != REDIR_R && cmd->redir_type_out != REDIR_RR)
 		{
 			if (dup2(pfd[j + 1], 1) == -1 && cmd->error == 0)
 			{
@@ -86,7 +86,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 	}
 	if (j != 0)
 	{
-		if (cmd->redir_type_in != REDIR_L || cmd->redir_type_in != REDIR_LL)
+		if (cmd->redir_type_in != REDIR_L && cmd->redir_type_in != REDIR_LL)
 		{
 			if (dup2(pfd[j - 2], 0) == -1 && cmd->error == 0)
 			{

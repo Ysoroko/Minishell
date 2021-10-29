@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_hdoc.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
+/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:45:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 10:59:55 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/10/29 11:48:23 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,7 +51,7 @@ void	ft_add_redir_hdoc(t_command *cmd, int i)
 	else
 	{
 		ft_minishell_error("syntax error");
-		ft_exit(errno);
+		return ;
 	}
 	ft_hdoc(cmd);
 	cmd->keyword_index++;
@@ -68,7 +68,8 @@ void	ft_hdoc(t_command *cmd)
 		if (cmd->buffer != NULL)
 			free(cmd->buffer);
 		cmd->buffer = readline("> ");
-		write(fd, cmd->buffer, ft_strlen(cmd->buffer));
+		if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
+			write(fd, cmd->buffer, ft_strlen(cmd->buffer));
 		if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) != 0)
 			write(fd, "\n", 1);
 		if (ft_strcmp(cmd->buffer, cmd->keyword[cmd->keyword_index]) == 0)

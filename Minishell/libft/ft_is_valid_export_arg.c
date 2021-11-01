@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 14:28:07 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 17:37:27 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/01 11:53:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,7 +53,7 @@ int	ft_check_results(char *arg, char **before, char **after, char equal)
 		return (ft_free_all(error_message, *before, *after, 0));
 	}
 	if (!equal)
-		return (ft_free_all(error_message, *before, *after, 0));
+		return (ft_free_all(error_message, *before, *after, 1));
 	if (*after && ft_str_only_has_chars_from_charset(*after, REDIRS))
 	{
 		ft_minishell_error("syntax error");

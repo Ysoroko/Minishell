@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/29 15:56:23 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/01 11:55:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -71,8 +71,8 @@ void	ft_prompt(char *path)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// - les signaux dans heredoc ne quittent pas heredoc
-// - si on unset PATH les builtins ne marchent plus
+// 1) cat | cat | ls ---> comportement différent du bash
+// 2) > test --------> dit "command not found"
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/29 16:12:04 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/11/02 12:01:07 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ void	ft_parent_process(int npipes, int *pfd)
 	int	status_code;
 
 	i = 0;
-	while (i <= npipes + 1)
+	while (i <= npipes)
 	{
-		waitpid(g_glob.fork_ret, &status, 0);
+		waitpid(0, &status, 0);
 		if (g_glob.fork_ret > 0)
 		{
 			if (WIFEXITED(status))

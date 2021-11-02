@@ -6,7 +6,7 @@
 /*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 07:14:45 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/29 15:13:52 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/11/02 11:51:04 by ablondel         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 	{
 		if (cmd->redir_type_out != REDIR_R && cmd->redir_type_out != REDIR_RR)
 		{
-			if (dup2(pfd[j + 1], 1) == -1 && cmd->error == 0)
+			if (dup2(pfd[j + 1], 1) == -1)
 			{
 				ft_minishell_error(strerror(errno));
 				ft_exit(errno);
@@ -88,7 +88,7 @@ void	ft_pipe_cmd(t_dl_lst *command_list, t_command *cmd, int *pfd, int j)
 	{
 		if (cmd->redir_type_in != REDIR_L && cmd->redir_type_in != REDIR_LL)
 		{
-			if (dup2(pfd[j - 2], 0) == -1 && cmd->error == 0)
+			if (dup2(pfd[j - 2], 0) == -1)
 			{
 				ft_minishell_error(strerror(errno));
 				ft_exit(errno);

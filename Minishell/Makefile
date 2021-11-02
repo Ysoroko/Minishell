@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/11/02 16:17:30 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/11/02 17:29:52 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -40,6 +40,7 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_update_shlvl.c \
 
 SIGNALS				=	signals/ft_signal_handler.c \
+						signals/ft_hererdoc_signals.c \
 
 BUILTINS			=	builtins/ft_export.c \
 						builtins/ft_unset.c \

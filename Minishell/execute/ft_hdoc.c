@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:45:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/11/02 17:21:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:50:49 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,8 +14,6 @@
 
 int	ft_open_hdoc(t_command *cmd, int *fd)
 {
-	int	forked;
-
 	if (ft_check_file_permissions("hdoc/tmp") >= 1)
 		*fd = open("hdoc/tmp", O_RDWR | O_CREAT | O_TRUNC, 0664);
 	else
@@ -26,16 +24,16 @@ int	ft_open_hdoc(t_command *cmd, int *fd)
 		cmd->error = 1;
 		ft_exit(errno);
 	}
-	forked = fork();
-	if (forked < 0)
+	g_glob.fork_ret = fork();
+	if (g_glob.fork_ret < 0)
 	{
 		ft_minishell_error(strerror(errno));
 		ft_exit(errno);
 	}
-	else if (!forked)
-		return (forked);
+	else if (!g_glob.fork_ret)
+		return (g_glob.fork_ret);
 	else
-		wait(NULL);
+		ft_wait_and_update_exit_status_hdoc();
 	return (1);
 }
 
@@ -66,7 +64,10 @@ void	ft_add_redir_hdoc(t_command *cmd, int i)
 		ft_minishell_error("syntax error");
 		return ;
 	}
+	ft_heredoc_signals_setup();
 	ft_hdoc(cmd);
+	g_glob.fork_ret = 0;
+	ft_setup_signals();
 	cmd->keyword_index++;
 	cmd->keyword[cmd->keyword_index] = 0;
 }

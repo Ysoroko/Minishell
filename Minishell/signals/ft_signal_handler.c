@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_signal_handler.c                                :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/01 11:36:31 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 14:31:06 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/11/02 14:58:05 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,9 +33,9 @@ static void	ft_control_c_function(void)
 	{
 		ft_modify_exit_status(1);
 		ft_putchar_fd('\n', STDOUT);
-		//rl_on_new_line();
-		//rl_replace_line("", 0);
-		//rl_redisplay();
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
 	}
 }
 
@@ -48,11 +48,11 @@ static void	ft_control_c_function(void)
 
 static void	ft_control_backslash_function(void)
 {
-	//if (!g_glob.fork_ret)
-	//{
-	//	rl_on_new_line();
-	//	rl_redisplay();
-	//}
+	if (!g_glob.fork_ret)
+	{
+		rl_on_new_line();
+		rl_redisplay();
+	}
 }
 
 /*

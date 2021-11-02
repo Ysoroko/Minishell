@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 17:25:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:25:00 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,7 +77,6 @@ void	ft_prompt(char *path)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-// signaux + heredoc
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

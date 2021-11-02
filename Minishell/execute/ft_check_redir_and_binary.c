@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 16:01:44 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:25:51 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -99,7 +99,7 @@ void	ft_check_redir_and_binary(void *current_command)
 	{
 		command->error = 1;
 		command->exists = 0;
-		//if (command->redir_type_in == 0 && command->redir_type_out == 0)
-		//	ft_minishell_error("command not found");
+		if (command->redir_type_in == 0 && command->redir_type_out == 0)
+			ft_minishell_error("command not found");
 	}
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_outfile.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:49:19 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/20 06:19:04 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:21:37 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,8 +27,8 @@ void	ft_copy_outfile(t_command *cmd, int i)
 	}
 	else
 	{
-		ft_minishell_error("syntax error");
-		ft_exit(errno);
+		ft_err(NULL, NULL, "syntax error", 258);
+		return ;
 	}
 }
 
@@ -46,15 +46,7 @@ void	ft_add_redir_out(t_command *cmd, int m, int i)
 		cmd->redir_type_out = 2;
 	}
 	if (cmd->fdout == -1 && cmd->error == 0)
-	{
-		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		ft_exit(errno);
-	}
 	if (close(cmd->fdout) == -1 && cmd->error == 0)
-	{
-		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-		ft_exit(errno);
-	}
 }

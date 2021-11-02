@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/11/02 14:52:26 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/11/02 16:17:30 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -21,6 +21,7 @@ INPUT_PARSING		=	input_parsing/ft_user_input_to_dl_lst_with_commands.c \
 						input_parsing/utils/ft_extract_str_tab_all.c \
 						input_parsing/utils/ft_extract_str_tab_for_execve.c \
 						input_parsing/utils/ft_extract_role_macros_tab.c \
+						input_parsing/utils/ft_cmd_list_error.c \
 
 EXECUTE				=	execute/ft_execute.c \
 						execute/ft_check_if_cmd_exists.c \

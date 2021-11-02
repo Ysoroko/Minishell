@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/07/26 12:23:38 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:15:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -34,6 +34,11 @@ static void	ft_first_element_role(char **all_tab, int i, int *macros_array)
 		macros_array[i] = REDIR_LL;
 	else if (!ft_strlcmp(current_element, "|"))
 		macros_array[i] = PIPE;
+	else if ((ft_n_chars_in_str(current_element, '>') > 2
+			|| ft_n_chars_in_str(current_element, '<') > 2)
+		&& ft_str_only_has_chars_from_charset(current_element,
+			SPACES_AND_REDIRECTIONS))
+		macros_array[i] = REDIR_R;
 	else
 		macros_array[i] = COMMAND;
 }

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:47:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 11:00:49 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:21:35 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -29,8 +29,8 @@ void	ft_copy_infile(t_command *cmd, int i)
 	}
 	else
 	{
-		ft_minishell_error("syntax error");
-		ft_exit(errno);
+		ft_err(NULL, NULL, "syntax error", 258);
+		return ;
 	}
 }
 
@@ -39,13 +39,7 @@ void	ft_add_redir_in(t_command *cmd, int i)
 	ft_copy_infile(cmd, i);
 	cmd->fdin = open(cmd->infile, O_RDONLY);
 	if (cmd->fdin == -1 && cmd->error == 0)
-	{
-		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-	}
 	if (close(cmd->fdin) == -1 && cmd->error == 0)
-	{
-		ft_minishell_error(strerror(errno));
 		cmd->error = 1;
-	}
 }

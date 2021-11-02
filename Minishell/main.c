@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 14:57:28 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 17:03:24 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,7 +44,7 @@ int	ft_user_input_error(char *str)
 	if (ft_str_has_unclosed_quotes(str))
 	{
 		ft_err(str, NULL, "Unclosed quotes error", 1);
-		return (1);
+		return (0);
 	}
 	return (0);
 }
@@ -66,11 +66,17 @@ void	ft_prompt(char *path)
 		free(user_input_str);
 		return ;
 	}
+	else if (ft_str_has_unclosed_quotes(user_input_str))
+	{
+		free(user_input_str);
+		return ;
+	}
 	input_as_dl_command_list = ft_input_parsing(user_input_str, path);
 	ft_execute(input_as_dl_command_list);
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
+// signaux + heredoc
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

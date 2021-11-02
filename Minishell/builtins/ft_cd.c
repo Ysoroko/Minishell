@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:49:00 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/26 16:43:53 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 15:34:18 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,11 @@ static void	ft_update_pwd(void)
 {
 	char	buf[1024];
 	char	*tmp;
+	int		index;
 
+	index = ft_env_index("PWD");
+	if (index == -1)
+		return ;
 	tmp = g_glob.env[ft_env_index("PWD")];
 	getcwd(buf, 1024);
 	g_glob.env[ft_env_index("PWD")] = ft_strjoin_exit("PWD=", buf);

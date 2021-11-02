@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_execute.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ablondel <ablondel@student.s19.be>         +#+  +:+       +#+        */
+/*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 14:40:29 by ablondel         ###   ########.fr       */
+/*   Updated: 2021/11/02 17:13:59 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,10 +104,13 @@ void	ft_execute(t_dl_lst *command_list)
 	int			npipes;
 	int			j;
 
+	if (ft_cmd_list_error(command_list))
+		return ;
 	ft_setup_for_exec(command_list, &pfd, &npipes, &j);
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
+		ft_print_command_list(cmd);
 		if (cmd->error == 0)
 		{
 			cmd->s = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);

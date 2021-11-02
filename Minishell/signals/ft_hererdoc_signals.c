@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 17:28:00 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 17:51:14 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/02 18:19:58 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,10 +40,16 @@ static void	ft_heredoc_signal_handler(int sig)
 	{
 		if (sig == SIGINT)
 			exit(EXIT_FAILURE);
+		else
+		{
+			rl_on_new_line();
+			rl_redisplay();
+		}
 	}
 	else
 	{
-		ft_putchar_fd('\n', STDOUT);
+		if (sig == SIGINT)
+			ft_putchar_fd('\n', STDOUT);
 	}
 }
 

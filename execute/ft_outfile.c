@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:49:19 by ablondel          #+#    #+#             */
-/*   Updated: 2021/11/02 17:21:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/03 13:53:22 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,10 @@ void	ft_add_redir_out(t_command *cmd, int m, int i)
 		cmd->redir_type_out = 2;
 	}
 	if (cmd->fdout == -1 && cmd->error == 0)
+	{
+		ft_err(NULL, NULL, strerror(errno), 1);
 		cmd->error = 1;
+	}
 	if (close(cmd->fdout) == -1 && cmd->error == 0)
 		cmd->error = 1;
 }

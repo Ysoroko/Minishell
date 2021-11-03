@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 13:52:17 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/03 11:34:37 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/03 13:56:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -77,43 +77,6 @@ void	ft_prompt(char *path)
 	ft_cleanup_and_free(&user_input_str, input_as_dl_command_list);
 }
 
-/// hdoc en dehors du dossier minishell
-/// leaks??
-// shi-r11-p1% ./minishell 
-// minishell: echo bonjour
-// bonjour
-// minishell: echo -n bonjour
-// bonjourminishell: echo test
-// test
-// minishell: echo test > test.txt au revoir
-// minishell: cat test.txt 
-// test au revoir
-// minishell: rm test.txt 
-// minishell: << EOF
-// > 
-// minishell: echo $?
-// 1
-// minishell: << EOF
-// > 
-// minishell: echo 4?
-// 4?
-// minishell: echo $?
-// 0
-// minishell: 
-// exit
-// shi-r11-p1% make
-// shi-r11-p1% ./minishell 
-// minishell: << EOF
-// > 
-// minishell: cat
-// minishell: cat
-// minishell: ./minishell
-// minishell: 
-// exit
-// minishell: env
-// shi-r11-p1% ./minishell 
-// minishell: cd ..
-// minishell: env
 int	main(int ac, char **av, char **env)
 {
 	char	origin[1024];

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 17:46:26 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 17:26:10 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/03 10:34:48 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,6 +108,7 @@ void	ft_execute(t_dl_lst *command_list)
 	while (command_list)
 	{
 		cmd = (t_command *)command_list->content;
+		ft_print_command_list(cmd);
 		if (cmd->error == 0)
 		{
 			cmd->s = ft_builtin_cmd_found(cmd->str_tab_for_execve[0]);

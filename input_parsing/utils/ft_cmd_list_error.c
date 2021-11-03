@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/11/02 16:04:09 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/03 10:44:17 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/03 11:40:59 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ static int	ft_redir_error(int *macros, int len)
 	int		i;
 
 	i = -1;
-	while (++i <= len)
+	while (++i < len)
 	{
 		if (ft_is_a_redirection_macro(macros[i]))
 		{
@@ -72,6 +72,8 @@ int	ft_cmd_list_error(t_dl_lst *lst)
 		if (tab[len - 1] == PIPE && ft_pipe_error(current->next))
 			return (ft_error_found());
 		if (ft_redir_error(tab, len))
+			return (ft_error_found());
+		if (ft_error_macro_present(tab, len))
 			return (ft_error_found());
 		current = current->next;
 	}

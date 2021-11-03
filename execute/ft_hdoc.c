@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/08 06:45:21 by ablondel          #+#    #+#             */
-/*   Updated: 2021/11/02 18:50:09 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/03 10:51:08 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,16 +14,7 @@
 
 int	ft_open_hdoc(t_command *cmd, int *fd)
 {
-	if (ft_check_file_permissions("hdoc/tmp") >= 1)
-		*fd = open("hdoc/tmp", O_RDWR | O_CREAT | O_TRUNC, 0664);
-	else
-		*fd = open("hdoc/tmp", O_RDWR | O_CREAT | O_APPEND, 0664);
-	if (*fd == -1)
-	{
-		ft_minishell_error(strerror(errno));
-		cmd->error = 1;
-		ft_exit(errno);
-	}
+	ft_open_hdoc_file(cmd, fd);
 	g_glob.fork_ret = fork();
 	if (g_glob.fork_ret < 0)
 	{

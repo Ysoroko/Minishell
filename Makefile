@@ -6,7 +6,7 @@
 #    By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2021/03/25 11:12:03 by ysoroko           #+#    #+#              #
-#    Updated: 2021/11/03 10:43:24 by ysoroko          ###   ########.fr        #
+#    Updated: 2021/11/03 10:51:06 by ysoroko          ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -39,6 +39,7 @@ EXECUTE				=	execute/ft_execute.c \
 						execute/ft_pipes.c \
 						execute/ft_free_ressources.c \
 						execute/ft_update_shlvl.c \
+						execute/ft_hdoc_utils.c \
 
 SIGNALS				=	signals/ft_signal_handler.c \
 						signals/ft_hererdoc_signals.c \

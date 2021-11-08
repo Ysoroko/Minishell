@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/23 14:34:24 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 16:39:07 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/08 16:47:06 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,7 @@ t_list	*ft_tab_to_list(void)
 	lst = NULL;
 	if (!g_glob.env)
 	{
-		g_glob.env = malloc(sizeof(char *) * 2);
+		g_glob.env = ft_malloc_exit(sizeof(char *) * 2);
 		g_glob.env[0] = ft_strdup_exit("EXIT_STATUS=0");
 		g_glob.env[1] = NULL;
 		ft_export("EXIT_STATUS=1");
@@ -60,7 +60,7 @@ char	**ft_list_to_tab(t_list *lst)
 		return (NULL);
 	while (lst)
 	{
-		next_env[i] = ft_strdup(lst->content);
+		next_env[i] = ft_strdup_exit(lst->content);
 		if (!next_env[i])
 			return (NULL);
 		lst = lst->next;

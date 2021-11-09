@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/26 13:04:22 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/09 17:18:15 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 static void	ft_exit_error(char *str, char *str2)
 {
-	ft_putstr_fd(PROMPT_NAME, STDERR);
+	ft_putstr_fd(PROMPT_ERROR, STDERR);
 	ft_putstr_fd("exit: ", STDERR);
 	ft_putstr_fd(str, STDERR);
 	if (str2)

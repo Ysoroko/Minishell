@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 13:00:06 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/03 11:45:16 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/11 16:38:14 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -133,7 +133,7 @@ void	ft_extract_role_macros_tab(t_command *command)
 		return ;
 	all_tab = command->str_tab_all;
 	len = ft_str_tab_len(all_tab);
-	command->role_macros = ft_calloc_exit(len, sizeof(int));
+	command->role_macros = ft_calloc_exit(len + 1, sizeof(int));
 	macros_array = command->role_macros;
 	i = -1;
 	while (all_tab[++i])

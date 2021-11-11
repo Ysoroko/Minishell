@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/01 19:57:11 by ablondel          #+#    #+#             */
-/*   Updated: 2021/11/09 17:18:15 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/11 16:29:13 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,15 +42,15 @@ void	ft_exit_cmd(t_command *cmd)
 	ft_putendl_fd("exit", STDOUT);
 	exit_arg_str = cmd->str_tab_for_execve[1];
 	non_num = !ft_str_only_has_chars_from_charset(exit_arg_str, "0123456789");
-	if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
-	{
-		ft_exit_error("too many arguments", NULL);
-		ft_modify_exit_status(1);
-	}
-	else if (exit_arg_str && non_num)
+	if (exit_arg_str && non_num)
 	{
 		ft_exit_error(exit_arg_str, ": numeric argument required");
 		ft_exit(255);
+	}
+	else if (ft_str_tab_len(cmd->str_tab_for_execve) > 2)
+	{
+		ft_exit_error("too many arguments", NULL);
+		ft_modify_exit_status(1);
 	}
 	else
 	{

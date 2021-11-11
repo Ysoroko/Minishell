@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/03 11:43:30 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/11 11:33:46 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -173,7 +173,7 @@ void		ft_duplicate_env(char **env);
 char		*ft_getenv(char *s);
 void		ft_exit(int n);
 void		ft_unset(char *var);
-void		ft_export(char *new_var);
+int			ft_export(char *new_var);
 void		ft_close_pipes(int npipes, int *pfd);
 void		ft_open_pipes(int npipes, int *pfd);
 void		ft_fdin(t_command *cmd);

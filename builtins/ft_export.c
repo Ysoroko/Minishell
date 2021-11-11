@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/04 12:48:00 by ablondel          #+#    #+#             */
-/*   Updated: 2021/10/28 16:39:57 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/11 11:33:31 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -93,13 +93,13 @@ void	ft_print(void)
 	ft_free_str_tab(&sorted, NULL);
 }
 
-void	ft_export(char *new_var)
+int	ft_export(char *new_var)
 {
 	t_list	*lst;
 	t_list	*new;
 
 	if (!ft_is_valid_export_arg(new_var))
-		return ;
+		return (0);
 	lst = ft_tab_to_list();
 	if (!lst)
 	{
@@ -117,6 +117,7 @@ void	ft_export(char *new_var)
 	}
 	ft_lstclear(&lst, &free);
 	ft_lstdelone(new, &free);
+	return (1);
 }
 
 void	ft_export_handler(t_command *cmd)
@@ -134,7 +135,8 @@ void	ft_export_handler(t_command *cmd)
 		if (ft_env_index(tmp) >= 0)
 			ft_unset(tmp);
 		free(tmp);
-		ft_export(cmd->str_tab_for_execve[i]);
+		if (ft_export(cmd->str_tab_for_execve[i]))
+			ft_modify_exit_status(0);
 		i++;
 	}
 }

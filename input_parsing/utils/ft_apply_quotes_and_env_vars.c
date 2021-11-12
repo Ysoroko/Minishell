@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/04/14 16:43:56 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 15:56:24 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/12 15:01:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,6 +41,49 @@ static void	ft_apply_conditions(char **str, int *i, int *j, char **ret)
 		ft_quoted_copy(&((*str)[*i]), ret, i, j);
 	else
 		(*ret)[*j] = (*str)[*i];
+}
+
+static void	ft_apply_env_conditions(char **str, int *i, int *j, char **ret)
+{
+	char	c;
+	int		quoted;
+	char	next_char;
+
+	quoted = 0;
+	c = (*str)[*i];
+	if (c == '$')
+	{
+		quoted = ft_char_between_the_quotes(*i, *str);
+		next_char = (*str)[(*i) + 1];
+	}
+	if ((*str)[*i] == '$' && ft_is_env_name_char(next_char) && quoted != '\'')
+		ft_append_env_var_value(&((*str)[*i]), ret, i, j);
+	else if ((*str)[*i] == '$' && ((*str)[(*i) + 1] == '\''
+			|| (*str)[(*i) + 1] == '\"'))
+		;
+	else
+		(*ret)[*j] = (*str)[*i];
+}
+
+char	*ft_apply_env_vars(char **str)
+{
+	int		i;
+	int		j;
+	char	*ret;
+
+	if (!str || !(*str))
+		return (0);
+	ft_initialize_variables(str, &i, &j, &ret);
+	while ((*str)[++i])
+	{
+		ft_apply_env_conditions(str, &i, &j, &ret);
+		if (ret[j])
+			j++;
+		if (!(*str)[i])
+			break ;
+	}
+	ret[j] = 0;
+	return (ft_strdup_exit_and_free_src(&ret));
 }
 
 /*

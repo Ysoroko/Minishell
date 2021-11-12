@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/07/25 14:41:39 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/03 13:55:48 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/12 15:04:44 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ int	ft_exec_check(char *path, char *cmd)
 	if (cmd == NULL)
 		return (-1);
 	dir = opendir(path);
+	if (!dir)
+		return (-1);
 	d = readdir(dir);
 	while (d != NULL)
 	{

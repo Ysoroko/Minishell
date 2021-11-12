@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/03/25 11:07:01 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/11 16:33:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/12 15:01:26 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -209,6 +209,7 @@ int			ft_is_a_redirection_macro(int m);
 void		ft_open_hdoc_file(t_command *cmd, int *fd);
 int			ft_role_macro_error(char *current_element);
 int			ft_error_macro_present(int *macros, int len);
+char		*ft_apply_env_vars(char **str);
 
 /*
 ** COLORS

@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:49:00 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/02 15:34:18 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/12 15:22:32 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,11 @@ static void	ft_update_pwd(void)
 	if (index == -1)
 		return ;
 	tmp = g_glob.env[ft_env_index("PWD")];
-	getcwd(buf, 1024);
+	if (!getcwd(buf, 1024))
+	{
+		ft_err(NULL, NULL, strerror(errno), 1);
+		return ;
+	}
 	g_glob.env[ft_env_index("PWD")] = ft_strjoin_exit("PWD=", buf);
 	free(tmp);
 }
@@ -53,10 +57,11 @@ void	ft_cd(t_command *cmd)
 	arg = (cmd->str_tab_for_execve)[1];
 	if (!arg)
 		arg = ft_getenv("HOME");
-	getcwd(oldpwd, 1024);
-	if (chdir(arg) == -1)
+	else if (ft_str_only_has_chars_from_charset(arg, SPACES))
+		return ;
+	if (!getcwd(oldpwd, 1024) || chdir(arg) == -1)
 	{
-		ft_err("cd", arg, "No such file or directory", 1);
+		ft_err("cd", arg, strerror(errno), 1);
 		return ;
 	}
 	ft_update_oldpwd(oldpwd);

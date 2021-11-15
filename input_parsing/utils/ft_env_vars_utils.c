@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/05/04 12:33:47 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/11 16:38:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/15 17:45:04 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	ft_calculate_total_length_needed(char *str)
 		else
 			ret++;
 	}
-	return (ret);
+	return (ret + 1);
 }
 
 /*

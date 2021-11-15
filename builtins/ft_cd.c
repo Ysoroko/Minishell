@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/26 13:49:00 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/11/12 15:22:32 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/15 10:33:56 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,6 +59,11 @@ void	ft_cd(t_command *cmd)
 		arg = ft_getenv("HOME");
 	else if (ft_str_only_has_chars_from_charset(arg, SPACES))
 		return ;
+	else if (ft_strlen(arg) > 255)
+	{
+		ft_err("cd", arg, "File name too long", 1);
+		return ;
+	}
 	if (!getcwd(oldpwd, 1024) || chdir(arg) == -1)
 	{
 		ft_err("cd", arg, strerror(errno), 1);

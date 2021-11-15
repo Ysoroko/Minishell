@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/10/07 15:22:37 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/10/28 16:55:08 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/15 17:28:27 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,24 +27,41 @@ static void	ft_add_to_final_string(char *current_element, char **final_str)
 	}
 }
 
+static int	ft_is_a_flag_argument(char *str, int flagged)
+{
+	if (str[0] == '-' && ft_str_only_has_chars_from_charset(&str[1], "n")
+		&& flagged == 0)
+	{
+		return (1);
+	}
+	return (0);
+}
+
 void	ft_echo(char **str_tab_for_execve)
 {
 	int		i;
-	char	*current_element;
+	int		flagged;
+	char	*str;
 	char	*final_str;
 	char	end_of_line;
 
 	end_of_line = '\n';
 	i = 0;
-	final_str = 0;
+	flagged = 0;
+	final_str = NULL;
 	while (str_tab_for_execve[++i])
 	{
-		current_element = str_tab_for_execve[i];
-		if (i == 1 && !ft_strlcmp(current_element, "-n"))
+		str = str_tab_for_execve[i];
+		if (ft_is_a_flag_argument(str, flagged))
 			end_of_line = '\0';
 		else
-			ft_add_to_final_string(current_element, &final_str);
+		{
+			flagged = 1;
+			ft_add_to_final_string(str, &final_str);
+		}
 	}
+	if (!final_str)
+		final_str = ft_strdup_exit("");
 	printf("%s%c", final_str, end_of_line);
 	free(final_str);
 }

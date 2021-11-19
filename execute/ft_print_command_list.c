@@ -6,7 +6,7 @@
 /*   By: ysoroko <ysoroko@student.42.fr>            +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2021/09/25 15:56:05 by ysoroko           #+#    #+#             */
-/*   Updated: 2021/09/25 15:57:05 by ysoroko          ###   ########.fr       */
+/*   Updated: 2021/11/19 13:36:45 by ysoroko          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,9 +50,9 @@ static char	*ft_role_color(int m)
 static char	*ft_role_str(int m)
 {
 	const char	*tab[] = {"ERROR", "REDIR_R", "REDIR_RR", "REDIR_L",
-					"REDIR_LL", "REDIR_ARG", "PIPE", "COMMAND", "FLAG",
-					"COMMAND_ARG", "R_REDIR_ARG", "L_REDIR_ARG",
-					"RR_REDIR_ARG", "LL_REDIR_ARG"};
+		"REDIR_LL", "REDIR_ARG", "PIPE", "COMMAND", "FLAG",
+		"COMMAND_ARG", "R_REDIR_ARG", "L_REDIR_ARG",
+		"RR_REDIR_ARG", "LL_REDIR_ARG"};
 
 	if (m > ft_str_tab_len((char **)tab) || m < 0)
 		return ("Undefined");

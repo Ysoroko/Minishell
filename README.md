@@ -21,5 +21,5 @@ This project is a collaboration with [Arnaud Blondel](https://github.com/ablonde
   - unset
   - exit
 
-### Amazing links that helped me to create this project:
+### Useful links that helped me to create this project:
 - [**Great videos covering the subject**](https://www.youtube.com/watch?v=cex9XrZCU14&list=PLfqABt5AS4FkW5mOn2Tn9ZZLLDwA3kZUY)

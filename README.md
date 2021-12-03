@@ -11,6 +11,7 @@ This project is a collaboration with [Arnaud Blondel](https://github.com/ablonde
 - Redirections
 - Pipes
 - Exit status of the processes
+- Signal management
 - Parsing of double and simple quotes + environmental variables
 - Recreates the following buil-ins:
   - echo

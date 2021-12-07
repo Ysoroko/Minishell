@@ -1,5 +1,6 @@
 # Minishell
 A bash terminal, recreated in C.
+This is a group project
 
 This project is a collaboration with [Arnaud Blondel](https://github.com/ablondel19).
 

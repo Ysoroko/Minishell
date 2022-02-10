@@ -6,7 +6,7 @@ This project is a collaboration with [Arnaud Blondel](https://github.com/ablonde
 
 ![image](https://user-images.githubusercontent.com/36443074/142890265-e7e81cd8-14ee-489b-bc9d-9782b1934363.png)
 
-### The project covers:
+### The project implements:
 
 - Bash commands
 - Redirections

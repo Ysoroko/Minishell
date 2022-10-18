@@ -14,7 +14,7 @@ This project is a collaboration with [Arnaud Blondel](https://github.com/ablonde
 - Exit status of the processes
 - Signals
 - Parsing of double and simple quotes + environmental variables
-- Recreates the following buil-ins:
+- Recreates the following built-ins:
   - echo
   - cd
   - pwd
